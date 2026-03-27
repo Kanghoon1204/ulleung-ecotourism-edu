@@ -1,0 +1,1659 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>울릉군 생태관광 AI 교육 - 수업 진행 페이지</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --orange: #f97316;
+  --purple: #8b5cf6;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --code-bg: #1e1e2e;
+  --code-text: #cdd6f4;
+  --tip-bg: #fefce8;
+  --tip-border: #fde047;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== Hero ===== */
+.hero { background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #2563eb 100%); color: #fff; padding: 60px 0 50px; text-align: center; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 40px; background: var(--bg); border-radius: 40px 40px 0 0; }
+.hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+.hero .sub { font-size: 1.1rem; opacity: .9; margin-bottom: 24px; }
+.hero-info { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 20px; }
+.hero-tag { background: rgba(255,255,255,0.18); padding: 6px 16px; border-radius: 20px; font-size: 0.9rem; backdrop-filter: blur(4px); }
+
+/* ===== Sticky Nav ===== */
+.sticky-nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+.sticky-nav ul { list-style: none; display: flex; gap: 0; overflow-x: auto; max-width: 900px; margin: 0 auto; padding: 0 16px; }
+.sticky-nav li a { display: block; padding: 14px 16px; font-size: 0.82rem; font-weight: 600; color: var(--text-light); white-space: nowrap; border-bottom: 3px solid transparent; transition: all .2s; }
+.sticky-nav li a:hover, .sticky-nav li a.active { color: var(--primary); border-bottom-color: var(--primary); text-decoration: none; }
+
+/* ===== Prompt Box ===== */
+.prompt-box { background: var(--code-bg); border-radius: var(--radius); padding: 16px 18px; margin: 12px 0; position: relative; overflow-x: auto; }
+.prompt-box code { color: var(--code-text); font-family: 'Courier New', monospace; font-size: 0.88rem; white-space: pre-wrap; word-break: break-all; display: block; line-height: 1.6; }
+.copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-family: 'Noto Sans KR', sans-serif; transition: all .2s; }
+.copy-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* ===== Result Boxes ===== */
+.result-box { border-radius: var(--radius); padding: 16px 18px; margin: 12px 0; font-size: 0.9rem; line-height: 1.8; border-left: 4px solid; }
+.result-box .label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.result-good { background: #ecfdf5; border-color: #6ee7b7; }
+.result-good .label { color: #059669; }
+.result-bad { background: #fef2f2; border-color: #fca5a5; }
+.result-bad .label { color: #dc2626; }
+.result-info { background: #eff6ff; border-color: #93c5fd; }
+.result-info .label { color: #2563eb; }
+
+/* ===== Tip Box ===== */
+.tip-box { background: var(--tip-bg); border-left: 4px solid var(--tip-border); border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 12px 0; font-size: 0.88rem; }
+.tip-box strong { color: #a16207; }
+
+/* ===== Morning: Time Block ===== */
+.time-block { background: var(--card); border-radius: 16px; padding: 28px; margin: 32px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-top: 4px solid var(--primary); }
+.time-block.s2 { border-top-color: var(--secondary); }
+.time-block.s3 { border-top-color: var(--orange); }
+.time-block.s4 { border-top-color: var(--purple); }
+.time-block.s5 { border-top-color: var(--orange); }
+.time-block.s6 { border-top-color: var(--accent); }
+.time-block .time-header { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+.time-block .time-badge { background: var(--primary); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+.time-block.s2 .time-badge { background: var(--secondary); }
+.time-block.s3 .time-badge { background: var(--orange); }
+.time-block.s4 .time-badge { background: var(--purple); }
+.time-block.s5 .time-badge { background: var(--orange); }
+.time-block.s6 .time-badge { background: var(--accent); }
+.time-block .time-title { font-size: 1.3rem; font-weight: 900; }
+.time-block .time-instructor { font-size: 0.85rem; color: var(--text-light); margin-top: 2px; }
+
+/* ===== Afternoon: Time Block Override ===== */
+.time-block h2 { font-size: 1.5rem; margin-bottom: 6px; }
+.time-meta { font-size: 0.85rem; color: var(--text-light); margin-bottom: 4px; }
+.time-desc { font-size: 0.92rem; color: var(--text-light); margin-bottom: 28px; line-height: 1.6; }
+
+/* ===== Exercise (shared) ===== */
+.exercise { background: #f8fafc; border-radius: var(--radius); padding: 24px; margin: 20px 0; border: 1px solid var(--border); }
+.exercise .ex-header, .ex-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.exercise .ex-num { background: var(--primary); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; }
+.time-block.s2 .exercise .ex-num { background: var(--secondary); }
+.time-block.s3 .exercise .ex-num { background: var(--orange); }
+.exercise .ex-title { font-weight: 700; font-size: 1.05rem; }
+.exercise .ex-goal, .ex-goal { color: var(--text-light); font-size: 0.88rem; margin-bottom: 12px; padding-left: 38px; }
+.ex-header h3 { font-size: 1.1rem; margin: 0; }
+
+/* Afternoon ex-num pill override */
+.time-block.s4 .ex-num, .time-block.s5 .ex-num, .time-block.s6 .ex-num {
+  border-radius: 20px; padding: 4px 14px; min-width: auto; height: auto; white-space: nowrap; flex-shrink: 0;
+}
+
+/* Afternoon ex-goal override */
+.time-block.s4 .ex-goal, .time-block.s5 .ex-goal, .time-block.s6 .ex-goal {
+  padding: 8px 14px; padding-left: 14px; background: #fff; border-radius: 8px; border-left: 3px solid var(--primary);
+}
+
+/* ===== Morning: Steps List (ol) ===== */
+.steps-list { margin: 14px 0; }
+.steps-list ol { list-style: none; counter-reset: step-counter; padding: 0 0 0 38px; margin: 0; }
+.steps-list ol li { counter-increment: step-counter; position: relative; padding: 6px 0 6px 32px; font-size: 0.92rem; line-height: 1.6; }
+.steps-list ol li::before { content: counter(step-counter); position: absolute; left: 0; top: 7px; width: 22px; height: 22px; border-radius: 50%; background: #e2e8f0; color: var(--text); font-size: 0.72rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+/* ===== Afternoon: Steps List (step-item) ===== */
+.step-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 0.92rem; }
+.step-item:last-child { border-bottom: none; }
+.step-item .step-num { background: var(--border); color: var(--text); min-width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+/* ===== Checkpoint ===== */
+.checkpoint { background: #ecfdf5; border: 2px solid #6ee7b7; border-radius: var(--radius); padding: 14px 18px; margin-top: 16px; font-size: 0.92rem; font-weight: 600; color: #065f46; }
+
+/* ===== Formula ===== */
+.formula { background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 2px solid var(--primary); border-radius: 12px; padding: 24px; margin: 20px 0; text-align: center; }
+.formula .formula-text { font-size: 1.3rem; font-weight: 900; color: var(--primary-dark); margin-bottom: 8px; letter-spacing: 1px; }
+.formula .formula-desc { font-size: 0.9rem; color: var(--text-light); }
+.formula ul { list-style: none; padding: 0; margin: 12px 0 0; text-align: left; display: inline-block; }
+.formula ul li { padding: 4px 0; font-size: 0.9rem; }
+
+/* ===== Lunch Break ===== */
+.lunch-break { background: linear-gradient(135deg, #fef3c7, #fde68a); border-radius: 16px; padding: 24px; text-align: center; margin: 32px 0; }
+.lunch-break h3 { color: #92400e; margin-bottom: 8px; font-size: 1.2rem; }
+.lunch-break p { color: #a16207; font-size: 0.9rem; }
+
+/* ===== Compare Grid ===== */
+.user-fill { background: #fef9c3; padding: 1px 4px; border-radius: 4px; font-weight: 700; color: #92400e; border: 1px dashed #f59e0b; }
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.compare-bad { background: #fef2f2; border: 1px solid #fca5a5; border-radius: 12px; padding: 14px; }
+.compare-good { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: 12px; padding: 14px; }
+.compare-bad .compare-label { font-size: 0.75rem; font-weight: 700; color: #dc2626; margin-bottom: 8px; display: block; }
+.compare-good .compare-label { font-size: 0.75rem; font-weight: 700; color: #059669; margin-bottom: 8px; display: block; }
+@media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+
+/* ===== Fill Blanks ===== */
+.fill-blank { background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 4px; font-weight: 700; }
+.fill-highlight { background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 4px; }
+.prompt-box .fill-blank { background: rgba(254,243,199,0.3); color: #fde68a; padding: 1px 4px; border-radius: 3px; }
+
+/* ===== Presentation Prep ===== */
+.presentation-prep { background: #fff; border: 2px solid var(--accent); border-radius: var(--radius); padding: 24px; margin: 16px 0; }
+.presentation-prep h4 { font-size: 1rem; color: var(--accent); margin-bottom: 12px; }
+.prep-checklist { display: flex; flex-direction: column; gap: 4px; }
+.prep-checklist label { display: flex; align-items: flex-start; gap: 10px; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; transition: background .15s; }
+.prep-checklist label:hover { background: #fffbeb; }
+.prep-checklist input[type="checkbox"] { margin-top: 3px; accent-color: var(--accent); width: 18px; height: 18px; flex-shrink: 0; }
+.presentation-schedule { margin: 16px 0; overflow-x: auto; }
+
+/* ===== Homework ===== */
+.homework-checklist { display: flex; flex-direction: column; gap: 8px; margin-bottom: 8px; }
+.homework-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); cursor: pointer; font-size: 0.9rem; transition: border-color .2s, box-shadow .2s; }
+.homework-item:hover { border-color: var(--primary); box-shadow: var(--shadow); }
+.homework-item input[type="checkbox"] { margin-top: 3px; accent-color: var(--primary); width: 18px; height: 18px; flex-shrink: 0; }
+.homework-item div { flex: 1; }
+.homework-hint { display: block; font-size: 0.82rem; color: var(--text-light); margin-top: 4px; }
+
+/* ===== Contact ===== */
+.contact-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+.contact-card h4 { margin-bottom: 4px; }
+.contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.contact-item { text-align: center; padding: 14px 10px; background: #f8fafc; border-radius: 8px; }
+.contact-item strong { display: block; font-size: 0.92rem; margin-bottom: 4px; }
+.contact-item span { font-size: 0.8rem; color: var(--text-light); }
+
+/* ===== Survey ===== */
+.survey-box { background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 2px solid var(--primary); border-radius: var(--radius); padding: 24px; text-align: center; }
+.survey-box h4 { margin-bottom: 4px; }
+.survey-btn { display: inline-block; background: var(--primary); color: #fff; padding: 12px 32px; border-radius: 30px; font-weight: 700; font-size: 0.95rem; transition: transform .2s, box-shadow .2s; text-decoration: none; }
+.survey-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); text-decoration: none; }
+
+/* ===== Link Grid ===== */
+.links-section { margin-bottom: 40px; }
+.link-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.link-card { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; text-decoration: none; color: var(--text); transition: border-color .2s, box-shadow .2s, transform .15s; }
+.link-card:hover { border-color: var(--primary); box-shadow: var(--shadow); transform: translateY(-2px); text-decoration: none; }
+.link-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 1.1rem; flex-shrink: 0; }
+.link-info { display: flex; flex-direction: column; }
+.link-info strong { font-size: 0.9rem; }
+.link-info span { font-size: 0.75rem; color: var(--text-light); }
+
+/* ===== Progress Bar ===== */
+.progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--primary), var(--purple)); z-index: 200; transition: width .1s; width: 0%; }
+
+/* ===== Footer ===== */
+footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: center; font-size: 0.85rem; margin-top: 40px; }
+footer a { color: #93c5fd; }
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 1.5rem; }
+  .time-block { padding: 24px 18px; }
+  .exercise { padding: 18px 14px; }
+  .link-grid { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: 1fr; gap: 8px; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.3rem; }
+  .time-block { padding: 20px 14px; margin: 20px 0; }
+  .time-block h2 { font-size: 1.25rem; }
+  .link-grid { grid-template-columns: 1fr; }
+  .sticky-nav li a { padding: 12px 10px; font-size: 0.75rem; }
+  .presentation-schedule table { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar"></div>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="container">
+    <h1>울릉군 글로벌 생태관광 AI 교육</h1>
+    <p class="sub">수업 진행 페이지 - 위에서 아래로 따라하면 8시간 교육 완성!</p>
+    <div class="hero-info">
+      <span class="hero-tag">2026.4.18 (토)</span>
+      <span class="hero-tag">울릉고등학교 전산실</span>
+      <span class="hero-tag">50명</span>
+      <span class="hero-tag">09:00 ~ 18:00</span>
+    </div>
+    <div class="hero-info">
+      <span class="hero-tag">Gemini</span>
+      <span class="hero-tag">Scout</span>
+      <span class="hero-tag">ChatGPT</span>
+      <span class="hero-tag">Antigravity</span>
+    </div>
+  </div>
+</div>
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav">
+  <ul>
+    <li><a href="#step1">STEP 1 AI 첫만남</a></li>
+    <li><a href="#step2">STEP 2 콘텐츠</a></li>
+    <li><a href="#step3">STEP 3 실무도구</a></li>
+    <li><a href="#lunch">점심</a></li>
+    <li><a href="#step4">STEP 4 GPT앱</a></li>
+    <li><a href="#step5">STEP 5 웹페이지</a></li>
+    <li><a href="#step6">STEP 6 발표</a></li>
+  </ul>
+</nav>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="container">
+
+<!-- ==================== STEP 1: AI와 첫 만남 (09:00~10:00) ==================== -->
+<div class="time-block" id="step1">
+  <div class="time-header">
+    <span class="time-badge">09:00 ~ 10:00</span>
+    <div>
+      <div class="time-title">STEP 1: AI와 첫 만남</div>
+      <div class="time-instructor">강사: 김병철 교수</div>
+    </div>
+  </div>
+
+  <!-- 실습 1 -->
+  <div class="exercise" id="ex1">
+    <div class="ex-header">
+      <span class="ex-num">1</span>
+      <span class="ex-title">Gemini 접속하기</span>
+    </div>
+    <div class="ex-goal">목표: 구글 Gemini에 접속하여 대화 입력창을 확인합니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>바탕화면 또는 작업표시줄에서 <strong>크롬(Chrome) 브라우저</strong>를 더블클릭하여 엽니다.</li>
+        <li>화면 상단의 <strong>주소창</strong>을 클릭한 뒤 <strong>gemini.google.com</strong> 을 입력하고 Enter를 누릅니다.</li>
+        <li><strong>구글 로그인</strong> 화면이 나타나면, 강사가 안내하는 교육용 계정(이메일/비밀번호)으로 로그인합니다.</li>
+        <li>로그인 후, 화면 하단에 <strong>"여기에 메시지 입력"</strong> 이라는 입력창이 보이는지 확인합니다.</li>
+      </ol>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      Gemini 메인 화면이 열리고, 하단에 텍스트 입력창이 보입니다. 상단에 "Gemini" 로고가 표시되어 있으면 성공입니다.
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 크롬이 아닌 다른 브라우저(엣지, 사파리)에서도 작동하지만, 크롬에서 가장 안정적입니다. 주소를 잘못 입력하면 구글 검색 결과가 나옵니다 -- 주소창에 정확히 입력해주세요.
+    </div>
+
+    <div class="checkpoint">✅ Gemini 화면이 보이나요? 하단에 입력창이 있으면 성공!</div>
+  </div>
+
+  <!-- 실습 2 -->
+  <div class="exercise" id="ex2">
+    <div class="ex-header">
+      <span class="ex-num">2</span>
+      <span class="ex-title">첫 번째 대화</span>
+    </div>
+    <div class="ex-goal">목표: AI에게 첫 질문을 보내고, 답변을 받아봅니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>화면 하단의 입력창을 클릭합니다.</li>
+        <li>아래 프롬프트를 복사하여 입력창에 붙여넣기 합니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>안녕, 나는 울릉도에서 식당을 운영하고 있어. 울릉도를 한 줄로 소개해줘</code>
+    </div>
+
+    <div class="steps-list">
+      <ol start="3">
+        <li><strong>Enter</strong> 키를 누르거나, 입력창 오른쪽의 <strong>보내기 버튼</strong>(종이비행기 아이콘)을 클릭합니다.</li>
+        <li>잠시 기다리면 AI가 답변을 생성합니다. 답변을 읽어봅니다.</li>
+      </ol>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      "울릉도는 동해 한가운데 자리한 화산섬으로, 깎아지른 해안 절벽과 맑은 바다, 울창한 원시림이 어우러진 대한민국의 숨겨진 보석 같은 섬입니다."<br><br>
+      이처럼 울릉도를 한 줄로 소개하는 문장이 한국어로 표시됩니다.
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> AI의 답변은 매번 조금씩 다릅니다. 같은 질문을 해도 표현이 달라질 수 있어요. 이것이 AI의 특징입니다!
+    </div>
+
+    <div class="checkpoint">✅ AI가 한국어로 답변했나요? 울릉도 소개 문장이 보이면 성공!</div>
+  </div>
+
+  <!-- 실습 3 -->
+  <div class="exercise" id="ex3">
+    <div class="ex-header">
+      <span class="ex-num">3</span>
+      <span class="ex-title">프롬프트 원리 체험</span>
+    </div>
+    <div class="ex-goal">목표: 막연한 질문과 구체적인 질문의 결과 차이를 직접 체험합니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>먼저 <strong>"나쁜 프롬프트"</strong>를 입력해봅니다. 아래를 복사하여 Gemini에 보냅니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>홍보 문구 써줘</code>
+    </div>
+
+    <div class="result-box result-bad">
+      <span class="label">예상 결과 (막연한 답변)</span>
+      "어떤 제품이나 서비스의 홍보 문구를 원하시나요? 좀 더 구체적으로 알려주시면 맞춤형 홍보 문구를 작성해 드리겠습니다."<br><br>
+      무엇을 홍보할지, 어디에 쓸지 모르니 AI도 막연하게 되물어봅니다.
+    </div>
+
+    <div class="steps-list">
+      <ol start="2">
+        <li>결과를 확인합니다. 뭔가 부족하죠? 이번에는 <strong>"좋은 프롬프트"</strong>를 입력합니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>너는 울릉도 관광 마케팅 전문가야.
+성인봉 등산 코스를 홍보하는 인스타그램 문구를 3개 만들어줘.
+각 100자 이내, 감성적인 톤, 이모지 포함, 해시태그 5개씩.</code>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과 (구체적인 답변)</span>
+      <strong>1.</strong> 구름 위를 걷는 기분, 알아요? 성인봉 정상에서 동해를 내려다보면 세상 모든 걱정이 안개처럼 사라져요 🌿⛰️<br>
+      #성인봉 #울릉도등산 #동해절경 #섬트레킹 #힐링여행<br><br>
+      <strong>2.</strong> 984m, 숲이 들려주는 이야기에 귀 기울이며 한 걸음씩. 성인봉은 걸을수록 마음이 가벼워지는 길이에요 🍃✨<br>
+      #성인봉트레킹 #울릉도여행 #자연속으로 #등산스타그램 #울릉도<br><br>
+      <strong>3.</strong> 원시림 사이로 쏟아지는 햇살, 발끝에 닿는 이끼의 촉감. 성인봉, 오르는 내내 감탄이 멈추지 않는 길 🌄💚<br>
+      #울릉도성인봉 #원시림 #섬여행 #등산추천 #자연치유
+    </div>
+
+    <div class="steps-list">
+      <ol start="3">
+        <li>두 결과를 비교해봅니다. <strong>역할 + 맥락 + 구체적 지시</strong>가 있으니 결과가 완전히 달라졌죠!</li>
+      </ol>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-bad">
+        <span class="compare-label">나쁜 프롬프트</span>
+        "홍보 문구 써줘"<br><br>
+        <span style="font-size:0.82rem; color:#94a3b8;">역할 없음 / 맥락 없음 / 지시 막연</span>
+      </div>
+      <div class="compare-good">
+        <span class="compare-label">좋은 프롬프트</span>
+        "너는 ~전문가야. ~를 ~해줘. 조건: ~"<br><br>
+        <span style="font-size:0.82rem; color:#94a3b8;">역할 부여 / 맥락 제공 / 지시 구체적</span>
+      </div>
+    </div>
+
+    <div class="checkpoint">✅ 두 결과의 차이를 느꼈나요? 좋은 프롬프트의 결과가 훨씬 구체적이면 성공!</div>
+  </div>
+
+  <!-- 프롬프트 공식 -->
+  <div class="formula">
+    <div class="formula-text">역할 + 맥락 + 구체적 지시 = 좋은 프롬프트</div>
+    <div class="formula-desc">이 공식만 기억하면 AI를 200% 활용할 수 있습니다!</div>
+    <ul>
+      <li><strong>역할:</strong> "너는 ○○ 전문가야" -- AI에게 전문가 모자를 씌워주세요</li>
+      <li><strong>맥락:</strong> 가게 정보, 상황, 대상 고객 -- 배경을 알려주세요</li>
+      <li><strong>구체적 지시:</strong> 개수, 글자수, 톤, 형식, 언어 -- 원하는 결과를 정확히!</li>
+    </ul>
+  </div>
+
+</div>
+
+<!-- ==================== STEP 2: Gemini로 콘텐츠 만들기 (10:00~11:00) ==================== -->
+<div class="time-block s2" id="step2">
+  <div class="time-header">
+    <span class="time-badge">10:00 ~ 11:00</span>
+    <div>
+      <div class="time-title">STEP 2: Gemini로 콘텐츠 만들기</div>
+      <div class="time-instructor">강사: 김강훈 강사</div>
+    </div>
+  </div>
+
+  <!-- 실습 4 -->
+  <div class="exercise" id="ex4">
+    <div class="ex-header">
+      <span class="ex-num">4</span>
+      <span class="ex-title">우리 가게 홍보 문구</span>
+    </div>
+    <div class="ex-goal">목표: 내 가게 정보를 넣어 맞춤형 인스타그램 홍보 문구를 만듭니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>아래 프롬프트를 복사합니다.</li>
+        <li><span class="user-fill">[대괄호]</span> 안의 내용을 <strong>본인의 실제 가게 정보</strong>로 바꿔서 입력합니다.</li>
+        <li>Gemini에 붙여넣고 Enter를 누릅니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>너는 울릉도 관광 마케팅 전문가야.
+[내 가게 이름]을 홍보하는 인스타그램 포스팅을 만들어줘.
+
+가게 정보:
+- 업종: [식당/숙소/체험 등]
+- 위치: 울릉도 [도동/저동/나리 등]
+- 대표 상품: [대표 메뉴나 서비스]
+- 특징: [자랑거리]
+
+조건:
+- 한국어 1개, 영어 1개
+- 이모지 포함
+- 해시태그 10개
+- 200자 이내</code>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> <span class="user-fill">[대괄호]</span> 부분은 반드시 내 정보로 바꿔야 합니다! 예를 들어 <span class="user-fill">[내 가게 이름]</span> 대신 "해울림식당", <span class="user-fill">[업종]</span> 대신 "횟집" 같이 바꿔주세요. 가게가 없는 분은 울릉도의 유명한 가게를 상상해서 채워보세요.
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>[한국어 버전]</strong><br>
+      파도 소리를 BGM 삼아 즐기는 자연산 회 한 상 🐟🌊 울릉도 도동항 바로 앞, 해울림식당에서 오늘 새벽 잡은 싱싱한 오징어회와 따개비밥을 만나보세요. 바다가 차려주는 밥상, 여기밖에 없습니다 ✨<br>
+      #울릉도맛집 #해울림식당 #울릉도회 #오징어회 #따개비밥 #도동항맛집 #울릉도여행 #섬맛집 #동해맛집 #울릉도현지맛집<br><br>
+      <strong>[English Version]</strong><br>
+      Fresh from the East Sea to your table 🐟 Experience the taste of Ulleungdo at Haeullim — wild-caught squid sashimi & barnacle rice with an ocean view. Pure island dining! 🌊✨<br>
+      #UlleungdoFood #KoreanSeafood #IslandDining #EastSea #KoreaTravel #HiddenGem #SeafoodLovers #Ulleungdo #FreshCatch #OceanView
+    </div>
+
+    <div class="checkpoint">✅ 내 가게에 맞는 한국어+영어 홍보 문구가 나왔나요?</div>
+  </div>
+
+  <!-- 실습 5 -->
+  <div class="exercise" id="ex5">
+    <div class="ex-header">
+      <span class="ex-num">5</span>
+      <span class="ex-title">관광 포스터 이미지</span>
+    </div>
+    <div class="ex-goal">목표: Gemini로 울릉도 관광 포스터 이미지를 생성하고 저장합니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>아래 프롬프트를 복사하여 Gemini에 입력합니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>울릉도 관광 포스터 이미지를 만들어줘.
+
+포함 요소:
+- 맑은 동해 바다와 해안 절벽
+- 성인봉이 보이는 울릉도 전경
+- "울릉도 - 동해의 보석" 텍스트
+- 밝고 선명한 색감
+- 여행 포스터 스타일
+- 세로 비율 (3:4)</code>
+    </div>
+
+    <div class="steps-list">
+      <ol start="2">
+        <li>잠시 기다리면 이미지가 생성됩니다 (10~30초 소요).</li>
+        <li>생성된 이미지를 저장합니다: 이미지 위에서 <strong>마우스 우클릭</strong> → <strong>"이미지를 다른 이름으로 저장"</strong> 클릭 → 바탕화면이나 원하는 폴더에 저장합니다.</li>
+      </ol>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      에메랄드빛 동해 바다와 깎아지른 해안 절벽이 담긴 울릉도 전경 이미지가 생성됩니다. 상단에 성인봉이 보이고, 하단에 "울릉도 - 동해의 보석" 텍스트가 포함된 여행 포스터 스타일의 세로형 이미지입니다. 밝고 선명한 색감으로 SNS에 바로 활용할 수 있는 퀄리티입니다.
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 이미지가 마음에 들지 않으면 "좀 더 밝게 해줘", "절벽을 더 크게 해줘" 처럼 추가 요청을 해보세요. AI가 수정해줍니다. 만약 이미지 생성이 안 되면 "이미지를 그려줘"라고 명확하게 요청해보세요.
+    </div>
+
+    <div class="checkpoint">✅ 이미지가 생성되었나요? 컴퓨터에 저장까지 했으면 완벽!</div>
+  </div>
+
+  <!-- 실습 6 -->
+  <div class="exercise" id="ex6">
+    <div class="ex-header">
+      <span class="ex-num">6</span>
+      <span class="ex-title">3개 국어 메뉴판</span>
+    </div>
+    <div class="ex-goal">목표: 내 가게 메뉴판을 한국어/영어/일본어 3개 국어로 만듭니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>아래 프롬프트를 복사합니다.</li>
+        <li><span class="user-fill">[대괄호]</span> 안의 내용을 <strong>본인의 실제 메뉴</strong>로 바꿔서 입력합니다.</li>
+        <li>Gemini에 붙여넣고 Enter를 누릅니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>내 식당 메뉴판을 한국어, 영어, 일본어로 만들어줘.
+
+가게: [내 가게 이름]
+메뉴:
+1. [메뉴1] - [가격]원
+2. [메뉴2] - [가격]원
+3. [메뉴3] - [가격]원
+4. [메뉴4] - [가격]원
+5. [메뉴5] - [가격]원
+
+조건:
+- 각 메뉴마다 맛과 특징 한 줄 설명
+- 외국인이 이해하기 쉽게
+- 표 형태로 정리
+- 알레르기 안내 포함
+- 하단에 WiFi 비밀번호/카드결제 안내 영어/일본어 포함</code>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 가게가 식당이 아니라면? 숙소는 "객실 유형과 가격", 체험업은 "체험 프로그램과 가격"으로 바꿔서 응용할 수 있습니다.
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>해울림식당 메뉴판 / Menu / メニュー</strong><br><br>
+      <table style="width:100%; border-collapse:collapse; font-size:0.82rem; margin-top:8px;">
+        <tr style="background:#f1f5f9;">
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">한국어</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">English</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">日本語</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">가격</th>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #e2e8f0;"><strong>울릉도 회정식</strong><br><span style="color:#64748b; font-size:0.78rem;">당일 자연산 횟감 + 반찬 12종</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">Hoe-jeongsik (Sashimi Set)<br><span style="color:#64748b; font-size:0.78rem;">Wild-caught sashimi + 12 side dishes</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">刺身定食<br><span style="color:#64748b; font-size:0.78rem;">天然刺身＋おかず12種</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">35,000원</td>
+        </tr>
+        <tr style="background:#fafafa;">
+          <td style="padding:8px; border:1px solid #e2e8f0;"><strong>따개비칼국수</strong><br><span style="color:#64748b; font-size:0.78rem;">울릉도 특산 따개비 육수</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">Barnacle Noodle Soup<br><span style="color:#64748b; font-size:0.78rem;">Rich broth from Ulleungdo barnacles</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">フジツボカルグクス<br><span style="color:#64748b; font-size:0.78rem;">鬱陵島産フジツボ出汁の麺</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">12,000원</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #e2e8f0;"><strong>오징어내장탕</strong><br><span style="color:#64748b; font-size:0.78rem;">매콤한 울릉도 향토 요리</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">Squid Intestine Stew<br><span style="color:#64748b; font-size:0.78rem;">Spicy local specialty of Ulleungdo</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">イカ内臓鍋<br><span style="color:#64748b; font-size:0.78rem;">ピリ辛の鬱陵島郷土料理</span></td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">15,000원</td>
+        </tr>
+      </table>
+      <br>
+      <span style="font-size:0.82rem; color:#64748b;">
+        Allergy Info / アレルギー情報: Fish, Shellfish, Wheat, Soy / 魚、貝類、小麦、大豆<br>
+        WiFi: ullim_guest (PW: welcome2026) | Card OK / カード可
+      </span>
+    </div>
+
+    <div class="checkpoint">✅ 3개국어 메뉴판이 완성되었나요? 표 형태로 깔끔하게 나왔으면 성공!</div>
+  </div>
+
+</div>
+
+<!-- ==================== STEP 3: 실무 도구 + Scout (11:00~12:00) ==================== -->
+<div class="time-block s3" id="step3">
+  <div class="time-header">
+    <span class="time-badge">11:00 ~ 12:00</span>
+    <div>
+      <div class="time-title">STEP 3: 실무 도구 + Scout</div>
+      <div class="time-instructor">강사: 김강훈 강사</div>
+    </div>
+  </div>
+
+  <!-- 실습 7 -->
+  <div class="exercise" id="ex7">
+    <div class="ex-header">
+      <span class="ex-num">7</span>
+      <span class="ex-title">네이버 지도 영문 정보 만들기</span>
+    </div>
+    <div class="ex-goal">목표: 내 가게의 네이버 지도 등록용 영문/일문 정보를 만듭니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>아래 프롬프트를 복사합니다.</li>
+        <li><span class="user-fill">[대괄호]</span> 안의 내용을 <strong>본인의 실제 가게 정보</strong>로 바꿔서 입력합니다.</li>
+        <li>Gemini에 붙여넣고 Enter를 누릅니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>내 가게의 네이버 지도 영어 정보를 작성해줘.
+
+가게 정보:
+- 상호명: [가게 이름]
+- 주소: 경상북도 울릉군 [상세주소]
+- 업종: [업종]
+- 대표 메뉴: [메뉴1], [메뉴2], [메뉴3]
+- 영업시간: [영업시간]
+
+만들어줘:
+1. 영문 상호명
+2. 영문 주소
+3. 영문 메뉴 설명 (한 줄씩)
+4. 영문 소개글 (3줄)
+5. 일본어 소개글 (3줄)</code>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>1. 영문 상호명</strong><br>
+      Haeullim Restaurant (해울림식당)<br><br>
+      <strong>2. 영문 주소</strong><br>
+      123 Dodong-ri, Ulleung-eup, Ulleung-gun, Gyeongsangbuk-do, South Korea<br><br>
+      <strong>3. 영문 메뉴 설명</strong><br>
+      - Hoe-jeongsik (Sashimi Set): A full-course meal featuring daily wild-caught sashimi with 12 traditional side dishes.<br>
+      - Ttaegaebi Kalguksu (Barnacle Noodle Soup): Handmade noodles in a rich, savory broth made from Ulleungdo barnacles.<br>
+      - Ojingeo Naejangtang (Squid Intestine Stew): A hearty, spicy stew made with fresh local squid.<br><br>
+      <strong>4. 영문 소개글</strong><br>
+      Located steps from Dodong Port, Haeullim serves the freshest seafood caught daily from the East Sea. Our signature sashimi set and Ulleungdo barnacle noodle soup have been beloved by locals and travelers for over 20 years. Come taste the ocean — no reservation needed!<br><br>
+      <strong>5. 일본어 소개글</strong><br>
+      道洞港すぐそば、毎日東海で獲れた新鮮な海産物をご提供。名物の刺身定食とフジツボカルグクスは20年以上愛されています。海の味覚をぜひお楽しみください。予約不要です！
+    </div>
+
+    <div class="steps-list">
+      <ol start="4">
+        <li>결과를 <strong>메모장(메모 앱)</strong>에 복사하여 저장해둡니다. (나중에 네이버 지도에 등록할 때 사용)</li>
+      </ol>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 결과를 저장하는 법: AI 답변 텍스트를 드래그하여 선택 → Ctrl+C (복사) → 메모장 열기 → Ctrl+V (붙여넣기) → Ctrl+S (저장). 파일명은 "내가게_영문정보.txt" 등으로 해두면 찾기 쉽습니다.
+    </div>
+
+    <div class="checkpoint">✅ 영문 가게 정보가 완성되었나요? 메모장에 저장까지 했으면 완벽!</div>
+  </div>
+
+  <!-- 실습 8 -->
+  <div class="exercise" id="ex8">
+    <div class="ex-header">
+      <span class="ex-num">8</span>
+      <span class="ex-title">네이버 스마트플레이스 소개글</span>
+    </div>
+    <div class="ex-goal">목표: 네이버 스마트플레이스에 바로 등록할 수 있는 소개글을 만듭니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>아래 프롬프트를 복사합니다.</li>
+        <li><span class="user-fill">[대괄호]</span> 안의 내용을 <strong>본인의 실제 정보</strong>로 바꿔서 입력합니다.</li>
+        <li>Gemini에 붙여넣고 Enter를 누릅니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>네이버 스마트플레이스에 등록할 소개글을 작성해줘.
+
+업체: [가게 이름]
+업종: [업종]
+위치: [위치 특징]
+특징: [차별점, 전통, 자랑거리]
+대표 메뉴/서비스: [대표 상품들]
+
+작성해줘:
+1. 업체 소개글 (200자, 검색 키워드 포함)
+2. 대표 메뉴 3개 설명 (각 50자)
+3. 이번 달 소식 게시글 1개</code>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>1. 업체 소개글 (200자)</strong><br>
+      울릉도 도동항 앞 해울림식당은 25년 전통의 자연산 횟집입니다. 매일 새벽 울릉도 근해에서 직접 잡은 싱싱한 회와 울릉도 특산 따개비칼국수를 맛볼 수 있습니다. 동해 바다가 보이는 2층 오션뷰 좌석과 넓은 단체석도 준비되어 있어 가족 모임, 단체 여행에 안성맞춤. 울릉도 맛집, 도동항 맛집을 찾으신다면 해울림으로 오세요!<br><br>
+      <strong>2. 대표 메뉴 설명</strong><br>
+      - 울릉도 회정식: 당일 자연산 횟감과 정갈한 반찬 12종이 한 상 가득 차려지는 대표 코스<br>
+      - 따개비칼국수: 울릉도에서만 맛볼 수 있는 따개비 육수에 쫄깃한 수제 면을 더한 향토 별미<br>
+      - 오징어내장탕: 싱싱한 울릉도 오징어 내장으로 끓인 얼큰하고 깊은 맛의 향토 찌개<br><br>
+      <strong>3. 이번 달 소식</strong><br>
+      [4월 소식] 봄 울릉도 제철 메뉴 출시! 미역국과 봄나물 비빔밥이 새로 추가되었습니다. 4월 한 달간 회정식 주문 시 따개비전 서비스! 봄바람 맞으며 울릉도 바다 한 상 드시러 오세요.
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 네이버 스마트플레이스(smartplace.naver.com)에서 내 업체를 등록/수정할 때, "소개글" 란에 이 결과를 그대로 붙여넣으면 됩니다. "소식 게시글"은 네이버 예약 > 소식 탭에서 등록할 수 있습니다.
+    </div>
+
+    <div class="checkpoint">✅ 스마트플레이스 소개글이 완성되었나요? 200자 소개글 + 메뉴 설명 + 소식 게시글이 모두 나왔으면 성공!</div>
+  </div>
+
+  <!-- 실습 9 -->
+  <div class="exercise" id="ex9">
+    <div class="ex-header">
+      <span class="ex-num">9</span>
+      <span class="ex-title">AI 음성 통역 테스트</span>
+    </div>
+    <div class="ex-goal">목표: 스마트폰의 AI 앱으로 실시간 음성 통역을 체험합니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li><strong>스마트폰</strong>을 꺼냅니다.</li>
+        <li><strong>Gemini 앱</strong> (또는 ChatGPT 앱)을 실행합니다. 설치되어 있지 않다면, 앱스토어/플레이스토어에서 "Gemini"를 검색하여 설치합니다.</li>
+        <li>앱 화면 하단의 <strong>마이크 버튼</strong>을 터치합니다.</li>
+        <li>"지금부터 한국어를 영어로 통역해줘" 라고 또박또박 말합니다.</li>
+        <li>AI가 알겠다고 응답하면, 이어서 말합니다: <strong>"어서 오세요, 오늘의 추천 메뉴는 회정식입니다"</strong></li>
+        <li>AI가 영어로 통역한 결과를 확인합니다.</li>
+      </ol>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      AI 음성: "Welcome! Today's recommended menu is Hoe-jeongsik, a traditional Korean sashimi set meal."<br><br>
+      한국어로 말하면 AI가 즉시 영어로 통역해줍니다. 외국인 관광객이 가게에 왔을 때 스마트폰 하나로 의사소통이 가능합니다!
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 일본어 통역도 가능합니다! "한국어를 일본어로 통역해줘"로 바꿔서 말해보세요. 실제 외국인 손님이 오시면 이 방법으로 바로 소통할 수 있습니다. 조용한 환경에서 또박또박 말하면 인식률이 올라갑니다.
+    </div>
+
+    <div class="checkpoint">✅ AI가 영어로 통역했나요? 스마트폰에서 음성 통역이 작동하면 성공!</div>
+  </div>
+
+  <!-- 실습 10 -->
+  <div class="exercise" id="ex10">
+    <div class="ex-header">
+      <span class="ex-num">10</span>
+      <span class="ex-title">Scout으로 경쟁 지역 분석</span>
+    </div>
+    <div class="ex-goal">목표: AI Scout을 사용하여 경쟁 관광지의 홍보 전략을 분석합니다.</div>
+
+    <div class="steps-list">
+      <ol>
+        <li>강사의 안내에 따라 <strong>Scout</strong>에 접속합니다.</li>
+        <li>아래 프롬프트를 복사하여 Scout에 입력합니다.</li>
+      </ol>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>제주도, 강릉, 거제도의 관광 홍보 전략을 분석해줘.
+
+1. 각 지역의 메인 슬로건
+2. SNS에서 인기 있는 콘텐츠 유형
+3. 외국인 관광객 대상 콘텐츠 비율
+4. 울릉도가 벤치마킹할 포인트 3가지
+
+표로 정리해줘.</code>
+    </div>
+
+    <div class="steps-list">
+      <ol start="3">
+        <li>Scout이 인터넷을 검색하고 분석한 결과를 확인합니다.</li>
+        <li>울릉도에 적용할 수 있는 포인트를 메모합니다.</li>
+      </ol>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <table style="width:100%; border-collapse:collapse; font-size:0.82rem; margin-top:8px;">
+        <tr style="background:#f1f5f9;">
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">항목</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">제주도</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">강릉</th>
+          <th style="padding:8px; border:1px solid #e2e8f0; text-align:left;">거제도</th>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #e2e8f0; font-weight:700;">메인 슬로건</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">"All in Jeju"</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">"커피의 도시, 강릉"</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">"블루시티 거제"</td>
+        </tr>
+        <tr style="background:#fafafa;">
+          <td style="padding:8px; border:1px solid #e2e8f0; font-weight:700;">인기 콘텐츠</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">릴스/숏폼 자연경관, 카페 투어</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">카페 감성 사진, 해변 일출</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">해금강 드론 영상, 모노레일 체험</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; border:1px solid #e2e8f0; font-weight:700;">외국인 콘텐츠 비율</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">약 35%</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">약 15%</td>
+          <td style="padding:8px; border:1px solid #e2e8f0;">약 10%</td>
+        </tr>
+      </table>
+      <br>
+      <strong>울릉도 벤치마킹 포인트 3가지:</strong><br>
+      1. 제주도처럼 영문/일문 SNS 콘텐츠를 별도로 제작하여 외국인 관광객 유입 확대<br>
+      2. 강릉의 "커피 도시" 같은 명확한 브랜딩 -- 울릉도만의 키워드(예: "신비의 화산섬") 확립<br>
+      3. 거제도의 드론 영상처럼 해안 절벽, 독도 조망 등 압도적 자연경관 숏폼 콘텐츠 제작
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> Scout은 인터넷에서 최신 정보를 검색하여 분석해주는 AI입니다. 일반 Gemini/ChatGPT보다 실시간 데이터 기반의 분석에 강합니다. "울릉도 관광객 통계 2025년"처럼 최신 데이터를 물어볼 때 특히 유용합니다.
+    </div>
+
+    <div class="checkpoint">✅ 경쟁 지역 분석표가 나왔나요? 표 형태로 3개 지역 비교가 보이면 성공!</div>
+  </div>
+
+</div>
+
+<!-- ==================== 점심시간 (12:00~13:00) ==================== -->
+<div class="lunch-break" id="lunch">
+  <h3>점심시간 (12:00 ~ 13:00)</h3>
+  <p>오전에 만든 결과물을 메모장이나 문서에 정리해두세요!<br>오후에 계속 사용합니다.</p>
+</div>
+
+
+<!-- ==================== STEP 4: 나만의 GPT 앱 만들기 ==================== -->
+<div class="time-block s4" id="step4">
+  <div class="time-badge">STEP 4</div>
+  <h2>나만의 GPT 앱 만들기</h2>
+  <p class="time-meta">13:00 ~ 14:00 (60분) | 이성로 강사, 김강훈 강사</p>
+  <p class="time-desc">한 번 만들면 매번 편하게! 울릉도 관광 홍보 전용 GPT 앱을 직접 만들어 봅니다.</p>
+
+  <!-- ===== 실습 11 ===== -->
+  <div class="exercise" id="ex11">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--purple);">실습 11</span>
+      <h3>ChatGPT 접속 &amp; GPT 앱 만들기 화면 진입</h3>
+    </div>
+    <p class="ex-goal">목표: ChatGPT에서 GPT 빌더 화면까지 도달합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>주소창에 <strong>chatgpt.com</strong> 입력 후 접속</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>구글 계정 또는 이메일로 <strong>로그인</strong></span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>왼쪽 사이드바에서 <strong>"GPT 탐색"</strong> 클릭</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">4</span>
+        <span>오른쪽 상단 <strong>"만들기(+ Create)"</strong> 버튼 클릭</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">5</span>
+        <span>GPT 빌더 화면 확인 &mdash; 왼쪽: 설정 패널, 오른쪽: 미리보기 패널</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> GPT 빌더가 보이지 않으면 ChatGPT Plus 구독이 필요할 수 있습니다. 무료 계정이라면 강사에게 손을 들어 알려주세요!
+    </div>
+
+    <div class="checkpoint">✅ GPT 빌더 화면이 보이나요? (왼쪽 설정 + 오른쪽 미리보기)</div>
+  </div>
+
+  <!-- ===== 실습 12 ===== -->
+  <div class="exercise" id="ex12">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--purple);">실습 12</span>
+      <h3>울릉도 홍보 GPT 앱 만들기</h3>
+    </div>
+    <p class="ex-goal">목표: GPT 빌더에게 우리가 원하는 GPT 앱을 설명하여 자동 생성합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>GPT 빌더의 <strong>"만들기(Create)"</strong> 탭 입력창에 아래 프롬프트를 복사-붙여넣기</span>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>울릉도 관광 홍보 콘텐츠를 만들어주는 GPT를 만들어줘.
+
+역할: 울릉도 관광 마케팅 전문가
+기능:
+- SNS 홍보 문구 작성
+- 한국어/영어/일본어 번역
+- 메뉴판 제작
+- 리뷰 답글 작성
+
+울릉도 정보: 성인봉, 행남해안산책로, 봉래폭포, 도동항, 오징어, 호박엿, 산나물
+톤: 친근하고 감성적
+이름: "울릉도 관광 도우미"</code>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>Enter 키를 눌러 전송 &mdash; GPT 빌더가 자동으로 이름과 아이콘을 생성합니다</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>GPT 빌더가 "이대로 만들까요?" 라고 물으면 <strong>"네, 좋아"</strong> 라고 답변</span>
+      </div>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      GPT 빌더가 자동으로 다음을 생성합니다:<br>
+      - <strong>이름:</strong> "울릉도 관광 도우미"<br>
+      - <strong>아이콘:</strong> 울릉도/바다 테마의 아이콘 이미지<br>
+      - <strong>설명:</strong> "울릉도 관광 홍보 콘텐츠를 전문적으로 제작하는 AI 마케터입니다."<br>
+      - <strong>기본 지시사항:</strong> 자동 생성 (다음 실습에서 직접 편집합니다)
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> GPT 빌더는 대화형으로 동작합니다. 마음에 안 드는 부분이 있으면 "이름을 바꿔줘" 또는 "아이콘을 다시 만들어줘"처럼 자연어로 요청하면 됩니다.
+    </div>
+
+    <div class="checkpoint">✅ GPT 앱 이름과 아이콘이 생성되었나요?</div>
+  </div>
+
+  <!-- ===== 실습 13 ===== -->
+  <div class="exercise" id="ex13">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--purple);">실습 13</span>
+      <h3>GPT 앱 지시사항 직접 편집</h3>
+    </div>
+    <p class="ex-goal">목표: GPT 앱의 지시사항을 직접 편집하여 더 정확하고 전문적으로 만듭니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>GPT 빌더 상단의 <strong>"구성(Configure)"</strong> 탭 클릭</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span><strong>"지시사항(Instructions)"</strong> 칸의 기존 내용을 모두 선택(Ctrl+A) 후, 아래 내용으로 교체</span>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>## 역할
+너는 울릉도 관광 홍보 전문 AI 마케터야.
+
+## 핵심 기능
+1. SNS 홍보 콘텐츠 (인스타, 블로그)
+2. 다국어 번역 (한↔영↔일)
+3. 메뉴판/안내문 제작
+4. 리뷰 답글 작성
+
+## 울릉도 데이터
+- 관광지: 성인봉(984m), 행남해안산책로, 봉래폭포, 도동항, 나리분지, 독도
+- 특산물: 오징어, 호박엿, 산나물(명이나물, 부지깽이), 약소고기
+- 음식: 회정식, 물회, 오징어내장탕, 따개비밥, 산채비빔밥
+- 교통: 강릉/포항/묵호 여객선
+
+## 규칙
+- 한국어 기본, 번역 요청 시만 외국어
+- 감성적이고 친근한 톤
+- SNS에는 이모지 + 해시태그 포함
+- 음식 번역 시 로마자 병행 (예: 회정식 Hoejeongsik)</code>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span><strong>"대화 시작 메시지(Conversation starters)"</strong>에 아래 4개를 입력</span>
+      </div>
+    </div>
+
+    <div class="result-box result-info">
+      <span class="label">대화 시작 메시지 4개</span>
+      <ol style="margin-left: 18px;">
+        <li>"인스타 포스팅 만들어줘"</li>
+        <li>"메뉴판 영어로 번역해줘"</li>
+        <li>"이 리뷰에 답글 써줘"</li>
+        <li>"오늘의 홍보 이벤트 문구 만들어줘"</li>
+      </ol>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">4</span>
+        <span>기능 설정: <strong>웹 검색 ON</strong>, <strong>이미지 생성 ON</strong> (토글 스위치 켜기)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">5</span>
+        <span>오른쪽 상단 <strong>"저장(Save)"</strong> 버튼 클릭</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">6</span>
+        <span>공개 범위 선택: <strong>"나만 사용(Only me)"</strong> 선택 후 <strong>"확인"</strong></span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 지시사항은 "## 제목"으로 섹션을 나누면 GPT가 훨씬 잘 이해합니다. 나중에 원하는 내용을 추가하거나 수정할 수 있어요.
+    </div>
+
+    <div class="checkpoint">✅ GPT 앱이 저장되었나요? ("저장 완료" 메시지 확인)</div>
+  </div>
+
+  <!-- ===== 실습 14 ===== -->
+  <div class="exercise" id="ex14">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--purple);">실습 14</span>
+      <h3>내 GPT 앱 테스트하기</h3>
+    </div>
+    <p class="ex-goal">목표: 직접 만든 GPT 앱이 제대로 작동하는지 테스트합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>저장 완료 후 자동으로 대화 화면으로 전환됩니다</span>
+      </div>
+    </div>
+
+    <p style="font-weight:700; margin: 16px 0 8px; color: var(--purple);">테스트 1: 인스타 포스팅</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>우리 가게 인스타 포스팅 만들어줘.
+가게 정보: 도동항 근처 횟집, 대표 메뉴는 울릉도 회정식(3만원)과 물회(1만5천원). 바다가 보이는 창가석이 인기.</code>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>[인스타그램 포스팅]</strong><br><br>
+      도동항 바다를 창가에서 그대로 담다<br>
+      울릉도에서만 맛볼 수 있는 싱싱함!<br><br>
+      오늘의 주인공은 울릉도 회정식!<br>
+      갓 잡은 자연산 회 + 성게알 + 해조류 소반까지<br>
+      한 상 가득 차려진 바다의 선물<br><br>
+      창가석에 앉으면 도동항 푸른 바다가<br>
+      디저트처럼 펼쳐집니다<br><br>
+      회정식 30,000원 | 물회 15,000원<br><br>
+      #울릉도맛집 #도동항맛집 #울릉도회정식 #울릉도물회 #울릉도여행 #바다뷰맛집 #횟집추천 #섬여행 #동해바다 #울릉도먹방
+    </div>
+
+    <p style="font-weight:700; margin: 16px 0 8px; color: var(--purple);">테스트 2: 리뷰 답글</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>이 리뷰에 답글 써줘: "회정식 맛있었어요! 특히 성게알이 신선하고 직원분도 친절했어요. 다음에 또 올게요~"</code>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      안녕하세요, 저희 가게를 찾아주시고 따뜻한 후기까지 남겨주셔서 정말 감사합니다!<br><br>
+      성게알은 매일 아침 울릉도 바다에서 직접 공수하고 있어요. 신선하다고 느끼셨다니 보람을 느낍니다.<br><br>
+      다음에 오시면 물회도 꼭 드셔보세요! 울릉도 바다의 또 다른 매력을 느끼실 수 있을 거예요.<br>
+      다시 뵐 날을 기다리겠습니다. 감사합니다!
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 이제 이 GPT 앱은 ChatGPT 사이드바에 항상 남아 있습니다. 가게 홍보가 필요할 때마다 클릭 한 번으로 바로 사용할 수 있어요!
+    </div>
+
+    <div class="checkpoint">✅ GPT 앱이 제대로 작동하나요? (포스팅과 답글이 자연스럽게 나오면 성공!)</div>
+  </div>
+</div>
+
+
+<!-- ==================== STEP 5: Antigravity로 웹페이지 만들기 ==================== -->
+<div class="time-block s5" id="step5">
+  <div class="time-badge">STEP 5</div>
+  <h2>Antigravity로 웹페이지 만들기</h2>
+  <p class="time-meta">14:00 ~ 16:00 (120분) | 이성로 강사, 김강훈 강사</p>
+  <p class="time-desc">코딩 없이 AI에게 말로 설명해서 웹페이지를 만듭니다. 내 가게, 내 관광지만의 홍보 페이지를 직접 완성해 봅니다!</p>
+
+  <!-- ===== 실습 15 ===== -->
+  <div class="exercise" id="ex15">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--orange);">실습 15</span>
+      <h3>Antigravity 접속하기</h3>
+    </div>
+    <p class="ex-goal">목표: Antigravity에 접속하고 화면 구성을 이해합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>주소창에 <strong>antigravity.dev</strong> 입력 (또는 강사가 안내하는 주소)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span><strong>구글 계정</strong>으로 로그인</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>Antigravity 화면 구성 확인</span>
+      </div>
+    </div>
+
+    <div class="result-box result-info">
+      <span class="label">Antigravity 화면 구성</span>
+      <strong>왼쪽 패널:</strong> 프롬프트(명령) 입력창 &mdash; 여기에 원하는 페이지를 설명합니다<br>
+      <strong>오른쪽 패널:</strong> 실시간 미리보기 &mdash; AI가 만든 웹페이지가 바로 보입니다<br><br>
+      프롬프트를 입력하면 AI가 자동으로 HTML/CSS 코드를 작성하고, 오른쪽에 결과가 즉시 반영됩니다.
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> Antigravity는 코딩을 전혀 몰라도 사용할 수 있습니다. 한국어로 "이런 페이지 만들어줘"라고 말하면 AI가 알아서 만들어줍니다!
+    </div>
+
+    <div class="checkpoint">✅ Antigravity 화면이 보이나요? (왼쪽 프롬프트 입력 + 오른쪽 미리보기)</div>
+  </div>
+
+  <!-- ===== 실습 16 ===== -->
+  <div class="exercise" id="ex16">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--orange);">실습 16</span>
+      <h3>관광 홍보 웹페이지 생성</h3>
+    </div>
+    <p class="ex-goal">목표: Antigravity에 프롬프트를 입력하여 울릉도 관광 홍보 웹페이지를 생성합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>왼쪽 프롬프트 입력창에 아래 내용을 복사-붙여넣기</span>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>울릉도 관광 홍보 웹페이지를 만들어줘.
+
+페이지 구성:
+1. 히어로 섹션: "동해의 보석, 울릉도" 큰 제목 + 바다 배경 이미지
+2. 주요 관광지 4곳: 성인봉, 행남해안산책로, 봉래폭포, 도동항 (카드 형태)
+3. 맛집/특산물 소개: 회정식, 오징어내장탕, 따개비밥, 호박엿
+4. 찾아오는 길: 강릉/포항/묵호 배편 정보
+5. 문의/연락처 하단
+
+디자인: 파란색+초록색, 깔끔하고 현대적, 사진이 많은 느낌, 반응형</code>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>Enter 또는 전송 버튼 클릭 후 <strong>30초~1분 기다리기</strong> (페이지 생성 중)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>오른쪽 미리보기 패널에서 결과 확인</span>
+      </div>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      오른쪽 미리보기에 다음과 같은 웹페이지가 나타납니다:<br><br>
+      <strong>1. 히어로 영역:</strong> "동해의 보석, 울릉도" 큰 제목 + 바다/섬 배경 이미지 + 반투명 오버레이<br>
+      <strong>2. 관광지 카드:</strong> 성인봉, 행남해안산책로, 봉래폭포, 도동항 &mdash; 각각 이미지+설명이 있는 카드<br>
+      <strong>3. 맛집 섹션:</strong> 회정식, 오징어내장탕, 따개비밥, 호박엿 소개<br>
+      <strong>4. 교통 안내:</strong> 강릉/포항/묵호 출발 배편 표 형태<br>
+      <strong>5. 하단 연락처:</strong> 전화번호, 주소, 링크 등
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 페이지가 마음에 안 들어도 걱정 마세요! 다음 실습에서 원하는 대로 수정할 수 있습니다. 처음에는 전체 뼈대만 잘 나오면 성공입니다.
+    </div>
+
+    <div class="checkpoint">✅ 웹페이지가 생성되었나요? (미리보기에 5개 섹션이 보이면 성공!)</div>
+  </div>
+
+  <!-- ===== 실습 17 ===== -->
+  <div class="exercise" id="ex17">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--orange);">실습 17</span>
+      <h3>웹페이지 수정하기</h3>
+    </div>
+    <p class="ex-goal">목표: 생성된 웹페이지를 내 정보로 수정합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>왼쪽 프롬프트 입력창에 아래 내용을 복사-붙여넣기한 후, <strong class="fill-highlight">[대괄호]</strong> 부분을 내 정보로 수정</span>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>수정해줘:
+1. 히어로 제목을 "<strong class="fill-blank">[내 가게/관광지 이름]</strong>"으로 바꿔줘
+2. 맛집 섹션에 우리 가게 정보 추가: <strong class="fill-blank">[가게이름, 대표메뉴, 가격]</strong>
+3. 페이지 하단에 전화번호 <strong class="fill-blank">[번호]</strong>와 영업시간 <strong class="fill-blank">[시간]</strong> 추가
+4. 색상을 <strong class="fill-blank">[원하는 색]</strong> 계열로 변경</code>
+    </div>
+
+    <div class="result-box result-info">
+      <span class="label">입력 예시</span>
+      수정해줘:<br>
+      1. 히어로 제목을 "해녀식당 - 울릉도 바다의 맛"으로 바꿔줘<br>
+      2. 맛집 섹션에 우리 가게 정보 추가: 해녀식당, 회정식 3만원, 물회 1만5천원, 오징어내장탕 1만2천원<br>
+      3. 페이지 하단에 전화번호 054-791-XXXX와 영업시간 매일 10:00~21:00 추가<br>
+      4. 색상을 남색+하늘색 계열로 변경
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>수정 결과를 오른쪽 미리보기에서 확인</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>마음에 안 드는 부분이 있으면 추가로 수정 요청 (예: "글씨를 더 크게 해줘", "사진 위치를 바꿔줘")</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 수정은 몇 번이든 할 수 있습니다! "제목 색상 빨간색으로", "배경 이미지 밝게", "글자 크기 키워줘" 등 자유롭게 요청하세요.
+    </div>
+
+    <div class="checkpoint">✅ 원하는 대로 수정되었나요? (내 정보가 반영된 페이지가 보이면 성공!)</div>
+  </div>
+
+  <!-- ===== 실습 18 ===== -->
+  <div class="exercise" id="ex18">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--orange);">실습 18</span>
+      <h3>(심화) 내 가게 전용 페이지 만들기</h3>
+    </div>
+    <p class="ex-goal">목표: 처음부터 내 가게/관광지 전용 홍보 웹페이지를 직접 만듭니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>아래 프롬프트를 복사한 후, <strong class="fill-highlight">[대괄호]</strong> 부분을 모두 내 정보로 채워서 입력</span>
+      </div>
+    </div>
+
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code><strong class="fill-blank">[내 가게 이름]</strong> 전용 홍보 웹페이지를 만들어줘.
+
+가게 정보:
+- 상호: <strong class="fill-blank">[      ]</strong>
+- 업종: <strong class="fill-blank">[      ]</strong>
+- 위치: <strong class="fill-blank">[      ]</strong>
+- 대표 메뉴/서비스: <strong class="fill-blank">[      ]</strong>
+- 가격: <strong class="fill-blank">[      ]</strong>
+- 영업시간: <strong class="fill-blank">[      ]</strong>
+- 전화번호: <strong class="fill-blank">[      ]</strong>
+- 특징/자랑: <strong class="fill-blank">[      ]</strong>
+
+페이지 구성:
+1. 메인 배너 (가게 이름 + 한 줄 소개)
+2. 대표 메뉴/서비스 소개 (사진+설명 카드 형태)
+3. 영어/일본어 메뉴판 포함
+4. 찾아오는 길 + 지도
+5. 예약/문의 (전화번호, 카카오톡)
+6. 고객 후기 섹션
+
+디자인: 깔끔, 모바일 반응형, <strong class="fill-blank">[원하는 분위기]</strong></code>
+    </div>
+
+    <div class="result-box result-info">
+      <span class="label">작성 예시 - 이렇게 채워보세요</span>
+      <strong>해녀식당</strong> 전용 홍보 웹페이지를 만들어줘.<br><br>
+      가게 정보:<br>
+      - 상호: <strong>해녀식당</strong><br>
+      - 업종: <strong>울릉도 향토 음식점</strong><br>
+      - 위치: <strong>울릉군 울릉읍 도동리 123-4, 도동항에서 도보 3분</strong><br>
+      - 대표 메뉴/서비스: <strong>회정식, 물회, 오징어내장탕, 따개비밥</strong><br>
+      - 가격: <strong>회정식 3만원, 물회 1.5만원, 오징어내장탕 1.2만원, 따개비밥 1만원</strong><br>
+      - 영업시간: <strong>매일 10:00~21:00 (매주 수요일 휴무)</strong><br>
+      - 전화번호: <strong>054-791-XXXX</strong><br>
+      - 특징/자랑: <strong>30년 전통, 바다 전망 창가석, 자연산 횟감만 사용</strong><br><br>
+      (이하 페이지 구성, 디자인은 그대로 두고 분위기만: <strong>따뜻하고 정감있는 한식 느낌</strong>)
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>30초~1분 기다린 후 미리보기에서 결과 확인</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span>수정할 부분이 있으면 자유롭게 추가 요청</span>
+      </div>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      완성된 웹페이지에 다음이 포함됩니다:<br><br>
+      <strong>메인 배너:</strong> "해녀식당 - 울릉도 바다의 정성을 담은 30년 전통 한 상"<br>
+      <strong>메뉴 카드:</strong> 회정식/물회/오징어내장탕/따개비밥 사진+설명+가격<br>
+      <strong>다국어 메뉴판:</strong> 한국어/영어/일본어 3개 국어 메뉴 표<br>
+      <strong>찾아오는 길:</strong> 도동항에서의 위치 안내 + 지도<br>
+      <strong>예약/문의:</strong> 전화번호, 카카오톡 링크<br>
+      <strong>고객 후기:</strong> 리뷰 카드 형태로 표시
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 가게가 없으셔도 괜찮습니다! 울릉도의 관광지, 숙박업소, 체험 프로그램 등 홍보하고 싶은 것이면 무엇이든 가능합니다. 예: "울릉도 스쿠버다이빙 체험 소개 페이지", "나리분지 민박 안내 페이지" 등
+    </div>
+
+    <div class="checkpoint">✅ 내 가게 웹페이지가 완성되었나요? (6개 섹션이 모두 포함되어 있으면 성공!)</div>
+  </div>
+
+  <!-- ===== 실습 19 ===== -->
+  <div class="exercise" id="ex19">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--orange);">실습 19</span>
+      <h3>웹페이지 배포하기 (공유 링크 만들기)</h3>
+    </div>
+    <p class="ex-goal">목표: 완성한 웹페이지를 인터넷에 공개하고, 스마트폰으로 확인합니다.</p>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>Antigravity 화면 상단의 <strong>"배포(Publish)"</strong> 또는 <strong>"공유(Share)"</strong> 버튼 클릭</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>생성된 <strong>URL 복사</strong> (Ctrl+C 또는 복사 버튼)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span><strong>스마트폰</strong>에서 복사한 URL을 카카오톡 "나에게 보내기"로 전송 후 접속</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">4</span>
+        <span>스마트폰에서 페이지가 잘 보이는지 확인 (반응형 확인)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">5</span>
+        <span><strong>카카오톡</strong>으로 옆 사람에게 링크 공유하기</span>
+      </div>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과</span>
+      <strong>PC 화면:</strong> 넓은 화면에 카드들이 가로로 나란히 배치<br>
+      <strong>스마트폰 화면:</strong> 카드들이 세로로 쌓여서 보기 편하게 자동 조정<br><br>
+      이 URL은 계속 유효하므로 카카오톡 프로필, 네이버 스마트플레이스, 명함 등에 넣을 수 있습니다!
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 배포된 웹페이지는 전 세계 누구나 접속할 수 있습니다. 외국인 관광객도 이 링크로 우리 가게를 확인할 수 있어요!
+    </div>
+
+    <div class="checkpoint">✅ 스마트폰에서 내 웹페이지가 보이나요? (PC와 스마트폰 모두 정상이면 성공!)</div>
+  </div>
+</div>
+
+
+<!-- ==================== STEP 6: 조별 발표 & 마무리 ==================== -->
+<div class="time-block s6" id="step6">
+  <div class="time-badge">STEP 6</div>
+  <h2>조별 발표 &amp; 마무리</h2>
+  <p class="time-meta">16:00 ~ 18:00 (120분) | 전체 강사진</p>
+  <p class="time-desc">오늘 배운 내용을 정리하고, 조별로 결과물을 공유합니다.</p>
+
+  <!-- ===== 실습 20: 발표 준비 ===== -->
+  <div class="exercise" id="ex20">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--accent);">실습 20</span>
+      <h3>발표 준비</h3>
+    </div>
+    <p class="ex-goal">목표: 조별(5인 1조, 총 10조)로 모여 오늘의 베스트 결과물을 선정하고 발표를 준비합니다.</p>
+    <p class="time-meta" style="margin-bottom: 16px;">16:00 ~ 16:30 (30분)</p>
+
+    <div class="presentation-prep">
+      <h4>발표 결과물 후보 (가장 잘 된 것 1개 선택)</h4>
+      <div class="prep-checklist">
+        <label><input type="checkbox"> <span>홍보 문구 (오전 실습 4에서 만든 SNS 포스팅)</span></label>
+        <label><input type="checkbox"> <span>3개국어 메뉴판 (오전 실습 6에서 만든 번역 결과)</span></label>
+        <label><input type="checkbox"> <span>GPT 앱 (실습 12~14에서 만든 "울릉도 관광 도우미")</span></label>
+        <label><input type="checkbox"> <span>Antigravity 웹페이지 (실습 16~19에서 만든 홍보 페이지)</span></label>
+      </div>
+
+      <h4 style="margin-top: 20px;">발표 내용 정리 (조별로 5분)</h4>
+      <div class="prep-checklist">
+        <label><input type="checkbox"> <span><strong>1. 결과물 소개</strong> &mdash; 화면 공유하면서 "이런 걸 만들었습니다" 설명</span></label>
+        <label><input type="checkbox"> <span><strong>2. 사용한 프롬프트</strong> &mdash; "이런 프롬프트를 입력했더니 이런 결과가 나왔어요"</span></label>
+        <label><input type="checkbox"> <span><strong>3. 가장 유용했던 기능</strong> &mdash; "번역 기능이 제일 편했어요" 등 소감</span></label>
+        <label><input type="checkbox"> <span><strong>4. 활용 계획</strong> &mdash; "앞으로 이렇게 활용할 예정입니다"</span></label>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> 발표가 어려우시면 화면만 보여주고 한두 마디만 하셔도 충분합니다! 결과물 자체가 이미 훌륭한 발표 자료입니다.
+    </div>
+
+    <div class="checkpoint">✅ 발표 결과물 1개를 선택하고, 발표 순서를 정했나요?</div>
+  </div>
+
+  <!-- ===== 조별 발표 ===== -->
+  <div class="exercise" id="presentation">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--accent);">발표</span>
+      <h3>조별 발표</h3>
+    </div>
+    <p class="time-meta" style="margin-bottom: 16px;">16:30 ~ 17:30 (60분) | 각 조 5분 발표 + 2분 피드백</p>
+
+    <div class="presentation-schedule">
+      <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
+        <thead>
+          <tr style="background: #f1f5f9;">
+            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border);">순서</th>
+            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border);">조</th>
+            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border);">시간</th>
+            <th style="padding: 10px 14px; text-align: left; border-bottom: 2px solid var(--border);">비고</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">1</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">1조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">16:30~16:37</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">2</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">2조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">16:37~16:44</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">3</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">3조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">16:44~16:51</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">4</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">4조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">16:51~16:58</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">5</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">5조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">16:58~17:05</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">6</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">6조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">17:05~17:12</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">7</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">7조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">17:12~17:19</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">8</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">8조</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">17:19~17:26</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">발표 5분 + 피드백 2분</td></tr>
+          <tr><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);">-</td><td style="padding: 8px 14px; border-bottom: 1px solid var(--border);" colspan="3"><strong>강사진 총평 (17:26~17:30)</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box" style="margin-top: 16px;">
+      <strong>TIP:</strong> 10조까지 있지만 시간 관계상 8조까지 발표하고, 나머지 2조는 총평 시간에 간단히 소개합니다. 발표 순서는 조별로 협의하여 자유롭게 진행합니다.
+    </div>
+  </div>
+
+  <!-- ===== 2회차 안내 & 마무리 ===== -->
+  <div class="exercise" id="wrapup">
+    <div class="ex-header">
+      <span class="ex-num" style="background: var(--accent);">마무리</span>
+      <h3>2회차 안내 &amp; 마무리</h3>
+    </div>
+    <p class="time-meta" style="margin-bottom: 16px;">17:30 ~ 18:00 (30분)</p>
+
+    <!-- 2회차 안내 -->
+    <div class="result-box result-info" style="margin-bottom: 20px;">
+      <span class="label">2회차 예고</span>
+      <strong>주제:</strong> "온라인 플랫폼 활용 홍보 전략 실습"<br>
+      네이버 스마트플레이스, 구글 비즈니스 프로필, 인스타그램 등<br>
+      실제 플랫폼에 등록하고 운영하는 방법을 실습합니다.
+    </div>
+
+    <!-- 숙제 체크리스트 -->
+    <h4 style="margin-bottom: 12px;">2회차까지 숙제</h4>
+    <div class="homework-checklist">
+      <label class="homework-item">
+        <input type="checkbox">
+        <div>
+          <strong>숙제 1:</strong> 오늘 만든 GPT 앱으로 실제 SNS 포스팅 1개 올리기
+          <span class="homework-hint">인스타그램, 블로그, 카카오스토리 등 어디든 OK</span>
+        </div>
+      </label>
+      <label class="homework-item">
+        <input type="checkbox">
+        <div>
+          <strong>숙제 2:</strong> 네이버 스마트플레이스에 영문 정보 등록하기
+          <span class="homework-hint">smartplace.naver.com 접속 &rarr; 내 업체 &rarr; 영문 정보 추가</span>
+        </div>
+      </label>
+      <label class="homework-item">
+        <input type="checkbox">
+        <div>
+          <strong>숙제 3:</strong> Antigravity 웹페이지 URL을 카카오톡 프로필에 등록하기
+          <span class="homework-hint">카카오톡 &rarr; 프로필 편집 &rarr; 링크 추가</span>
+        </div>
+      </label>
+    </div>
+
+    <!-- 강사 연락처 -->
+    <div class="contact-card" style="margin-top: 24px;">
+      <h4>강사 연락처</h4>
+      <p style="font-size: 0.9rem; color: var(--text-light); margin-bottom: 12px;">궁금한 점이 있으시면 언제든 연락주세요!</p>
+      <div class="contact-grid">
+        <div class="contact-item">
+          <strong>김병철 교수</strong>
+          <span>교육 총괄</span>
+        </div>
+        <div class="contact-item">
+          <strong>이성로 강사</strong>
+          <span>실습 문의</span>
+        </div>
+        <div class="contact-item">
+          <strong>김강훈 강사</strong>
+          <span>기술 지원</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 설문조사 -->
+    <div class="survey-box" style="margin-top: 24px;">
+      <h4>교육 만족도 설문조사</h4>
+      <p style="font-size: 0.9rem; margin-bottom: 12px;">오늘 교육이 어떠셨나요? 소중한 의견을 남겨주세요.</p>
+      <a href="#" class="survey-btn">설문조사 참여하기</a>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 오늘의 핵심 요약 ==================== -->
+<div class="formula" id="summary" style="margin-top: 40px;">
+  <div class="formula-text">오늘의 핵심 요약</div>
+  <div class="formula-desc" style="text-align: left; max-width: 560px; margin: 16px auto 0; font-size: 0.95rem;">
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+      <span style="background: var(--primary); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">1</span>
+      <span><strong>프롬프트</strong> = 역할 + 맥락 + 구체적 지시</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+      <span style="background: var(--secondary); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">2</span>
+      <span><strong>Gemini</strong> = 홍보 문구, 번역, 이미지 생성</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+      <span style="background: var(--orange); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">3</span>
+      <span><strong>GPT 앱</strong> = 한 번 만들면 매번 편하게 사용</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
+      <span style="background: var(--purple); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">4</span>
+      <span><strong>Antigravity</strong> = 코딩 없이 웹페이지 제작</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 10px;">
+      <span style="background: var(--accent); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">5</span>
+      <span><strong>AI 음성 통역</strong> = 외국인 응대에 바로 활용</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ==================== 유용한 링크 모음 ==================== -->
+<div class="links-section" id="links" style="margin-top: 40px;">
+  <h3 style="font-size: 1.3rem; margin-bottom: 20px; text-align: center;">유용한 링크 모음</h3>
+  <div class="link-grid">
+    <a href="https://gemini.google.com" target="_blank" class="link-card">
+      <div class="link-icon" style="background: var(--secondary);">G</div>
+      <div class="link-info">
+        <strong>Gemini</strong>
+        <span>gemini.google.com</span>
+      </div>
+    </a>
+    <a href="https://chatgpt.com" target="_blank" class="link-card">
+      <div class="link-icon" style="background: var(--purple);">C</div>
+      <div class="link-info">
+        <strong>ChatGPT</strong>
+        <span>chatgpt.com</span>
+      </div>
+    </a>
+    <a href="https://antigravity.dev" target="_blank" class="link-card">
+      <div class="link-icon" style="background: var(--orange);">A</div>
+      <div class="link-info">
+        <strong>Antigravity</strong>
+        <span>antigravity.dev</span>
+      </div>
+    </a>
+    <a href="prompt-guide.html" class="link-card">
+      <div class="link-icon" style="background: var(--primary);">P</div>
+      <div class="link-info">
+        <strong>프롬프트 가이드</strong>
+        <span>prompt-guide.html</span>
+      </div>
+    </a>
+    <a href="example.html" class="link-card">
+      <div class="link-icon" style="background: var(--accent);">E</div>
+      <div class="link-info">
+        <strong>완성 예시 페이지</strong>
+        <span>example.html</span>
+      </div>
+    </a>
+    <a href="https://smartplace.naver.com" target="_blank" class="link-card">
+      <div class="link-icon" style="background: #03c75a;">N</div>
+      <div class="link-info">
+        <strong>네이버 스마트플레이스</strong>
+        <span>smartplace.naver.com</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p>울릉군 글로벌 생태관광 전문인재 양성 교육 (1회차) | 2026.4.18</p>
+    <p style="margin-top:8px;"><a href="index.html">교육 가이드</a> · <a href="prompt-guide.html">프롬프트 가이드</a> · <a href="example.html">완성 예시</a></p>
+  </div>
+</footer>
+
+<script>
+function copyPrompt(btn) {
+  const code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.innerText).then(() => {
+    btn.textContent = '완료!';
+    setTimeout(() => { btn.textContent = '복사'; }, 1500);
+  }).catch(() => {
+    const range = document.createRange();
+    range.selectNode(code);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+    btn.textContent = '완료!';
+    setTimeout(() => { btn.textContent = '복사'; }, 1500);
+  });
+}
+
+// Progress bar
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  const p = (window.scrollY / h) * 100;
+  document.getElementById('progressBar').style.width = p + '%';
+});
+
+// Active nav highlight
+const sections = document.querySelectorAll('.time-block, .lunch-break');
+const navLinks = document.querySelectorAll('.sticky-nav a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
