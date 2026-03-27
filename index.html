@@ -184,6 +184,7 @@ footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: c
   <a href="#timetable" title="시간표"></a>
   <a href="#scenarios" title="실전 시나리오"></a>
   <a href="#prompt-master" title="프롬프트 마스터"></a>
+  <a href="#digital-tools" title="디지털 도구"></a>
   <a href="#scout-section" title="Scout 활용"></a>
   <a href="#templates" title="템플릿"></a>
   <a href="#tools" title="도구 소개"></a>
@@ -218,6 +219,7 @@ footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: c
   <ul>
     <li><a href="#flow">교육 흐름</a></li>
     <li><a href="#timetable">상세 시간표</a></li>
+    <li><a href="#digital-tools">디지털 도구 세팅</a></li>
     <li><a href="#scenarios">실전 시나리오</a></li>
     <li><a href="#prompt-master">프롬프트 마스터</a></li>
     <li><a href="#scout-section">Scout 활용</a></li>
@@ -572,6 +574,244 @@ footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: c
       </div>
     </div>
   </div><!-- /STEP 2 card -->
+
+  <!-- ===== 실무 디지털 도구 세팅 ===== -->
+  <div class="card" id="digital-tools" style="border-left: 5px solid var(--accent);">
+    <div class="step-header">
+      <span class="step-badge" style="background: var(--accent);">BONUS</span>
+      <div>
+        <h3>실무 디지털 도구 세팅 가이드</h3>
+        <p style="font-size:0.85rem; color:var(--text-light);">STEP 2 실습 중 | 외국인 관광객 맞이를 위한 필수 세팅</p>
+      </div>
+    </div>
+    <p style="margin-bottom:20px;">AI 콘텐츠 제작과 함께, 외국인 관광객을 맞이하기 위한 <strong>실무 디지털 도구</strong>도 함께 세팅합니다. 요즘은 이런 것도 쉽게 할 수 있어요!</p>
+
+    <!-- 도구 1: 네이버 지도 영어 세팅 -->
+    <div class="sub-step">
+      <span class="ss-num" style="background: var(--accent);">1</span>
+      <div class="ss-content">
+        <h4>네이버 지도 영어 세팅</h4>
+        <p style="font-size:0.9rem;">외국인 관광객이 내 가게를 영어로 검색할 수 있게 만들어봅니다.</p>
+        <div class="tip-box" style="background: #fef3c7; border-color: var(--accent);">
+          <strong>왜 중요한가요?</strong> 외국인 관광객은 구글 맵 또는 네이버 맵 영어 버전으로 식당/숙소를 검색합니다. 영어 정보가 없으면 검색 자체가 안 됩니다!
+        </div>
+        <p style="font-weight:700; margin-top:12px;">따라하기 (5분 소요)</p>
+        <div class="result-box result-anti">
+          <span class="label">세팅 방법</span>
+          <strong>① 네이버 지도 앱 접속</strong><br>
+          → 내 업체 검색 → "정보 수정 제안" 클릭<br><br>
+          <strong>② 영문 업체명 등록</strong><br>
+          → 업체명 영문 표기 추가 (예: "울릉도 해녀의집" → "Ulleung Haenyeo House")<br><br>
+          <strong>③ 영문 주소 확인</strong><br>
+          → 도로명 주소 영문 자동 표기 여부 확인<br><br>
+          <strong>④ 영문 메뉴/서비스 정보 추가</strong><br>
+          → 대표 메뉴를 영어로 추가 입력
+        </div>
+        <div class="prompt-box">
+          <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+          <code>내 식당의 네이버 지도 영어 정보를 작성해줘.
+
+가게 정보:
+- 상호명: 울릉도 해녀의집
+- 주소: 경상북도 울릉군 울릉읍 도동리 123-4
+- 업종: 해산물 전문점
+- 대표 메뉴: 회정식(35,000원), 오징어내장탕(12,000원), 따개비밥(12,000원)
+- 영업시간: 매일 10:00~21:00
+
+다음을 만들어줘:
+1. 영문 상호명
+2. 영문 주소
+3. 영문 메뉴 설명 (각 메뉴 한 줄 설명 포함)
+4. 영문 소개글 (3줄)
+5. 일본어 소개글 (3줄)</code>
+        </div>
+        <div class="result-box result-gemini">
+          <span class="label">Gemini 예상 출력</span>
+          <strong>1. 영문 상호명:</strong> Ulleung Haenyeo House (海女の家)<br><br>
+          <strong>2. 영문 주소:</strong> 123-4, Dodong-ri, Ulleung-eup, Ulleung-gun, Gyeongsangbuk-do<br><br>
+          <strong>3. 영문 메뉴:</strong><br>
+          • Ulleung Sashimi Set (₩35,000) - Fresh wild-caught sashimi platter with local mountain herb sides<br>
+          • Squid Intestine Stew (₩12,000) - Rich, savory stew made with Ulleung's famous squid<br>
+          • Barnacle Rice (₩12,000) - Unique island delicacy of seasoned rice with fresh barnacles<br><br>
+          <strong>4. 영문 소개글:</strong><br>
+          Ulleung Haenyeo House is a family-run seafood restaurant on Ulleung Island, known for the freshest catch from the East Sea. Our signature dish, the Ulleung Sashimi Set, features wild-caught fish served with local mountain herbs. Open daily 10AM-9PM — come taste the real flavors of this hidden island gem!<br><br>
+          <strong>5. 일본어 소개글:</strong><br>
+          鬱陵島の海女の家は、東海で獲れた新鮮な海産物が自慢の家族経営レストランです。看板メニューの鬱陵刺身定食は、天然の刺身に地元の山菜を添えてお出しします。毎日10時〜21時営業。隠れた島のグルメをぜひご堪能ください！
+        </div>
+        <div class="tip-box">
+          <strong>TIP:</strong> Gemini가 만들어준 영문/일본어 텍스트를 복사해서 네이버 지도 "정보 수정 제안"에 그대로 붙여넣기하면 끝! 5분이면 외국인 검색에 내 가게가 노출됩니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 도구 2: 네이버 스마트플레이스 세팅 -->
+    <div class="sub-step">
+      <span class="ss-num" style="background: var(--accent);">2</span>
+      <div class="ss-content">
+        <h4>네이버 스마트플레이스 세팅</h4>
+        <p style="font-size:0.9rem;">네이버 검색에서 내 업체가 예쁘게 보이도록 스마트플레이스를 등록합니다.</p>
+        <div class="result-box result-anti">
+          <span class="label">세팅 방법</span>
+          <strong>① 스마트플레이스 접속</strong><br>
+          → <strong>smartplace.naver.com</strong> → 네이버 로그인<br><br>
+          <strong>② "업체 신규 등록" 클릭</strong><br>
+          → 업체명, 주소, 전화번호, 업종 입력<br><br>
+          <strong>③ 사진 등록 (최소 5장)</strong><br>
+          → 외관, 내부, 대표메뉴, 메뉴판, 주차장 사진<br>
+          → <em>Gemini로 만든 홍보 이미지도 활용 가능!</em><br><br>
+          <strong>④ 메뉴 정보 등록</strong><br>
+          → 메뉴명, 가격, 사진, 설명 입력<br><br>
+          <strong>⑤ 소식/이벤트 작성</strong><br>
+          → 정기적으로 "오늘의 메뉴", "시즌 이벤트" 소식 게시
+        </div>
+        <div class="prompt-box">
+          <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+          <code>네이버 스마트플레이스에 등록할 업체 소개글을 작성해줘.
+
+업체 정보:
+- 상호명: 울릉도 해녀의집
+- 업종: 해산물 전문식당
+- 위치: 도동항 근처
+- 특징: 30년 전통, 자연산 횟감, 울릉도 특산물 반찬
+- 대표 메뉴: 회정식, 오징어내장탕, 따개비밥
+
+작성해줘:
+1. 업체 소개글 (200자 내외, 키워드 포함)
+2. 대표 메뉴 3개 설명 (각 50자)
+3. 네이버 블로그 소식 게시글 1개 (시즌 이벤트용)</code>
+        </div>
+        <div class="result-box result-gemini">
+          <span class="label">Gemini 예상 출력</span>
+          <strong>1. 업체 소개글:</strong><br>
+          도동항에서 도보 3분! 30년 전통의 울릉도 해녀의집은 매일 아침 동해에서 건져 올린 자연산 횟감으로 회정식을 준비합니다. 울릉도 오징어 내장탕, 따개비밥 등 섬에서만 맛볼 수 있는 특별한 메뉴와 정성 가득한 울릉도 산나물 반찬이 함께합니다. 울릉도 맛집을 찾으신다면 꼭 방문해보세요!<br><br>
+          <strong>2. 대표 메뉴 설명:</strong><br>
+          • 회정식(35,000원): 매일 아침 자연산 횟감 6종 + 울릉도 산나물 반찬 12가지<br>
+          • 오징어내장탕(12,000원): 울릉도 명물! 싱싱한 오징어 내장으로 끓인 진한 국물<br>
+          • 따개비밥(12,000원): 울릉도에서만 맛볼 수 있는 바다 향 가득한 솥밥<br><br>
+          <strong>3. 소식 게시글:</strong><br>
+          [봄맞이 특선] 울릉도 봄나물 회정식 출시!<br>
+          봄바람과 함께 돌아온 울릉도 봄나물! 냉이, 달래, 명이나물로 차린 특별한 봄 회정식을 만나보세요. 4월 한 달간 회정식 주문 시 울릉도 호박엿 서비스! 🌸
+        </div>
+        <div class="tip-box">
+          <strong>TIP:</strong> 스마트플레이스에 "소식"을 자주 올리면 네이버 검색에서 상위 노출됩니다. Gemini로 매주 새로운 소식 글을 만들어 올려보세요!
+        </div>
+      </div>
+    </div>
+
+    <!-- 도구 3: AI 음성 통역 모드 -->
+    <div class="sub-step">
+      <span class="ss-num" style="background: var(--accent);">3</span>
+      <div class="ss-content">
+        <h4>AI 음성 통역 모드 활용</h4>
+        <p style="font-size:0.9rem;">스마트폰 하나로 외국인 관광객과 실시간 대화하는 방법을 배웁니다.</p>
+        <div class="tip-box" style="background: #fef3c7; border-color: var(--accent);">
+          <strong>이런 상황에서 사용하세요!</strong> 외국인 관광객이 갑자기 들어왔는데 영어/일본어가 안 될 때! → 스마트폰 AI 앱으로 실시간 통역이 가능합니다.
+        </div>
+
+        <h4 style="margin-top:16px;">방법 1: Gemini Live (구글 제미나이)</h4>
+        <div class="result-box result-gemini">
+          <span class="label">사용 방법</span>
+          <strong>① Gemini 앱 실행</strong> → 하단의 <strong>🎙️ 마이크 버튼</strong> 길게 누르기<br><br>
+          <strong>② "Gemini Live" 모드 진입</strong><br>
+          → 음성으로 대화 가능한 상태가 됩니다<br><br>
+          <strong>③ 이렇게 말하세요:</strong><br>
+          "지금부터 한국어-영어 통역사 역할을 해줘. 내가 한국어로 말하면 영어로 통역하고, 상대방이 영어로 말하면 한국어로 통역해줘."<br><br>
+          <strong>④ 실시간 대화 시작!</strong><br>
+          → 한국어로 말하면 영어로 통역해줍니다<br>
+          → 외국인이 영어로 말하면 한국어로 통역해줍니다
+        </div>
+
+        <h4 style="margin-top:16px;">방법 2: ChatGPT 음성 모드</h4>
+        <div class="result-box" style="background: #f0fdf4; border-color: #86efac; border-left: 4px solid #86efac;">
+          <span class="label" style="color: #16a34a;">사용 방법</span>
+          <strong>① ChatGPT 앱 실행</strong> → 하단의 <strong>🎧 헤드폰 아이콘</strong> 터치<br><br>
+          <strong>② 음성 대화 모드 진입</strong><br>
+          → "한국어와 영어 동시통역을 해줘"라고 말하기<br><br>
+          <strong>③ 바로 통역 시작!</strong><br>
+          → 번갈아가며 한국어/영어로 대화하면 자동 통역<br><br>
+          <strong>💡 일본어도 가능!</strong><br>
+          → "한국어, 영어, 일본어 3개 국어 통역 해줘"라고 하면 3개 언어 동시 통역!
+        </div>
+
+        <div class="ba-grid">
+          <div class="before">
+            <span class="ba-label">BEFORE 😰</span>
+            외국인: "Excuse me, what's good here?"<br>
+            나: "어... 음... (당황)"
+          </div>
+          <div class="after">
+            <span class="ba-label">AFTER 😊</span>
+            나 → AI: "회정식이 제일 인기 많아요"<br>
+            AI → 외국인: "Our sashimi set is the most popular!"<br>
+            외국인 → AI: "Does it contain shellfish?"<br>
+            AI → 나: "조개류가 들어있나요?"
+          </div>
+        </div>
+        <div class="tip-box">
+          <strong>TIP:</strong> Gemini Live와 ChatGPT 음성 모드 모두 무료로 사용 가능합니다! 미리 "통역사 역할"이라고 설정해두면 더 정확한 통역이 됩니다.
+        </div>
+      </div>
+    </div>
+
+    <!-- 도구 4: AI 외국어 메뉴판 만들기 -->
+    <div class="sub-step">
+      <span class="ss-num" style="background: var(--accent);">4</span>
+      <div class="ss-content">
+        <h4>AI로 외국어 메뉴판 만들기</h4>
+        <p style="font-size:0.9rem;">Gemini를 활용해 인쇄 가능한 3개국어 메뉴판을 바로 만들어봅니다.</p>
+        <div class="prompt-box">
+          <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+          <code>내 식당 메뉴판을 한국어, 영어, 일본어 3개 국어로 만들어줘.
+
+가게 이름: 울릉도 해녀의집
+메뉴:
+1. 회정식 - 35,000원 (자연산 횟감 + 산나물 반찬)
+2. 오징어내장탕 - 12,000원 (울릉도 명물 오징어 내장 국물)
+3. 홍합밥 - 10,000원 (울릉도 홍합으로 지은 솥밥)
+4. 따개비밥 - 12,000원 (바위 따개비로 지은 밥)
+5. 산채비빔밥 - 9,000원 (울릉도 산나물 비빔밥)
+6. 물회 - 15,000원 (시원한 해산물 물회)
+
+조건:
+- 각 메뉴마다 맛과 특징을 한 줄로 설명
+- 외국인이 이해하기 쉽게 비유 포함 (예: "Korean seafood rice bowl")
+- 알레르기 정보 포함 (해산물, 갑각류 등)
+- 표 형태로 정리
+- 메뉴판 하단에 "WiFi 비밀번호", "카드 결제 가능" 안내 영어/일본어 포함</code>
+        </div>
+        <div class="result-box result-gemini">
+          <span class="label">Gemini 예상 출력 (일부)</span>
+          <strong>🍽️ 울릉도 해녀의집 MENU</strong><br>
+          <strong>Ulleung Haenyeo House | 鬱陵島 海女の家</strong><br><br>
+          <table style="width:100%; font-size:0.85rem; border-collapse:collapse;">
+            <tr style="background:#f1f5f9;">
+              <td style="padding:6px; border:1px solid #e2e8f0;"><strong>회정식</strong><br>Ulleung Sashimi Set<br>鬱陵刺身定食</td>
+              <td style="padding:6px; border:1px solid #e2e8f0;">₩35,000</td>
+              <td style="padding:6px; border:1px solid #e2e8f0;">자연산 횟감 6종 + 산나물 반찬 12가지<br><em>Fresh wild-caught sashimi platter with 12 mountain herb side dishes</em><br><em>天然刺身6種盛り＋山菜おかず12品</em></td>
+            </tr>
+            <tr>
+              <td style="padding:6px; border:1px solid #e2e8f0;"><strong>오징어내장탕</strong><br>Squid Intestine Stew<br>イカ内臓チゲ</td>
+              <td style="padding:6px; border:1px solid #e2e8f0;">₩12,000</td>
+              <td style="padding:6px; border:1px solid #e2e8f0;">울릉도 명물! 진한 오징어 내장 육수<br><em>Ulleung Island specialty — rich & savory squid stew</em><br><em>鬱陵島名物！濃厚イカの旨味スープ</em></td>
+            </tr>
+          </table>
+          <br>
+          ⚠️ 알레르기 안내 | Allergy Info | アレルギー情報<br>
+          해산물(갑각류, 조개류), 대두 포함 가능<br>
+          <em>May contain: seafood, shellfish, crustaceans, soy</em><br>
+          <em>海産物（甲殻類・貝類）、大豆を含む場合があります</em><br><br>
+          📶 WiFi: haenyeo_free | 💳 Card OK / カード可
+        </div>
+        <div class="tip-box">
+          <strong>TIP - 이걸로 바로 메뉴판을 만들 수 있어요!</strong><br>
+          1. Gemini 결과를 <strong>복사</strong>하기<br>
+          2. <strong>한글/워드</strong>에 붙여넣기<br>
+          3. 예쁘게 편집 후 <strong>인쇄</strong>하면 끝!<br>
+          또는 Antigravity에서 "이 메뉴를 예쁜 메뉴판 웹페이지로 만들어줘"라고 하면 디지털 메뉴판도 완성!
+        </div>
+      </div>
+    </div>
+  </div><!-- /실무 디지털 도구 세팅 -->
 
   <!-- ===== STEP 3 ===== -->
   <div class="card" id="step3">
@@ -1351,9 +1591,10 @@ footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: c
 <!-- CTA -->
 <section class="cta-section">
   <div class="container">
-    <h2 style="font-size:1.5rem; margin-bottom:8px;">완성된 예시 페이지를 확인해보세요!</h2>
-    <p style="opacity:.9;">AI로 만든 울릉도 관광 홍보 페이지 실제 예시</p>
+    <h2 style="font-size:1.5rem; margin-bottom:8px;">더 알아보기</h2>
+    <p style="opacity:.9;">AI로 만든 예시 페이지와 프롬프트 핵심 원리를 확인하세요</p>
     <a href="example.html" class="cta-btn">예시 페이지 보러 가기 &rarr;</a>
+    <a href="prompt-guide.html" class="cta-btn" style="margin-left:12px;">프롬프트 원리 & GPT 앱 만들기 &rarr;</a>
   </div>
 </section>
 

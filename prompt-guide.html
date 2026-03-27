@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>프롬프트 원리 & GPT 앱 만들기 | 울릉군 생태관광 AI 교육</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --orange: #f97316;
+  --purple: #8b5cf6;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --code-bg: #1e1e2e;
+  --code-text: #cdd6f4;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; }
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Back button */
+.back-btn { position: fixed; top: 16px; left: 16px; z-index: 1000; background: rgba(255,255,255,0.9); backdrop-filter: blur(8px); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; box-shadow: var(--shadow); color: var(--text); }
+.back-btn:hover { text-decoration: none; background: #fff; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #7c3aed 0%, #2563eb 50%, #06b6d4 100%); color: #fff; padding: 60px 0 50px; text-align: center; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 40px; background: var(--bg); border-radius: 40px 40px 0 0; }
+.hero h1 { font-size: 2rem; font-weight: 900; margin-bottom: 8px; }
+.hero .sub { font-size: 1.05rem; opacity: .9; margin-bottom: 16px; }
+.hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+.hero-tag { background: rgba(255,255,255,0.18); padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; backdrop-filter: blur(4px); }
+
+/* Sticky nav */
+.sticky-nav { background: var(--card); border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow); margin: 24px 0 32px; position: sticky; top: 0; z-index: 99; }
+.sticky-nav ul { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; }
+.sticky-nav a { padding: 5px 14px; border-radius: 16px; font-size: 0.82rem; font-weight: 500; background: #f1f5f9; color: var(--text); transition: all .2s; white-space: nowrap; }
+.sticky-nav a:hover { background: var(--primary); color: #fff; text-decoration: none; }
+
+/* Section */
+.section { padding: 40px 0; }
+.section-title { font-size: 1.5rem; margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+.section-title .num { background: var(--primary); color: #fff; width: 36px; height: 36px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+.section-desc { color: var(--text-light); margin-bottom: 24px; font-size: 0.95rem; }
+
+/* Card */
+.card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; }
+.card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+
+/* Principle cards */
+.principle { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; border-left: 5px solid var(--primary); position: relative; }
+.principle.p2 { border-left-color: var(--secondary); }
+.principle.p3 { border-left-color: var(--orange); }
+.principle.p4 { border-left-color: var(--purple); }
+.principle.p5 { border-left-color: var(--accent); }
+.principle .p-num { position: absolute; top: -12px; left: 20px; background: var(--primary); color: #fff; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; }
+.principle.p2 .p-num { background: var(--secondary); }
+.principle.p3 .p-num { background: var(--orange); }
+.principle.p4 .p-num { background: var(--purple); }
+.principle.p5 .p-num { background: var(--accent); }
+.principle h3 { margin-top: 8px; font-size: 1.1rem; }
+
+/* Prompt box */
+.prompt-box { background: var(--code-bg); border-radius: var(--radius); padding: 16px 18px; margin: 12px 0; position: relative; overflow-x: auto; }
+.prompt-box code { color: var(--code-text); font-family: 'Courier New', monospace; font-size: 0.88rem; white-space: pre-wrap; word-break: break-all; display: block; line-height: 1.6; }
+.copy-btn { position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 0.75rem; font-family: 'Noto Sans KR', sans-serif; transition: all .2s; }
+.copy-btn:hover { background: rgba(255,255,255,0.25); }
+
+/* Result box */
+.result-box { border-radius: var(--radius); padding: 16px 18px; margin: 12px 0; font-size: 0.9rem; line-height: 1.8; border-left: 4px solid; }
+.result-good { background: #ecfdf5; border-color: #6ee7b7; }
+.result-bad { background: #fef2f2; border-color: #fca5a5; }
+.result-info { background: #eff6ff; border-color: #93c5fd; }
+.result-box .label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 6px; display: block; }
+.result-good .label { color: #059669; }
+.result-bad .label { color: #dc2626; }
+.result-info .label { color: #2563eb; }
+
+/* Tip box */
+.tip-box { background: #fefce8; border-left: 4px solid #fde047; border-radius: 0 var(--radius) var(--radius) 0; padding: 14px 18px; margin: 12px 0; font-size: 0.88rem; }
+.tip-box strong { color: #a16207; }
+
+/* Before/After */
+.ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+.ba-grid .before { background: #fef2f2; border: 1px solid #fca5a5; border-radius: var(--radius); padding: 14px; }
+.ba-grid .after { background: #ecfdf5; border: 1px solid #6ee7b7; border-radius: var(--radius); padding: 14px; }
+.ba-grid .ba-label { font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; display: block; }
+.ba-grid .before .ba-label { color: #dc2626; }
+.ba-grid .after .ba-label { color: #059669; }
+@media (max-width: 600px) { .ba-grid { grid-template-columns: 1fr; } }
+
+/* Step box */
+.step-box { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+.step-box .s-num { background: var(--primary); color: #fff; min-width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
+.step-box .s-content { flex: 1; }
+
+/* Formula box */
+.formula { background: linear-gradient(135deg, #eff6ff, #f0fdf4); border: 2px solid var(--primary); border-radius: var(--radius); padding: 24px; margin: 20px 0; text-align: center; }
+.formula .formula-text { font-size: 1.3rem; font-weight: 900; color: var(--primary-dark); margin-bottom: 8px; letter-spacing: 1px; }
+.formula .formula-desc { font-size: 0.9rem; color: var(--text-light); }
+
+/* GPT app card */
+.gpt-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 20px; border-top: 4px solid var(--purple); }
+.gpt-card h3 { color: var(--purple); margin-bottom: 8px; }
+
+/* Screenshot placeholder */
+.screenshot { background: #f1f5f9; border: 2px dashed var(--border); border-radius: var(--radius); padding: 40px 20px; text-align: center; margin: 16px 0; color: var(--text-light); font-size: 0.9rem; }
+
+/* Toast */
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--text); color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 0.85rem; opacity: 0; transition: all .3s; z-index: 9999; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Footer */
+footer { background: var(--text); color: #94a3b8; padding: 32px 0; text-align: center; font-size: 0.85rem; margin-top: 40px; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.5rem; }
+  .formula .formula-text { font-size: 1.1rem; }
+  .card, .principle, .gpt-card { padding: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="toast" id="toast">복사되었습니다!</div>
+
+<a href="index.html" class="back-btn">← 교육 가이드로 돌아가기</a>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="container">
+    <p class="sub">울릉군 생태관광 AI 교육 | 핵심 가이드</p>
+    <h1>프롬프트 원리 & GPT 앱 만들기</h1>
+    <p style="opacity:.85; margin-bottom:16px;">AI를 200% 활용하는 핵심 기술을 배워봅시다</p>
+    <div class="hero-tags">
+      <span class="hero-tag">프롬프트 5원칙</span>
+      <span class="hero-tag">나만의 GPT 앱</span>
+      <span class="hero-tag">실전 활용법</span>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+
+<!-- Sticky Nav -->
+<nav class="sticky-nav">
+  <ul>
+    <li><a href="#principles">프롬프트 5원칙</a></li>
+    <li><a href="#bad-good">나쁜 vs 좋은 프롬프트</a></li>
+    <li><a href="#templates">만능 템플릿</a></li>
+    <li><a href="#gpt-app">GPT 앱 만들기</a></li>
+    <li><a href="#gpt-examples">GPT 앱 예시</a></li>
+    <li><a href="#practice">실전 연습</a></li>
+  </ul>
+</nav>
+
+<!-- ==================== PART 1: 프롬프트 원리 ==================== -->
+<section class="section" id="principles">
+  <h2 class="section-title"><span class="num">1</span> 프롬프트 5원칙</h2>
+  <p class="section-desc">AI에게 잘 부탁하는 5가지 핵심 원칙입니다. 이것만 기억하면 됩니다!</p>
+
+  <!-- 원칙 1: 역할 부여 -->
+  <div class="principle" style="margin-top:24px;">
+    <div class="p-num">1</div>
+    <h3>역할을 정해주세요 (Role)</h3>
+    <p>AI에게 "너는 ○○ 전문가야"라고 역할을 먼저 알려주면, 그 분야에 맞는 답변을 합니다.</p>
+    <div class="ba-grid">
+      <div class="before">
+        <span class="ba-label">역할 없이</span>
+        <code style="font-size:0.85rem;">"울릉도 홍보 문구 써줘"</code>
+      </div>
+      <div class="after">
+        <span class="ba-label">역할 부여</span>
+        <code style="font-size:0.85rem;">"너는 10년 경력의 관광 마케팅 전문가야. 울릉도 홍보 문구를 써줘"</code>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>자주 쓰는 역할:</strong> 관광 마케터, SNS 전문가, 번역가, 음식 칼럼니스트, 여행 블로거, 카피라이터
+    </div>
+  </div>
+
+  <!-- 원칙 2: 맥락 제공 -->
+  <div class="principle p2">
+    <div class="p-num">2</div>
+    <h3>배경 정보를 알려주세요 (Context)</h3>
+    <p>AI는 우리 가게나 상황을 모릅니다. 구체적인 배경 정보를 줄수록 정확한 답변이 나옵니다.</p>
+    <div class="ba-grid">
+      <div class="before">
+        <span class="ba-label">맥락 없이</span>
+        <code style="font-size:0.85rem;">"메뉴 소개글 써줘"</code>
+      </div>
+      <div class="after">
+        <span class="ba-label">맥락 제공</span>
+        <code style="font-size:0.85rem;">"울릉도 도동항 근처 30년 전통 해산물 식당이야. 자연산 횟감이 주력이고 관광객이 주 고객이야. 대표 메뉴 회정식의 소개글을 써줘"</code>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>꼭 포함할 정보:</strong> 업종, 위치, 특징, 대상 고객, 차별점
+    </div>
+  </div>
+
+  <!-- 원칙 3: 구체적 지시 -->
+  <div class="principle p3">
+    <div class="p-num">3</div>
+    <h3>구체적으로 요청하세요 (Specificity)</h3>
+    <p>"좋게 써줘"는 막연합니다. 몇 개, 몇 글자, 어떤 톤, 어떤 형식인지 구체적으로 지정하세요.</p>
+    <div class="ba-grid">
+      <div class="before">
+        <span class="ba-label">막연한 요청</span>
+        <code style="font-size:0.85rem;">"좋은 홍보 문구 써줘"</code>
+      </div>
+      <div class="after">
+        <span class="ba-label">구체적 요청</span>
+        <code style="font-size:0.85rem;">"인스타그램용 홍보 문구 3개, 각 100자 이내, 20~30대 여성 타겟, 감성적인 톤, 이모지 포함, 해시태그 5개씩 붙여줘"</code>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>구체화 체크리스트:</strong> 개수, 글자수, 대상, 톤, 형식(표/목록/문장), 언어
+    </div>
+  </div>
+
+  <!-- 원칙 4: 예시 제공 -->
+  <div class="principle p4">
+    <div class="p-num">4</div>
+    <h3>예시를 보여주세요 (Example)</h3>
+    <p>"이런 느낌으로"라고 예시를 하나만 보여줘도 AI가 스타일을 파악합니다.</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>울릉도 관광지 소개 문구를 써줘.
+
+이런 느낌으로:
+"제주 올레길 - 바람이 들려주는 제주의 이야기를 한 걸음 한 걸음 따라가보세요"
+
+위 예시처럼 감성적이고 서정적인 톤으로 울릉도 성인봉, 행남해안산책로, 봉래폭포 각각 1줄씩 만들어줘.</code>
+    </div>
+    <div class="tip-box">
+      <strong>TIP:</strong> 마음에 드는 홍보 문구를 평소에 스크린샷해두면 AI에게 예시로 보여줄 수 있어요!
+    </div>
+  </div>
+
+  <!-- 원칙 5: 출력 형식 지정 -->
+  <div class="principle p5">
+    <div class="p-num">5</div>
+    <h3>결과 형식을 정해주세요 (Format)</h3>
+    <p>표, 목록, 단락 등 원하는 형태를 미리 말해주면 바로 쓸 수 있는 결과가 나옵니다.</p>
+    <div class="ba-grid">
+      <div class="before">
+        <span class="ba-label">형식 미지정</span>
+        <code style="font-size:0.85rem;">"울릉도 관광지 정보 알려줘"</code><br>
+        <span style="font-size:0.8rem; color:#999;">→ 장문의 텍스트가 나옴</span>
+      </div>
+      <div class="after">
+        <span class="ba-label">형식 지정</span>
+        <code style="font-size:0.85rem;">"울릉도 관광지 5곳을 표로 정리해줘. 열: 관광지명, 소요시간, 난이도, 추천 포인트"</code><br>
+        <span style="font-size:0.8rem; color:#059669;">→ 깔끔한 표가 나옴</span>
+      </div>
+    </div>
+    <div class="tip-box">
+      <strong>자주 쓰는 형식:</strong> 표, 번호 목록, 요약(3줄), JSON, 마크다운, SNS 포스팅 형태
+    </div>
+  </div>
+
+  <!-- 공식 -->
+  <div class="formula">
+    <div class="formula-text">역할 + 맥락 + 구체적 지시 + 예시 + 형식 = 완벽한 프롬프트</div>
+    <div class="formula-desc">5가지를 모두 넣을 필요는 없습니다. 상황에 맞게 2~3개만 조합해도 충분해요!</div>
+  </div>
+</section>
+
+<!-- ==================== PART 2: 나쁜 vs 좋은 프롬프트 ==================== -->
+<section class="section" id="bad-good">
+  <h2 class="section-title"><span class="num">2</span> 나쁜 프롬프트 vs 좋은 프롬프트</h2>
+  <p class="section-desc">실제로 자주 하는 실수와 올바른 예시를 비교해봅시다.</p>
+
+  <div class="card">
+    <h3>사례 1: 홍보 문구 요청</h3>
+    <div class="result-box result-bad">
+      <span class="label">나쁜 프롬프트</span>
+      울릉도 홍보 문구 써줘
+    </div>
+    <div class="result-box result-good">
+      <span class="label">좋은 프롬프트</span>
+      너는 관광 마케팅 전문가야. 울릉도를 처음 방문하는 30대 직장인 커플을 타겟으로 한 인스타그램 홍보 문구를 5개 만들어줘. 각 문구는 50자 이내, 감성적인 톤, 이모지 포함해줘.
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-top:8px;"><strong>차이점:</strong> 역할(마케팅 전문가) + 맥락(30대 커플, 인스타) + 구체적(5개, 50자, 감성, 이모지)</p>
+  </div>
+
+  <div class="card">
+    <h3>사례 2: 번역 요청</h3>
+    <div class="result-box result-bad">
+      <span class="label">나쁜 프롬프트</span>
+      이거 영어로 번역해줘: "울릉도 오징어가 맛있습니다"
+    </div>
+    <div class="result-box result-good">
+      <span class="label">좋은 프롬프트</span>
+      외국인 관광객이 읽을 식당 메뉴판에 들어갈 문구야. 자연스럽고 식욕을 돋우는 톤으로 영어와 일본어로 번역해줘: "울릉도 오징어가 맛있습니다"
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-top:8px;"><strong>차이점:</strong> 맥락(메뉴판용) + 톤(자연스럽고 식욕 돋우는) + 형식(영어+일본어)</p>
+  </div>
+
+  <div class="card">
+    <h3>사례 3: 이미지 생성</h3>
+    <div class="result-box result-bad">
+      <span class="label">나쁜 프롬프트</span>
+      울릉도 사진 만들어줘
+    </div>
+    <div class="result-box result-good">
+      <span class="label">좋은 프롬프트</span>
+      울릉도 도동항에서 바라본 일출 풍경 이미지를 만들어줘. 맑은 하늘, 선명한 주황색 일출, 잔잔한 바다 반영, 여행 포스터 스타일, 세로 3:4 비율, 따뜻한 색감
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-light); margin-top:8px;"><strong>차이점:</strong> 구체적 장면 + 색감 + 스타일 + 비율 지정</p>
+  </div>
+</section>
+
+<!-- ==================== PART 3: 만능 템플릿 ==================== -->
+<section class="section" id="templates">
+  <h2 class="section-title"><span class="num">3</span> 만능 프롬프트 템플릿</h2>
+  <p class="section-desc">빈칸만 채우면 되는 만능 템플릿입니다. 복사해서 바로 사용하세요!</p>
+
+  <div class="card">
+    <h3>템플릿 A: 홍보 콘텐츠 만들기</h3>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>너는 [역할]이야.
+[대상]을 위한 [콘텐츠 종류]를 만들어줘.
+
+주제: [주제]
+조건:
+- 분량: [글자수/개수]
+- 톤: [감성적/전문적/친근한 등]
+- 형식: [표/목록/SNS 포스팅 등]
+- 언어: [한국어/영어/일본어 등]
+- 추가 요청: [해시태그/이모지/CTA 등]</code>
+    </div>
+    <p style="font-size:0.85rem; color:var(--text-light);">예: 역할=SNS 마케터, 대상=20대 여행객, 콘텐츠=인스타 릴스 스크립트</p>
+  </div>
+
+  <div class="card">
+    <h3>템플릿 B: 번역/다국어</h3>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>다음 내용을 [영어/일본어/중국어]로 번역해줘.
+
+용도: [메뉴판/관광 안내문/SNS 포스팅]
+톤: [자연스럽고 친근한/격식체/캐주얼]
+주의사항: [현지 표현 사용/음식명은 로마자 표기 병행]
+
+---
+[번역할 내용을 여기에 붙여넣기]
+---</code>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>템플릿 C: 분석/조사</h3>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>[주제]에 대해 조사해줘.
+
+분석할 내용:
+1. [항목1]
+2. [항목2]
+3. [항목3]
+
+결과를 표로 정리하고, 마지막에 핵심 시사점 3줄로 요약해줘.</code>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 4: GPT 앱 만들기 ==================== -->
+<section class="section" id="gpt-app">
+  <h2 class="section-title"><span class="num">4</span> 나만의 GPT 앱 만들기</h2>
+  <p class="section-desc">ChatGPT에서 "나만의 GPT"를 만들면, 매번 같은 설명 없이 바로 활용할 수 있습니다!</p>
+
+  <div class="card" style="background: linear-gradient(135deg, #faf5ff, #eff6ff); border: 2px solid var(--purple);">
+    <h3 style="color: var(--purple);">GPT 앱이란?</h3>
+    <p>ChatGPT에서 <strong>나만의 맞춤형 AI 도우미</strong>를 만드는 기능입니다.</p>
+    <ul style="margin: 12px 0; padding-left: 20px; font-size: 0.92rem;">
+      <li><strong>한 번 만들면 계속 사용</strong> - 매번 역할/맥락 설명 불필요</li>
+      <li><strong>나만의 전문가 AI</strong> - 내 업종, 내 상황에 맞는 AI</li>
+      <li><strong>공유 가능</strong> - 팀원, 직원에게 링크로 공유</li>
+      <li><strong>무료로 만들기 가능</strong> - ChatGPT 무료 버전에서도 사용!</li>
+    </ul>
+  </div>
+
+  <h3 style="margin: 24px 0 16px;">GPT 앱 만드는 방법 (따라하기)</h3>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">1</span>
+    <div class="s-content">
+      <h4>ChatGPT 접속</h4>
+      <p>chatgpt.com 접속 → 로그인 → 좌측 사이드바의 <strong>"GPT 탐색"</strong> 클릭</p>
+      <div class="screenshot">[ chatgpt.com → 좌측 사이드바 → "GPT 탐색" 위치 ]</div>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">2</span>
+    <div class="s-content">
+      <h4>"GPT 만들기" 클릭</h4>
+      <p>우측 상단의 <strong>"+ 만들기"</strong> 버튼 → GPT 빌더 화면이 열립니다.</p>
+      <div class="screenshot">[ "만들기" 버튼 → GPT 빌더 화면 ]</div>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">3</span>
+    <div class="s-content">
+      <h4>"만들기" 탭에서 대화로 설정</h4>
+      <p>GPT 빌더가 "무엇을 하는 GPT를 만들까요?"라고 물어봅니다. <strong>한국어로 자연스럽게 대화하면 됩니다!</strong></p>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <code>울릉도 관광 홍보 콘텐츠를 만들어주는 GPT를 만들어줘.
+
+이 GPT의 역할:
+- 울릉도 관광 마케팅 전문가
+- SNS 홍보 문구, 블로그 글, 포스터 카피 작성
+- 한국어/영어/일본어 다국어 콘텐츠 제작
+- 울릉도의 주요 관광지, 특산물, 문화에 대한 전문 지식 보유
+
+톤: 친근하고 감성적인 관광 홍보 톤
+항상 이모지를 적절히 사용하고, 해시태그도 함께 제공해줘.</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">4</span>
+    <div class="s-content">
+      <h4>"구성" 탭에서 세부 설정</h4>
+      <p>"구성" 탭을 클릭하면 직접 세부 설정을 편집할 수 있습니다.</p>
+      <div class="result-box result-info">
+        <span class="label">설정 항목</span>
+        <strong>이름:</strong> 울릉도 관광 홍보 도우미<br>
+        <strong>설명:</strong> 울릉도 관광 홍보 콘텐츠(SNS, 블로그, 포스터)를 한국어/영어/일본어로 만들어주는 AI 마케터<br>
+        <strong>지시사항(Instructions):</strong> 이 부분에 GPT의 행동 규칙을 적습니다 (아래 예시 참고)<br>
+        <strong>대화 시작 메시지:</strong> "안녕하세요! 울릉도 관광 홍보 도우미입니다. 어떤 콘텐츠를 만들어드릴까요?"<br>
+        <strong>기능:</strong> 웹 검색 ON, 이미지 생성 ON
+      </div>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">5</span>
+    <div class="s-content">
+      <h4>지시사항(Instructions) 작성</h4>
+      <p>가장 중요한 부분! GPT의 "두뇌"를 설정하는 곳입니다.</p>
+      <div class="prompt-box">
+        <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+        <code>## 역할
+너는 울릉도 관광 홍보 전문 AI 마케터야. 울릉도의 관광지, 맛집, 특산물, 문화에 대한 깊은 지식을 갖고 있어.
+
+## 핵심 업무
+1. SNS 홍보 콘텐츠 제작 (인스타그램, 페이스북, 블로그)
+2. 다국어 번역 (한국어 ↔ 영어 ↔ 일본어)
+3. 관광 포스터/배너 카피 작성
+4. 메뉴판, 안내문 다국어 제작
+
+## 울릉도 핵심 정보
+- 위치: 경상북도 울릉군, 동해 한가운데
+- 주요 관광지: 성인봉(984m), 행남해안산책로, 봉래폭포, 도동항, 태하등대, 나리분지
+- 특산물: 울릉도 오징어, 호박엿, 산나물(명이나물, 부지깽이), 약소고기
+- 교통: 강릉/포항/묵호에서 여객선
+- 독도: 울릉도에서 배편으로 방문 가능
+
+## 작성 규칙
+- 항상 감성적이고 친근한 톤 사용
+- 이모지를 자연스럽게 활용
+- SNS 콘텐츠에는 해시태그 5~10개 포함
+- 번역 시 자연스러운 현지 표현 사용
+- 요청하면 이미지도 함께 생성</code>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-box">
+    <span class="s-num" style="background: var(--purple);">6</span>
+    <div class="s-content">
+      <h4>저장 & 사용하기</h4>
+      <p>우측 상단의 <strong>"저장"</strong> 클릭 → "나만 사용" 또는 "링크가 있는 모든 사용자" 선택</p>
+      <div class="tip-box">
+        <strong>TIP:</strong> "링크가 있는 모든 사용자"를 선택하면 링크를 공유받은 사람 누구나 이 GPT를 사용할 수 있습니다. 관광 협회 직원들과 공유하세요!
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 5: GPT 앱 예시 ==================== -->
+<section class="section" id="gpt-examples">
+  <h2 class="section-title"><span class="num">5</span> 이런 GPT 앱을 만들어보세요!</h2>
+  <p class="section-desc">울릉도 사업자에게 유용한 GPT 앱 아이디어 4가지입니다.</p>
+
+  <!-- GPT 예시 1 -->
+  <div class="gpt-card">
+    <h3>1. 울릉도 다국어 안내 도우미</h3>
+    <p style="font-size:0.9rem; margin-bottom:12px;">외국인 관광객 응대에 필요한 문구를 바로 만들어주는 GPT</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>## 역할
+너는 울릉도 관광안내소의 다국어 도우미야.
+
+## 핵심 기능
+- 관광객의 질문에 한국어/영어/일본어로 답변
+- 식당 메뉴 번역
+- 관광지 안내문 번역
+- 긴급 상황 문구 제공 (병원, 경찰 등)
+
+## 규칙
+- 항상 한국어 원문과 번역을 함께 제공
+- 음식 이름은 로마자 표기 병행 (예: 회정식 Hoejeongsik)
+- 친절하고 이해하기 쉬운 표현 사용</code>
+    </div>
+    <div class="result-box result-info">
+      <span class="label">사용 예시</span>
+      <strong>나:</strong> "우리 숙소 체크인 안내를 영어/일본어로 만들어줘. 체크인 15시, 체크아웃 11시, 와이파이 비번 ulleung2024"<br><br>
+      <strong>GPT:</strong> 바로 3개 국어 체크인 안내문 생성!
+    </div>
+  </div>
+
+  <!-- GPT 예시 2 -->
+  <div class="gpt-card">
+    <h3>2. SNS 콘텐츠 자동 생성기</h3>
+    <p style="font-size:0.9rem; margin-bottom:12px;">사진 한 장 설명하면 SNS 포스팅을 뚝딱 만들어주는 GPT</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>## 역할
+너는 울릉도 SNS 마케팅 전문가야.
+
+## 핵심 기능
+- 사진 설명을 듣고 인스타그램 포스팅 작성
+- 릴스/숏츠 스크립트 작성
+- 네이버 블로그 글 작성
+
+## 규칙
+- 항상 해시태그 10개 포함
+- 이모지 자연스럽게 사용
+- 타겟: 2030 여성 여행객
+- 톤: 감성적이면서 정보도 포함
+- 한 번에 한국어 + 영어 버전 제공</code>
+    </div>
+    <div class="result-box result-info">
+      <span class="label">사용 예시</span>
+      <strong>나:</strong> "오늘 성인봉 정상에서 일출 사진 찍었어. 구름바다가 장관이었어"<br><br>
+      <strong>GPT:</strong> 인스타 포스팅(한국어+영어), 해시태그 10개 자동 생성!
+    </div>
+  </div>
+
+  <!-- GPT 예시 3 -->
+  <div class="gpt-card">
+    <h3>3. 울릉도 여행 코스 추천 봇</h3>
+    <p style="font-size:0.9rem; margin-bottom:12px;">관광객 유형에 맞는 맞춤 코스를 추천하는 GPT</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>## 역할
+너는 울릉도 토박이 가이드야. 10년 이상 울릉도에서 관광 가이드를 했어.
+
+## 핵심 기능
+- 여행 일수/취향에 맞는 코스 추천
+- 계절별 추천 포인트 안내
+- 맛집/숙소 동선 포함
+
+## 울릉도 데이터
+- 관광지: [성인봉, 행남해안산책로, 봉래폭포, 도동항, 저동항, 태하등대, 나리분지, 독도]
+- 맛집 거리: 도동, 저동 중심
+- 이동수단: 버스, 택시, 렌터카
+- 소요시간: 섬 일주 약 3시간(차량)
+
+## 규칙
+- 반드시 시간대별 코스 제공
+- 식사 장소와 예상 비용 포함
+- 날씨 주의사항 안내</code>
+    </div>
+  </div>
+
+  <!-- GPT 예시 4 -->
+  <div class="gpt-card">
+    <h3>4. 우리 가게 리뷰 답글 도우미</h3>
+    <p style="font-size:0.9rem; margin-bottom:12px;">네이버/구글 리뷰에 정성스러운 답글을 바로 쓸 수 있는 GPT</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>## 역할
+너는 울릉도 식당 사장님의 리뷰 답글 도우미야.
+
+## 핵심 기능
+- 긍정 리뷰에 감사 답글 작성
+- 부정 리뷰에 정중한 사과 및 개선 약속 답글 작성
+- 외국어 리뷰에 해당 언어로 답글 작성
+
+## 규칙
+- 항상 진심이 느껴지는 따뜻한 톤
+- 리뷰 내용을 구체적으로 언급 (복붙 느낌 X)
+- 100~150자 내외로 간결하게
+- 재방문을 유도하는 문구 포함
+- 영어/일본어 리뷰에는 해당 언어로 답글</code>
+    </div>
+    <div class="result-box result-info">
+      <span class="label">사용 예시</span>
+      <strong>나:</strong> "리뷰: '회정식 진짜 맛있었어요! 반찬도 정갈하고 특히 명이나물이 최고였습니다. 다음에 또 올게요~'"<br><br>
+      <strong>GPT:</strong> "소중한 후기 남겨주셔서 감사합니다! 직접 채취한 명이나물을 좋아해주셔서 정말 기쁘네요. 봄에 다시 오시면 더 싱싱한 봄나물 반찬도 준비해두겠습니다. 다음 방문을 기다리고 있을게요!"
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 6: 실전 연습 ==================== -->
+<section class="section" id="practice">
+  <h2 class="section-title"><span class="num">6</span> 실전 연습: 지금 바로 해보세요!</h2>
+  <p class="section-desc">아래 3가지 미션을 직접 따라해보세요. 5분이면 됩니다!</p>
+
+  <div class="card" style="border-left: 4px solid var(--secondary);">
+    <h3>미션 1: 내 가게 홍보 문구 만들기 (2분)</h3>
+    <p style="font-size:0.9rem; margin-bottom:12px;">아래 프롬프트의 빈칸을 채워서 Gemini 또는 ChatGPT에 입력해보세요.</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>너는 관광 마케팅 전문가야.
+[내 가게 이름]을 홍보하는 인스타그램 포스팅을 만들어줘.
+
+가게 정보:
+- 업종: [식당/숙소/체험/특산품 등]
+- 위치: [울릉도 어디]
+- 대표 상품: [메뉴/서비스]
+- 특징: [30년 전통/바다 전망/직접 잡은 해산물 등]
+
+조건:
+- 한국어 1개, 영어 1개
+- 이모지 포함
+- 해시태그 10개
+- 200자 이내</code>
+    </div>
+  </div>
+
+  <div class="card" style="border-left: 4px solid var(--orange);">
+    <h3>미션 2: 나만의 GPT 앱 만들기 (3분)</h3>
+    <p style="font-size:0.9rem;">ChatGPT → GPT 탐색 → 만들기 → 아래 내용 붙여넣기!</p>
+    <div class="prompt-box">
+      <button class="copy-btn" onclick="copyPrompt(this)">복사</button>
+      <code>[내 가게 이름]을 위한 전용 AI 도우미를 만들어줘.
+
+이 GPT의 역할:
+- [내 가게 이름]의 마케팅 담당자
+- SNS 홍보 문구 작성
+- 외국어 번역 (영어, 일본어)
+- 고객 리뷰 답글 작성
+
+우리 가게 정보:
+- 업종: [     ]
+- 위치: [     ]
+- 대표 상품/메뉴: [     ]
+- 특징/자랑거리: [     ]
+- 영업시간: [     ]
+
+항상 친근하고 따뜻한 톤으로 답변해줘.</code>
+    </div>
+  </div>
+
+  <div class="card" style="border-left: 4px solid var(--purple);">
+    <h3>미션 3: AI 음성 통역 테스트 (1분)</h3>
+    <p style="font-size:0.9rem;">스마트폰에서 바로 테스트해보세요!</p>
+    <div class="result-box result-info">
+      <span class="label">따라하기</span>
+      <strong>① Gemini 앱</strong> (또는 ChatGPT 앱) 실행<br>
+      <strong>② 마이크 버튼</strong> 길게 누르기<br>
+      <strong>③ 이렇게 말하기:</strong> "한국어를 영어로 통역해줘"<br>
+      <strong>④ 테스트:</strong> "울릉도에 오신 것을 환영합니다! 오늘 날씨가 좋아서 독도도 보일 거예요."<br>
+      <strong>⑤ AI가 바로 영어로 통역합니다!</strong>
+    </div>
+  </div>
+
+  <div class="formula" style="background: linear-gradient(135deg, #faf5ff, #fdf2f8); border-color: var(--purple);">
+    <div class="formula-text" style="color: var(--purple);">오늘 배운 핵심</div>
+    <div class="formula-desc" style="font-size:1rem;">
+      <strong>1.</strong> 프롬프트 = 역할 + 맥락 + 구체적 지시 + 예시 + 형식<br>
+      <strong>2.</strong> GPT 앱 = 한 번 설정하면 매번 편하게 사용<br>
+      <strong>3.</strong> AI 통역 = 스마트폰 하나로 외국인 응대 가능
+    </div>
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  <p>울릉군 글로벌 생태관광 전문인재 양성 교육 (2026.4.18)</p>
+  <p style="margin-top:4px;">경상북도 울릉군 | 울릉고등학교 전산실</p>
+  <p style="margin-top:8px;"><a href="index.html" style="color:#93c5fd;">← 메인 교육 가이드로 돌아가기</a></p>
+</footer>
+
+<script>
+function copyPrompt(btn) {
+  const code = btn.parentElement.querySelector('code');
+  navigator.clipboard.writeText(code.innerText).then(() => {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1500);
+  });
+}
+</script>
+
+</body>
+</html>
