@@ -295,7 +295,7 @@ select { background: #fff; cursor: pointer; }
   <!-- Step 2: Game Settings -->
   <div class="wizard-step" id="step2">
     <h2>Step 2. 게임 설정</h2>
-    <p class="desc">게임의 장르, 인원, 시간 등을 설정하세요.</p>
+    <p class="desc">게임의 핵심 구조를 설정하세요. 장르, 규칙 방향, 메커니즘 등을 구체적으로 정할수록 좋은 기획서가 나옵니다.</p>
 
     <div style="margin-bottom:16px; text-align:right;">
       <button class="btn-recommend" onclick="autoRecommendStep2()">자동 추천</button>
@@ -305,15 +305,77 @@ select { background: #fff; cursor: pointer; }
       <label class="form-label">게임 장르 <span class="req">*</span></label>
       <select id="genre">
         <option value="">선택하세요</option>
-        <option value="전략">전략</option>
-        <option value="퀴즈">퀴즈</option>
-        <option value="협동">협동</option>
-        <option value="모험">모험</option>
-        <option value="수집">수집</option>
-        <option value="레이싱">레이싱</option>
-        <option value="추리">추리</option>
-        <option value="덱빌딩">덱빌딩</option>
+        <option value="전략">전략 (자원 관리, 영역 확보)</option>
+        <option value="퀴즈">퀴즈 (지식, 문제 풀기)</option>
+        <option value="협동">협동 (팀워크, 공동 목표)</option>
+        <option value="모험">모험 (탐험, 미션 수행)</option>
+        <option value="수집">수집 (세트 모으기, 카드 수집)</option>
+        <option value="레이싱">레이싱 (경주, 최단 경로)</option>
+        <option value="추리">추리 (단서, 범인 찾기)</option>
+        <option value="덱빌딩">덱빌딩 (카드 조합, 강화)</option>
+        <option value="파티">파티 (간단, 다인원, 웃음)</option>
+        <option value="워커플레이스먼트">워커플레이스먼트 (일꾼 배치)</option>
       </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">플레이 방식 <span class="req">*</span></label>
+      <div class="radio-group" id="playStyleGroup">
+        <label class="radio-item selected"><input type="radio" name="playStyle" value="경쟁" checked>경쟁 (1등을 겨루기)</label>
+        <label class="radio-item"><input type="radio" name="playStyle" value="협동">협동 (함께 목표 달성)</label>
+        <label class="radio-item"><input type="radio" name="playStyle" value="팀전">팀전 (팀 vs 팀)</label>
+        <label class="radio-item"><input type="radio" name="playStyle" value="1 vs 다수">1 vs 다수</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">핵심 메커니즘 (복수 선택 가능)</label>
+      <div class="checkbox-grid">
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="주사위 굴리기"> 주사위 굴리기</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="카드 드래프트"> 카드 드래프트</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="타일 배치"> 타일 배치</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="자원 관리"> 자원 관리</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="영역 확보"> 영역 확보</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="트레이딩/교환"> 트레이딩/교환</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="퀴즈/문제풀기"> 퀴즈/문제풀기</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="블러핑/심리전"> 블러핑/심리전</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="이동/탐험"> 이동/탐험</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="경매/입찰"> 경매/입찰</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="미션 달성"> 미션 달성</label>
+        <label class="cb-item"><input type="checkbox" name="mechanic" value="덱빌딩"> 덱빌딩</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">승리 조건</label>
+      <select id="winCondition">
+        <option value="">AI가 자동 설정</option>
+        <option value="점수 최다">점수 최다 (가장 높은 점수)</option>
+        <option value="목표 달성">목표 달성 (특정 조건 충족)</option>
+        <option value="최후 생존">최후 생존 (마지막까지 남기)</option>
+        <option value="먼저 도착">먼저 도착 (골인 지점)</option>
+        <option value="세트 완성">세트 완성 (필요 카드/아이템 모으기)</option>
+        <option value="영역 지배">영역 지배 (맵 점령)</option>
+        <option value="공동 목표">공동 목표 (협동 모드)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">턴 구조</label>
+      <div class="radio-group" id="turnGroup">
+        <label class="radio-item selected"><input type="radio" name="turn" value="턴제" checked>턴제 (순서대로)</label>
+        <label class="radio-item"><input type="radio" name="turn" value="라운드제">라운드제 (동시 행동)</label>
+        <label class="radio-item"><input type="radio" name="turn" value="실시간">실시간 (동시 진행)</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">운/실력 비율</label>
+      <div class="radio-group" id="luckGroup">
+        <label class="radio-item"><input type="radio" name="luck" value="운 위주">운 위주 (주사위/카드 운)</label>
+        <label class="radio-item selected"><input type="radio" name="luck" value="균형" checked>균형 (운 + 전략)</label>
+        <label class="radio-item"><input type="radio" name="luck" value="실력 위주">실력 위주 (전략/판단)</label>
+      </div>
     </div>
 
     <div class="form-group">
@@ -339,10 +401,16 @@ select { background: #fff; cursor: pointer; }
     <div class="form-group">
       <label class="form-label">난이도 <span class="req">*</span></label>
       <div class="radio-group" id="difficultyGroup">
-        <label class="radio-item"><input type="radio" name="difficulty" value="입문">입문</label>
-        <label class="radio-item selected"><input type="radio" name="difficulty" value="보통" checked>보통</label>
-        <label class="radio-item"><input type="radio" name="difficulty" value="전략가">전략가</label>
+        <label class="radio-item"><input type="radio" name="difficulty" value="입문">입문 (처음 해보는 사람)</label>
+        <label class="radio-item selected"><input type="radio" name="difficulty" value="보통" checked>보통 (보드게임 경험 있음)</label>
+        <label class="radio-item"><input type="radio" name="difficulty" value="전략가">전략가 (마니아 수준)</label>
       </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">규칙 컨셉 / 특별한 아이디어</label>
+      <textarea id="rulesConcept" maxlength="300" placeholder="게임 규칙에 대한 아이디어가 있다면 자유롭게 적어주세요.&#10;예: 울릉도 지도 위를 이동하면서 특산물을 모으는 방식&#10;예: 독도 관련 퀴즈를 맞추면 보너스 카드 획득"></textarea>
+      <p class="form-hint"><span id="rulesCount">0</span>/300자</p>
     </div>
 
     <div class="btn-row">
@@ -468,6 +536,9 @@ let isTourism = true;
 let lastResult = '';
 let selectedPlaytime = '15분';
 let selectedDifficulty = '보통';
+let selectedPlayStyle = '경쟁';
+let selectedTurn = '턴제';
+let selectedLuck = '균형';
 let loadingTimer = null;
 
 // ─── Init ──────────────────────────────────
@@ -572,6 +643,9 @@ function setupCharCount() {
   document.getElementById('extraRequest').addEventListener('input', function() {
     document.getElementById('extraCount').textContent = this.value.length;
   });
+  document.getElementById('rulesConcept').addEventListener('input', function() {
+    document.getElementById('rulesCount').textContent = this.value.length;
+  });
 }
 
 function setupRadioGroups() {
@@ -585,6 +659,9 @@ function setupRadioGroups() {
         var value = item.querySelector('input').value;
         if (name === 'playtime') selectedPlaytime = value;
         if (name === 'difficulty') selectedDifficulty = value;
+        if (name === 'playStyle') selectedPlayStyle = value;
+        if (name === 'turn') selectedTurn = value;
+        if (name === 'luck') selectedLuck = value;
       });
     });
   });
@@ -673,6 +750,12 @@ function collectInputs() {
     data.themeKeywords = Array.from(document.querySelectorAll('#generalTags .tag.selected')).map(function(t) { return t.textContent; });
   }
   data.genre = document.getElementById('genre').value;
+  data.playStyle = selectedPlayStyle;
+  data.mechanics = Array.from(document.querySelectorAll('input[name="mechanic"]:checked')).map(function(c) { return c.value; });
+  data.winCondition = document.getElementById('winCondition').value;
+  data.turn = selectedTurn;
+  data.luck = selectedLuck;
+  data.rulesConcept = document.getElementById('rulesConcept').value.trim();
   data.minPlayers = document.getElementById('minPlayers').value;
   data.maxPlayers = document.getElementById('maxPlayers').value;
   data.playtime = selectedPlaytime;
@@ -693,9 +776,15 @@ function buildPrompt(data) {
   if (data.themeKeywords.length) p += '- 테마 키워드: ' + data.themeKeywords.join(', ') + '\n';
   p += '\n## 게임 설정\n';
   p += '- 장르: ' + data.genre + '\n';
+  p += '- 플레이 방식: ' + data.playStyle + '\n';
+  if (data.mechanics.length) p += '- 핵심 메커니즘: ' + data.mechanics.join(', ') + '\n';
+  if (data.winCondition) p += '- 승리 조건: ' + data.winCondition + '\n';
+  p += '- 턴 구조: ' + data.turn + '\n';
+  p += '- 운/실력 비율: ' + data.luck + '\n';
   p += '- 인원: ' + data.minPlayers + '~' + data.maxPlayers + '명\n';
   p += '- 플레이 타임: ' + data.playtime + '\n';
   p += '- 난이도: ' + data.difficulty + '\n';
+  if (data.rulesConcept) p += '\n## 규칙 컨셉 / 특별한 아이디어\n' + data.rulesConcept + '\n';
   p += '\n## 대상\n- 연령대: ' + data.ages.join(', ') + '\n';
   if (data.marketing.length) p += '- 마케팅 목표: ' + data.marketing.join(', ') + '\n';
   if (data.extra) p += '\n## 추가 요청\n' + data.extra + '\n';
@@ -718,7 +807,12 @@ async function callScout(systemPrompt, userPrompt) {
   try {
     var res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+      headers: {
+        'Authorization': 'Bearer ' + API_KEY,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': window.location.href,
+        'X-Title': 'Ulleung Boardgame Planner'
+      },
       body: JSON.stringify({
         model: MODEL,
         messages: [
