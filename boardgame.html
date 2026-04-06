@@ -247,8 +247,8 @@ select { background: #fff; cursor: pointer; }
 
   <!-- Step 1: Theme -->
   <div class="wizard-step active" id="step1">
-    <h2>Step 1. 테마 설정</h2>
-    <p class="desc">보드게임의 배경이 되는 테마를 설정하세요.</p>
+    <h2>Step 1. 테마 & 세계관</h2>
+    <p class="desc">보드게임의 첫걸음! 어떤 배경에서 어떤 이야기를 펼칠지 구상해보세요. 관광지와 테마 키워드가 게임의 분위기를 결정합니다.</p>
 
     <!-- Tourism ON -->
     <div id="tourismFields">
@@ -283,6 +283,22 @@ select { background: #fff; cursor: pointer; }
           <input type="text" id="customGeneralTag" placeholder="키워드 직접 입력">
           <button type="button" class="btn-sm btn-primary" onclick="addCustomTag('generalTags','customGeneralTag')">추가</button>
         </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">세계관 / 스토리 배경</label>
+      <textarea id="storyBackground" maxlength="300" placeholder="게임의 배경이 되는 이야기를 간단히 적어주세요.&#10;예: 울릉도에 숨겨진 보물 지도가 발견되었다. 플레이어들은 탐험가가 되어 울릉도 곳곳을 누비며 보물을 찾아야 한다.&#10;예: 독도를 지키는 수호자가 되어 해양 생물을 모으고 환경을 보호하는 미션을 수행한다."></textarea>
+      <p class="form-hint"><span id="storyCount">0</span>/300자 (비워두면 AI가 자동 생성)</p>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">아트 스타일 / 시각적 분위기</label>
+      <div class="radio-group" id="artStyleGroup">
+        <label class="radio-item selected"><input type="radio" name="artStyle" value="밝고 경쾌한" checked>밝고 경쾌한</label>
+        <label class="radio-item"><input type="radio" name="artStyle" value="카툰/귀여운">카툰/귀여운</label>
+        <label class="radio-item"><input type="radio" name="artStyle" value="사실적/자연">사실적/자연</label>
+        <label class="radio-item"><input type="radio" name="artStyle" value="모험/판타지">모험/판타지</label>
       </div>
     </div>
 
@@ -408,8 +424,45 @@ select { background: #fff; cursor: pointer; }
     </div>
 
     <div class="form-group">
+      <label class="form-label">보드 형태</label>
+      <div class="radio-group" id="boardTypeGroup">
+        <label class="radio-item selected"><input type="radio" name="boardType" value="고정 보드" checked>고정 보드 (지도형)</label>
+        <label class="radio-item"><input type="radio" name="boardType" value="모듈형 타일">모듈형 타일 (매번 다른 맵)</label>
+        <label class="radio-item"><input type="radio" name="boardType" value="카드만">카드만 (보드 없음)</label>
+        <label class="radio-item"><input type="radio" name="boardType" value="트랙형">트랙형 (일직선 경로)</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">주요 구성품 (복수 선택)</label>
+      <p class="form-hint" style="margin-bottom:8px">게임에 포함될 물리적 구성품을 선택하세요. AI가 각 구성품의 세부 사항을 기획합니다.</p>
+      <div class="checkbox-grid">
+        <label class="cb-item"><input type="checkbox" name="component" value="게임 보드"> 게임 보드</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="캐릭터 카드"> 캐릭터 카드</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="이벤트 카드"> 이벤트 카드</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="자원 카드"> 자원 카드</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="주사위"> 주사위</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="토큰/마커"> 토큰/마커</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="미플/말"> 미플/말</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="타일"> 타일</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="점수 트랙"> 점수 트랙</label>
+        <label class="cb-item"><input type="checkbox" name="component" value="미션 카드"> 미션 카드</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">플레이어 역할</label>
+      <div class="radio-group" id="playerRoleGroup">
+        <label class="radio-item selected"><input type="radio" name="playerRole" value="동일한 조건" checked>동일한 조건 (대칭)</label>
+        <label class="radio-item"><input type="radio" name="playerRole" value="고유 캐릭터">고유 캐릭터 (비대칭)</label>
+        <label class="radio-item"><input type="radio" name="playerRole" value="역할 배정">비밀 역할 배정</label>
+      </div>
+      <p class="form-hint">비대칭: 각 플레이어가 서로 다른 능력/역할을 가짐 (예: 탐험가, 어부, 상인)</p>
+    </div>
+
+    <div class="form-group">
       <label class="form-label">규칙 컨셉 / 특별한 아이디어</label>
-      <textarea id="rulesConcept" maxlength="300" placeholder="게임 규칙에 대한 아이디어가 있다면 자유롭게 적어주세요.&#10;예: 울릉도 지도 위를 이동하면서 특산물을 모으는 방식&#10;예: 독도 관련 퀴즈를 맞추면 보너스 카드 획득"></textarea>
+      <textarea id="rulesConcept" maxlength="300" placeholder="게임 규칙에 대한 아이디어가 있다면 자유롭게 적어주세요.&#10;예: 울릉도 지도 위를 이동하면서 특산물을 모으는 방식&#10;예: 독도 관련 퀴즈를 맞추면 보너스 카드 획득&#10;예: 날씨 이벤트 카드가 매 라운드 게임 상황을 변화시킴"></textarea>
       <p class="form-hint"><span id="rulesCount">0</span>/300자</p>
     </div>
 
@@ -421,8 +474,8 @@ select { background: #fff; cursor: pointer; }
 
   <!-- Step 3: Target & Extra -->
   <div class="wizard-step" id="step3">
-    <h2>Step 3. 대상 & 부가 설정</h2>
-    <p class="desc">타겟 연령대와 추가 요청사항을 입력하세요.</p>
+    <h2>Step 3. 대상 & 마케팅</h2>
+    <p class="desc">누가 이 게임을 즐기게 될까요? 타겟 플레이어와 마케팅 목표를 설정하면 AI가 맞춤형 기획서를 생성합니다.</p>
 
     <div class="form-group">
       <label class="form-label">타겟 연령대 <span class="req">*</span></label>
@@ -505,7 +558,7 @@ select { background: #fff; cursor: pointer; }
 
 <script>
 // ─── Config ───────────────────────────────
-const API_KEY = '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';
+const API_KEY = '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';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'meta-llama/llama-4-scout';
 
@@ -539,6 +592,9 @@ let selectedDifficulty = '보통';
 let selectedPlayStyle = '경쟁';
 let selectedTurn = '턴제';
 let selectedLuck = '균형';
+let selectedArtStyle = '밝고 경쾌한';
+let selectedBoardType = '고정 보드';
+let selectedPlayerRole = '동일한 조건';
 let loadingTimer = null;
 
 // ─── Init ──────────────────────────────────
@@ -646,6 +702,9 @@ function setupCharCount() {
   document.getElementById('rulesConcept').addEventListener('input', function() {
     document.getElementById('rulesCount').textContent = this.value.length;
   });
+  document.getElementById('storyBackground').addEventListener('input', function() {
+    document.getElementById('storyCount').textContent = this.value.length;
+  });
 }
 
 function setupRadioGroups() {
@@ -662,6 +721,9 @@ function setupRadioGroups() {
         if (name === 'playStyle') selectedPlayStyle = value;
         if (name === 'turn') selectedTurn = value;
         if (name === 'luck') selectedLuck = value;
+        if (name === 'artStyle') selectedArtStyle = value;
+        if (name === 'boardType') selectedBoardType = value;
+        if (name === 'playerRole') selectedPlayerRole = value;
       });
     });
   });
@@ -749,12 +811,17 @@ function collectInputs() {
     data.freeTheme = document.getElementById('freeTheme').value.trim();
     data.themeKeywords = Array.from(document.querySelectorAll('#generalTags .tag.selected')).map(function(t) { return t.textContent; });
   }
+  data.storyBackground = document.getElementById('storyBackground').value.trim();
+  data.artStyle = selectedArtStyle;
   data.genre = document.getElementById('genre').value;
   data.playStyle = selectedPlayStyle;
   data.mechanics = Array.from(document.querySelectorAll('input[name="mechanic"]:checked')).map(function(c) { return c.value; });
   data.winCondition = document.getElementById('winCondition').value;
   data.turn = selectedTurn;
   data.luck = selectedLuck;
+  data.boardType = selectedBoardType;
+  data.components = Array.from(document.querySelectorAll('input[name="component"]:checked')).map(function(c) { return c.value; });
+  data.playerRole = selectedPlayerRole;
   data.rulesConcept = document.getElementById('rulesConcept').value.trim();
   data.minPlayers = document.getElementById('minPlayers').value;
   data.maxPlayers = document.getElementById('maxPlayers').value;
@@ -774,6 +841,8 @@ function buildPrompt(data) {
     p += '## 테마: ' + data.freeTheme + '\n';
   }
   if (data.themeKeywords.length) p += '- 테마 키워드: ' + data.themeKeywords.join(', ') + '\n';
+  if (data.storyBackground) p += '- 세계관/스토리: ' + data.storyBackground + '\n';
+  p += '- 아트 스타일: ' + data.artStyle + '\n';
   p += '\n## 게임 설정\n';
   p += '- 장르: ' + data.genre + '\n';
   p += '- 플레이 방식: ' + data.playStyle + '\n';
@@ -781,6 +850,9 @@ function buildPrompt(data) {
   if (data.winCondition) p += '- 승리 조건: ' + data.winCondition + '\n';
   p += '- 턴 구조: ' + data.turn + '\n';
   p += '- 운/실력 비율: ' + data.luck + '\n';
+  p += '- 보드 형태: ' + data.boardType + '\n';
+  if (data.components.length) p += '- 주요 구성품: ' + data.components.join(', ') + '\n';
+  p += '- 플레이어 역할: ' + data.playerRole + '\n';
   p += '- 인원: ' + data.minPlayers + '~' + data.maxPlayers + '명\n';
   p += '- 플레이 타임: ' + data.playtime + '\n';
   p += '- 난이도: ' + data.difficulty + '\n';
@@ -793,12 +865,64 @@ function buildPrompt(data) {
 }
 
 function getSystemPrompt(tourism) {
-  var sp = '너는 보드게임 기획 전문가야.\n사용자가 제공한 정보를 바탕으로 실제 제작 가능한 수준의 완성도 높은 보드게임 기획서를 작성해.\n\n반드시 아래 섹션 구조로, 각 섹션을 ## 마크다운 헤더로 구분해서 출력해:\n\n## 게임 개요\n게임 제목, 한줄 컨셉, 스토리 배경, 테마 설명을 포함.\n\n## 게임 규칙\n승리 조건, 턴 진행 방식, 핵심 메커니즘, 특수 규칙을 구체적으로 기술.\n\n## 구성품 목록\n보드, 카드(종류별 수량), 토큰, 주사위 등 모든 구성품을 상세히 나열.\n\n## 밸런스 분석\n운/실력 비율, 선공 유불리, 강한 전략 경고 등 밸런싱 분석과 개선 제안.';
+  var sections = [
+    '너는 세계 최고의 보드게임 기획 전문가이자 게임 디자이너 AI야.',
+    '',
+    '## 역할과 목표',
+    '1. 사용자의 입력을 최대한 존중하고, 상호 모순되지 않는 일관된 기획을 수립해.',
+    '2. 입력되지 않은 부분은 보드게임 디자인 원칙과 창의성을 발휘하여 채워 넣어.',
+    '3. 단순 정보 나열이 아닌, 게임의 재미 요소와 핵심 경험을 강조하는 설득력 있는 기획서를 작성해.',
+    '4. 구성품, 규칙, 테마, 플레이 경험이 유기적으로 연결되도록 설계해.',
+    '5. 실제 보드게임 제작팀이 참고할 수 있을 정도로 구체적이고 실용적으로 작성해.',
+    '',
+    '## 기획서 구조 — 반드시 아래 ## 헤더로 구분하여 출력',
+    '',
+    '## 게임 개요',
+    '- 게임 제목 (창의적이고 기억에 남는 이름)',
+    '- 한줄 컨셉 (이 게임을 한 문장으로)',
+    '- 세계관과 스토리 배경 (몰입감 있는 서사)',
+    '- 테마 분위기와 아트 방향성',
+    '- 기본 정보: 인원, 플레이 타임, 난이도, 권장 연령',
+    '',
+    '## 게임 규칙',
+    '- 게임 준비 과정 (셋업)',
+    '- 턴/라운드 진행 순서 (단계별 상세 설명)',
+    '- 핵심 메커니즘 상세 설명 (각 메커니즘이 어떻게 작동하는지)',
+    '- 승리 조건과 게임 종료 조건',
+    '- 특수 규칙과 예외 상황',
+    '- 플레이어 상호작용 방식',
+    '',
+    '## 구성품 목록',
+    '- 모든 구성품을 종류별로 상세히 나열 (수량 포함)',
+    '- 카드: 종류별 이름, 수량, 역할 설명',
+    '- 보드/타일: 형태, 크기, 구성 설명',
+    '- 토큰/마커/미플: 종류, 수량, 용도',
+    '- 주사위: 종류(일반/커스텀), 수량',
+    '- 기타: 설명서, 점수 트랙, 참고 카드 등',
+    '',
+    '## 밸런스 분석',
+    '- 운/실력 비율 분석',
+    '- 선공/후공 유불리 분석',
+    '- 강한 전략이나 밸런스 우려 사항',
+    '- 리플레이성 요소 (매번 다른 경험을 제공하는 요소)',
+    '- 밸런스 개선 제안'
+  ];
   if (tourism) {
-    sp += '\n\n## 관광 마케팅 연계\n실제 관광지와의 연결 방안, SNS/온라인 홍보 활용법, 오프라인 체험 연계 아이디어.';
+    sections.push('');
+    sections.push('## 관광 마케팅 연계');
+    sections.push('- 실제 관광지와 게임 요소의 구체적 연결 방안');
+    sections.push('- 관광 체험과 연계한 오프라인 이벤트 아이디어');
+    sections.push('- SNS/온라인 홍보 활용법');
+    sections.push('- 기념품/굿즈 연계 가능성');
+    sections.push('- 교육적 가치 (관광지에 대해 자연스럽게 배우는 요소)');
   }
-  sp += '\n\n각 섹션 내 소제목은 ### 사용. 리스트는 - 사용.\n한국어로 작성할 것.';
-  return sp;
+  sections.push('');
+  sections.push('## 작성 규칙');
+  sections.push('- 각 섹션 내 소제목은 ### 사용. 리스트는 - 사용.');
+  sections.push('- 한국어로 작성.');
+  sections.push('- 사용자의 추가 요청사항은 최우선 반영.');
+  sections.push('- 과도하게 복잡한 규칙은 지양하고 명확하게 설명.');
+  return sections.join('\n');
 }
 
 async function callScout(systemPrompt, userPrompt) {
