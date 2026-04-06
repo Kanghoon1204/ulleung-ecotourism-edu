@@ -237,6 +237,7 @@ footer a { color: #93c5fd; }
       <span class="hero-tag">AI 리서치</span>
       <span class="hero-tag">ChatGPT</span>
       <span class="hero-tag">Antigravity</span>
+      <span class="hero-tag">AI 보드게임</span>
     </div>
   </div>
 </div>
@@ -1447,6 +1448,102 @@ footer a { color: #93c5fd; }
 
     <div class="checkpoint">✅ 스마트폰에서 내 웹페이지가 보이나요? 대단해요! 오늘 코딩 없이 웹사이트를 만드셨습니다!</div>
   </div>
+
+  <!-- ===== 실습 20 (보너스): AI 보드게임 기획서 만들기 ===== -->
+  <div class="exercise" id="ex-boardgame" style="border-left: 4px solid var(--accent); background: linear-gradient(135deg, #fefce8 0%, #fff 40%);">
+    <div class="ex-header">
+      <span class="ex-num" style="background: linear-gradient(135deg, var(--orange), var(--accent)); font-size: 0.75rem;">보너스</span>
+      <h3>AI로 울릉도 보드게임 기획서 만들기</h3>
+    </div>
+    <p class="ex-goal">목표: AI를 활용해 울릉도 관광 테마 보드게임 기획서를 자동으로 생성합니다!</p>
+
+    <div class="tip-box" style="background:#fef3c7; border-color:#fbbf24; margin-bottom:16px;">
+      <strong>보드게임 기획서 생성기란?</strong> 울릉도 관광지를 테마로 한 보드게임을 AI가 자동으로 기획해주는 도구입니다. 관광지를 선택하고, 게임 장르와 스타일을 정하면 — AI가 게임 규칙, 카드 구성, 밸런스 분석까지 한 번에 만들어줍니다! 실제로 만들어볼 수 있을 정도로 구체적인 기획서가 나옵니다.
+    </div>
+
+    <div class="tip-box" style="background:#f0fdf4; border-color:#86efac; margin-bottom:16px;">
+      <strong>왜 보드게임?</strong> 관광지를 홍보하는 방법은 웹페이지만 있는 게 아닙니다! 보드게임으로 만들면 관광객이 <strong>놀면서 자연스럽게</strong> 울릉도의 매력을 알게 됩니다. 기념품 가게에서 팔 수도 있고, 학교에서 교육용으로 쓸 수도 있어요!
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <span>아래 버튼을 클릭하여 <strong>보드게임 기획서 생성기</strong> 페이지를 엽니다</span>
+      </div>
+    </div>
+
+    <div style="text-align:center; margin: 20px 0;">
+      <a href="boardgame.html" target="_blank" style="
+        display: inline-flex; align-items: center; gap: 10px;
+        background: linear-gradient(135deg, var(--orange), var(--accent));
+        color: #fff; text-decoration: none;
+        padding: 16px 32px; border-radius: 12px;
+        font-size: 1.1rem; font-weight: 700;
+        box-shadow: 0 4px 14px rgba(249,115,22,0.35);
+        transition: transform 0.2s, box-shadow 0.2s;
+      " onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(249,115,22,0.45)'"
+         onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 4px 14px rgba(249,115,22,0.35)'">
+        🎲 보드게임 기획서 생성기 열기
+      </a>
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <span>페이지 상단의 <strong>"관광 테마"</strong> 토글이 <strong>ON</strong>으로 되어 있는지 확인합니다 (울릉도 관광지 선택 모드)</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <span><strong>API Key를 입력</strong>합니다 — 강사가 화면에 안내하는 키를 복사하여 붙여넣으세요</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">4</span>
+        <span><strong>STEP 1 ~ 5 단계</strong>를 따라가며 원하는 보드게임을 설정합니다:</span>
+      </div>
+    </div>
+
+    <div class="result-box result-info" style="margin: 12px 0 16px;">
+      <span class="label">5단계 설정 가이드</span>
+      <strong>1단계 — 테마 선택:</strong> 울릉도 관광지를 체크하세요 (예: 독도, 성인봉, 봉래폭포)<br>
+      <strong>2단계 — 세계관 설정:</strong> 게임의 스토리와 분위기를 정합니다<br>
+      <strong>3단계 — 장르 & 규칙:</strong> 전략/모험/퀴즈 등 장르를 고르고 게임 방식을 설정<br>
+      <strong>4단계 — 구성품 설정:</strong> 인원수, 플레이 시간, 보드 형태 등을 선택<br>
+      <strong>5단계 — 대상 & 완성:</strong> 연령대와 추가 요청사항을 입력하고 <strong>"AI 기획서 생성"</strong> 버튼 클릭!
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">5</span>
+        <span>AI가 30초~1분 동안 기획서를 생성합니다. 결과가 나오면 5개 카드를 확인합니다:</span>
+      </div>
+    </div>
+
+    <div class="result-box result-good">
+      <span class="label">예상 결과 — 5개 카드가 나옵니다</span>
+      <strong>🎮 게임 개요:</strong> 게임 제목, 컨셉, 스토리 배경<br>
+      <strong>📜 게임 규칙:</strong> 승리 조건, 턴 진행, 핵심 메커니즘<br>
+      <strong>🧩 구성품 목록:</strong> 보드, 카드 종류/수량, 토큰, 주사위 등<br>
+      <strong>⚖️ 밸런스 분석:</strong> 운/실력 비율, 밸런싱 제안<br>
+      <strong>🗺️ 관광 마케팅 연계:</strong> 실제 관광지 연결 방안, SNS 활용법
+    </div>
+
+    <div class="steps-list">
+      <div class="step-item">
+        <span class="step-num">6</span>
+        <span>마음에 안 드는 부분이 있으면 하단의 <strong>"수정 요청"</strong>에 원하는 수정 사항을 적고 <strong>재생성</strong>합니다</span>
+      </div>
+      <div class="step-item">
+        <span class="step-num">7</span>
+        <span>완성된 기획서는 각 카드의 <strong>"복사"</strong> 버튼으로 복사하여 메모장에 저장합니다</span>
+      </div>
+    </div>
+
+    <div class="tip-box">
+      <strong>TIP:</strong> "규칙을 더 쉽게 해줘", "카드 예시를 더 많이 넣어줘" 같은 빠른 수정 버튼도 있어요! 조별로 각자 다른 관광지를 선택해서 만들어보면 더 재미있습니다. 발표 시간에 보드게임 기획서를 발표해도 좋아요!
+    </div>
+
+    <div class="checkpoint">✅ AI 보드게임 기획서가 완성되었나요? 5개 카드가 모두 나오고 기획서가 구체적이면 대성공!</div>
+  </div>
 </div>
 
 
@@ -1473,6 +1570,7 @@ footer a { color: #93c5fd; }
         <label><input type="checkbox"> <span>3개국어 메뉴판 (오전 실습 6에서 만든 번역 결과)</span></label>
         <label><input type="checkbox"> <span>GPT 앱 (실습 12~14에서 만든 "울릉도 관광 도우미")</span></label>
         <label><input type="checkbox"> <span>Antigravity 웹페이지 (실습 16~19에서 만든 홍보 페이지)</span></label>
+        <label><input type="checkbox"> <span>AI 보드게임 기획서 (보너스 실습에서 만든 울릉도 보드게임 기획)</span></label>
       </div>
 
       <h4 style="margin-top: 20px;">발표 내용 정리 (조별로 5분)</h4>
@@ -1569,6 +1667,13 @@ footer a { color: #93c5fd; }
           <span class="homework-hint">카카오톡 &rarr; 프로필 편집 &rarr; 링크 추가</span>
         </div>
       </label>
+      <label class="homework-item">
+        <input type="checkbox">
+        <div>
+          <strong>숙제 4:</strong> AI 보드게임 기획서 생성기로 다른 관광지 테마 보드게임 만들어보기
+          <span class="homework-hint">boardgame.html &rarr; 다른 관광지 조합으로 새 기획서 생성</span>
+        </div>
+      </label>
     </div>
 
     <!-- 강사 연락처 -->
@@ -1625,9 +1730,13 @@ footer a { color: #93c5fd; }
       <span style="background: var(--purple); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">4</span>
       <span><strong>Antigravity</strong> = 코딩 없이 웹페이지 제작</span>
     </div>
-    <div style="display: flex; align-items: flex-start; gap: 10px;">
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px;">
       <span style="background: var(--accent); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">5</span>
       <span><strong>AI 음성 통역</strong> = 외국인 응대에 바로 활용</span>
+    </div>
+    <div style="display: flex; align-items: flex-start; gap: 10px;">
+      <span style="background: linear-gradient(135deg, var(--orange), var(--accent)); color: #fff; min-width: 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0;">+</span>
+      <span><strong>AI 보드게임</strong> = 관광 테마 보드게임 기획서 자동 생성</span>
     </div>
   </div>
 </div>
@@ -1656,6 +1765,13 @@ footer a { color: #93c5fd; }
       <div class="link-info">
         <strong>Antigravity</strong>
         <span>antigravity.dev</span>
+      </div>
+    </a>
+    <a href="boardgame.html" class="link-card">
+      <div class="link-icon" style="background: linear-gradient(135deg, var(--orange), var(--accent));">🎲</div>
+      <div class="link-info">
+        <strong>보드게임 기획서 생성기</strong>
+        <span>boardgame.html</span>
       </div>
     </a>
     <a href="prompt-guide.html" class="link-card">
