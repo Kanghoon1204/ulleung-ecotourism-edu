@@ -39,6 +39,12 @@ body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: va
 /* Toggle */
 .toggle-section { text-align: center; padding: 32px 0 16px; }
 .toggle-wrap { display: inline-flex; align-items: center; gap: 12px; background: var(--card); padding: 10px 24px; border-radius: 30px; box-shadow: var(--shadow); }
+.api-key-bar { display: flex; align-items: center; gap: 8px; margin: 16px 0 0; background: var(--card); padding: 10px 16px; border-radius: var(--radius); box-shadow: var(--shadow); font-size: .85rem; }
+.api-key-bar label { font-weight: 500; white-space: nowrap; color: var(--text-light); }
+.api-key-bar input { flex: 1; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; font-size: .85rem; font-family: monospace; }
+.api-key-bar .key-status { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.api-key-bar .key-status.on { background: var(--secondary); }
+.api-key-bar .key-status.off { background: #ef4444; }
 .toggle-label { font-size: 0.9rem; font-weight: 500; color: var(--text-light); transition: color .2s; }
 .toggle-label.active { color: var(--primary); font-weight: 700; }
 .toggle-switch { position: relative; width: 52px; height: 28px; cursor: pointer; }
@@ -219,6 +225,11 @@ select { background: #fff; cursor: pointer; }
       <span class="toggle-thumb"></span>
     </label>
     <span class="toggle-label active" id="toggleLabelOn">울릉도 관광 테마</span>
+  </div>
+  <div class="api-key-bar">
+    <span class="key-status off" id="keyStatus"></span>
+    <label>API Key</label>
+    <input type="password" id="apiKeyInput" placeholder="sk-or-v1-..." value="">
   </div>
 </section>
 
@@ -558,7 +569,7 @@ select { background: #fff; cursor: pointer; }
 
 <script>
 // ─── Config ───────────────────────────────
-const API_KEY = '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';
+var API_KEY = localStorage.getItem('openrouter_api_key') || '';
 const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
 const MODEL = 'meta-llama/llama-4-scout';
 
@@ -606,6 +617,27 @@ function init() {
   setupCheckboxStyles();
   setupCharCount();
   setupRadioGroups();
+  setupApiKeyInput();
+}
+
+function setupApiKeyInput() {
+  var input = document.getElementById('apiKeyInput');
+  var status = document.getElementById('keyStatus');
+  if (API_KEY) {
+    input.value = API_KEY;
+    status.className = 'key-status on';
+  }
+  input.addEventListener('input', function() {
+    var val = input.value.trim();
+    API_KEY = val;
+    if (val) {
+      localStorage.setItem('openrouter_api_key', val);
+      status.className = 'key-status on';
+    } else {
+      localStorage.removeItem('openrouter_api_key');
+      status.className = 'key-status off';
+    }
+  });
 }
 
 function renderSpots() {
@@ -926,6 +958,9 @@ function getSystemPrompt(tourism) {
 }
 
 async function callScout(systemPrompt, userPrompt) {
+  if (!API_KEY) {
+    throw new Error('API 키를 입력해주세요. 상단의 API Key 입력란에 OpenRouter 키를 넣어주세요.');
+  }
   var controller = new AbortController();
   var timeout = setTimeout(function() { controller.abort(); }, 60000);
   try {
