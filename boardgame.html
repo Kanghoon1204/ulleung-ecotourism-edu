@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보드게임 기획서 생성기 - 울릉군 생태관광 AI 교육</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #2563eb;
+  --primary-dark: #1d4ed8;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --orange: #f97316;
+  --purple: #8b5cf6;
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --border: #e2e8f0;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, #1e40af 0%, #7c3aed 50%, #2563eb 100%); color: #fff; padding: 48px 0 40px; text-align: center; position: relative; overflow: hidden; }
+.hero::after { content: ''; position: absolute; bottom: -2px; left: 0; right: 0; height: 40px; background: var(--bg); border-radius: 40px 40px 0 0; }
+.hero h1 { font-size: 1.8rem; font-weight: 900; margin-bottom: 6px; }
+.hero .sub { font-size: 1rem; opacity: .85; }
+.hero-nav { margin-top: 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.hero-nav a { color: #fff; background: rgba(255,255,255,0.18); padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; text-decoration: none; transition: background .2s; }
+.hero-nav a:hover { background: rgba(255,255,255,0.3); text-decoration: none; }
+
+/* Toggle */
+.toggle-section { text-align: center; padding: 32px 0 16px; }
+.toggle-wrap { display: inline-flex; align-items: center; gap: 12px; background: var(--card); padding: 10px 24px; border-radius: 30px; box-shadow: var(--shadow); }
+.toggle-label { font-size: 0.9rem; font-weight: 500; color: var(--text-light); transition: color .2s; }
+.toggle-label.active { color: var(--primary); font-weight: 700; }
+.toggle-switch { position: relative; width: 52px; height: 28px; cursor: pointer; }
+.toggle-switch input { display: none; }
+.toggle-track { position: absolute; inset: 0; background: var(--border); border-radius: 14px; transition: background .3s; }
+.toggle-switch input:checked + .toggle-track { background: var(--primary); }
+.toggle-thumb { position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: #fff; border-radius: 50%; transition: transform .3s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+.toggle-switch input:checked ~ .toggle-thumb { transform: translateX(24px); }
+
+/* Progress */
+.progress-bar { display: flex; align-items: center; justify-content: center; gap: 0; padding: 24px 0 8px; }
+.progress-step { display: flex; align-items: center; gap: 0; }
+.progress-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; border: 2px solid var(--border); background: var(--card); color: var(--text-light); transition: all .3s; cursor: pointer; }
+.progress-circle.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+.progress-circle.done { border-color: var(--secondary); background: var(--secondary); color: #fff; }
+.progress-line { width: 60px; height: 2px; background: var(--border); transition: background .3s; }
+.progress-line.done { background: var(--secondary); }
+.step-labels { display: flex; justify-content: center; gap: 62px; margin-bottom: 20px; }
+.step-label-text { font-size: 0.75rem; color: var(--text-light); text-align: center; width: 60px; }
+.step-label-text.active { color: var(--primary); font-weight: 700; }
+
+/* Wizard Card */
+.wizard-card { background: var(--card); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow-lg); margin-bottom: 24px; }
+.wizard-card h2 { font-size: 1.3rem; margin-bottom: 6px; }
+.wizard-card .desc { font-size: 0.88rem; color: var(--text-light); margin-bottom: 24px; }
+.wizard-step { display: none; }
+.wizard-step.active { display: block; }
+
+/* Form */
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
+.form-label .req { color: #ef4444; margin-left: 2px; }
+.form-hint { font-size: 0.78rem; color: var(--text-light); margin-top: 4px; }
+
+/* Checkbox group */
+.checkbox-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.cb-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; transition: all .2s; font-size: 0.88rem; }
+.cb-item:hover { border-color: var(--primary); background: #eff6ff; }
+.cb-item input { accent-color: var(--primary); width: 16px; height: 16px; }
+.cb-item.checked { border-color: var(--primary); background: #eff6ff; }
+
+/* Tags */
+.tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.tag { padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; border: 1px solid var(--border); cursor: pointer; transition: all .2s; user-select: none; }
+.tag:hover { border-color: var(--primary); }
+.tag.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tag-input-wrap { display: flex; gap: 8px; margin-top: 8px; }
+.tag-input-wrap input { flex: 1; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 0.88rem; font-family: inherit; }
+.tag-input-wrap input:focus { outline: none; border-color: var(--primary); }
+.tag-input-wrap button { padding: 8px 16px; border: none; background: var(--primary); color: #fff; border-radius: 8px; cursor: pointer; font-family: inherit; font-size: 0.85rem; }
+
+/* Text input */
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%; padding: 10px 14px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 0.9rem; font-family: inherit; transition: border-color .2s;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--primary); }
+textarea { resize: vertical; min-height: 80px; }
+select { background: #fff; cursor: pointer; }
+
+/* Number range */
+.num-range { display: flex; align-items: center; gap: 10px; }
+.num-range input[type="number"] { width: 80px; text-align: center; }
+.num-range span { color: var(--text-light); font-size: 0.9rem; }
+
+/* Radio group */
+.radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+.radio-item { padding: 8px 18px; border: 1px solid var(--border); border-radius: 20px; cursor: pointer; font-size: 0.88rem; transition: all .2s; user-select: none; }
+.radio-item:hover { border-color: var(--primary); }
+.radio-item.selected { background: var(--primary); color: #fff; border-color: var(--primary); }
+.radio-item input { display: none; }
+
+/* Buttons */
+.btn-row { display: flex; justify-content: space-between; align-items: center; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--border); }
+.btn { padding: 10px 28px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; cursor: pointer; border: none; font-family: inherit; transition: all .2s; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { background: var(--border); color: var(--text-light); cursor: not-allowed; }
+.btn-secondary { background: transparent; color: var(--text-light); border: 1px solid var(--border); }
+.btn-secondary:hover { border-color: var(--text-light); }
+.btn-accent { background: var(--secondary); color: #fff; }
+.btn-accent:hover { background: #059669; }
+.btn-sm { padding: 6px 14px; font-size: 0.82rem; }
+.btn-recommend { background: var(--accent); color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; border: none; cursor: pointer; font-family: inherit; font-weight: 500; transition: all .2s; }
+.btn-recommend:hover { background: #d97706; }
+
+/* Loading */
+.loading-section { display: none; text-align: center; padding: 60px 0; }
+.loading-section.active { display: block; }
+.spinner { width: 48px; height: 48px; border: 4px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 20px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 1rem; color: var(--text-light); }
+.loading-sub { font-size: 0.85rem; color: var(--text-light); margin-top: 8px; opacity: 0; transition: opacity .3s; }
+.loading-sub.show { opacity: 1; }
+
+/* Error */
+.error-box { background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); padding: 16px 20px; margin: 20px 0; display: none; }
+.error-box.show { display: block; }
+.error-box p { color: #dc2626; font-size: 0.9rem; margin-bottom: 10px; }
+
+/* Result */
+.result-section { display: none; padding-bottom: 40px; }
+.result-section.active { display: block; }
+.result-header { text-align: center; margin: 32px 0 24px; }
+.result-header h2 { font-size: 1.5rem; }
+.result-header p { color: var(--text-light); font-size: 0.9rem; margin-top: 4px; }
+
+.result-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 16px; overflow: hidden; }
+.result-card-header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); }
+.result-card-header h3 { font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+.result-card-header .card-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; color: #fff; flex-shrink: 0; }
+.icon-overview { background: var(--primary); }
+.icon-rules { background: var(--secondary); }
+.icon-components { background: var(--orange); }
+.icon-balance { background: var(--purple); }
+.icon-marketing { background: #ec4899; }
+.copy-card-btn { padding: 4px 12px; border: 1px solid var(--border); border-radius: 6px; background: transparent; cursor: pointer; font-size: 0.78rem; font-family: inherit; color: var(--text-light); transition: all .2s; }
+.copy-card-btn:hover { border-color: var(--primary); color: var(--primary); }
+.result-card-body { padding: 20px; font-size: 0.9rem; line-height: 1.8; }
+.result-card-body h3 { font-size: 1.05rem; margin: 16px 0 8px; color: var(--primary); }
+.result-card-body h4 { font-size: 0.95rem; margin: 12px 0 6px; color: var(--text); }
+.result-card-body ul, .result-card-body ol { padding-left: 20px; margin: 6px 0; }
+.result-card-body li { margin-bottom: 4px; }
+.result-card-body p { margin-bottom: 8px; }
+.result-card-body strong { color: var(--text); }
+
+/* Refinement */
+.refine-section { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-top: 24px; }
+.refine-section h3 { font-size: 1.1rem; margin-bottom: 12px; }
+.refine-row { display: flex; gap: 10px; }
+.refine-row textarea { flex: 1; min-height: 60px; }
+.refine-row .btn { align-self: flex-end; white-space: nowrap; }
+
+/* Toast */
+.toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(20px); background: #1e293b; color: #fff; padding: 10px 24px; border-radius: 8px; font-size: 0.88rem; opacity: 0; transition: all .3s; z-index: 9999; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Back to top */
+.back-link { text-align: center; padding: 24px 0 40px; }
+.back-link a { color: var(--text-light); font-size: 0.88rem; }
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero h1 { font-size: 1.4rem; }
+  .wizard-card { padding: 20px; }
+  .checkbox-grid { grid-template-columns: repeat(2, 1fr); }
+  .num-range input[type="number"] { width: 60px; }
+  .progress-line { width: 36px; }
+  .step-labels { gap: 38px; }
+  .refine-row { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="container">
+    <h1>보드게임 기획서 생성기</h1>
+    <p class="sub">AI가 만들어주는 완성도 높은 보드게임 기획서</p>
+    <nav class="hero-nav">
+      <a href="index.html">메인 페이지</a>
+      <a href="class.html">수업 진행</a>
+      <a href="prompt-guide.html">프롬프트 가이드</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+
+<!-- Tourism Toggle -->
+<section class="toggle-section">
+  <div class="toggle-wrap">
+    <span class="toggle-label" id="toggleLabelOff">일반 보드게임</span>
+    <label class="toggle-switch">
+      <input type="checkbox" id="tourismToggle" checked>
+      <span class="toggle-track"></span>
+      <span class="toggle-thumb"></span>
+    </label>
+    <span class="toggle-label active" id="toggleLabelOn">울릉도 관광 테마</span>
+  </div>
+</section>
+
+<!-- Progress Bar -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-step">
+    <div class="progress-circle active" data-step="1">1</div>
+    <div class="progress-line" id="line1"></div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-circle" data-step="2">2</div>
+    <div class="progress-line" id="line2"></div>
+  </div>
+  <div class="progress-step">
+    <div class="progress-circle" data-step="3">3</div>
+  </div>
+</div>
+<div class="step-labels">
+  <span class="step-label-text active" id="sl1">테마 설정</span>
+  <span class="step-label-text" id="sl2">게임 설정</span>
+  <span class="step-label-text" id="sl3">대상 & 부가</span>
+</div>
+
+<!-- Wizard -->
+<div class="wizard-card" id="wizardCard">
+
+  <!-- Step 1: Theme -->
+  <div class="wizard-step active" id="step1">
+    <h2>Step 1. 테마 설정</h2>
+    <p class="desc">보드게임의 배경이 되는 테마를 설정하세요.</p>
+
+    <!-- Tourism ON -->
+    <div id="tourismFields">
+      <div class="form-group">
+        <label class="form-label">관광지 선택 <span class="req">*</span></label>
+        <div class="checkbox-grid" id="spotGrid"></div>
+        <div class="tag-input-wrap" style="margin-top:10px">
+          <input type="text" id="customSpot" placeholder="직접 입력 (예: 울릉 해중전망대)">
+          <button type="button" class="btn-sm btn-primary" onclick="addCustomSpot()">추가</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">테마 키워드</label>
+        <div class="tag-container" id="tourismTags"></div>
+        <div class="tag-input-wrap">
+          <input type="text" id="customTourismTag" placeholder="키워드 직접 입력">
+          <button type="button" class="btn-sm btn-primary" onclick="addCustomTag('tourismTags','customTourismTag')">추가</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tourism OFF -->
+    <div id="generalFields" style="display:none">
+      <div class="form-group">
+        <label class="form-label">게임 테마 <span class="req">*</span></label>
+        <input type="text" id="freeTheme" placeholder="예: 우주 탐험, 좀비 서바이벌, 중세 판타지">
+      </div>
+      <div class="form-group">
+        <label class="form-label">테마 키워드</label>
+        <div class="tag-container" id="generalTags"></div>
+        <div class="tag-input-wrap">
+          <input type="text" id="customGeneralTag" placeholder="키워드 직접 입력">
+          <button type="button" class="btn-sm btn-primary" onclick="addCustomTag('generalTags','customGeneralTag')">추가</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <div></div>
+      <button class="btn btn-primary" onclick="goStep(2)">다음 단계</button>
+    </div>
+  </div>
+
+  <!-- Step 2: Game Settings -->
+  <div class="wizard-step" id="step2">
+    <h2>Step 2. 게임 설정</h2>
+    <p class="desc">게임의 장르, 인원, 시간 등을 설정하세요.</p>
+
+    <div style="margin-bottom:16px; text-align:right;">
+      <button class="btn-recommend" onclick="autoRecommendStep2()">자동 추천</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">게임 장르 <span class="req">*</span></label>
+      <select id="genre">
+        <option value="">선택하세요</option>
+        <option value="전략">전략</option>
+        <option value="퀴즈">퀴즈</option>
+        <option value="협동">협동</option>
+        <option value="모험">모험</option>
+        <option value="수집">수집</option>
+        <option value="레이싱">레이싱</option>
+        <option value="추리">추리</option>
+        <option value="덱빌딩">덱빌딩</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">인원 <span class="req">*</span></label>
+      <div class="num-range">
+        <input type="number" id="minPlayers" min="1" max="12" value="2">
+        <span>~</span>
+        <input type="number" id="maxPlayers" min="1" max="12" value="4">
+        <span>명</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">플레이 타임 <span class="req">*</span></label>
+      <div class="radio-group" id="playtimeGroup">
+        <label class="radio-item selected"><input type="radio" name="playtime" value="15분" checked>15분</label>
+        <label class="radio-item"><input type="radio" name="playtime" value="30분">30분</label>
+        <label class="radio-item"><input type="radio" name="playtime" value="60분">60분</label>
+        <label class="radio-item"><input type="radio" name="playtime" value="90분+">90분+</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">난이도 <span class="req">*</span></label>
+      <div class="radio-group" id="difficultyGroup">
+        <label class="radio-item"><input type="radio" name="difficulty" value="입문">입문</label>
+        <label class="radio-item selected"><input type="radio" name="difficulty" value="보통" checked>보통</label>
+        <label class="radio-item"><input type="radio" name="difficulty" value="전략가">전략가</label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(1)">이전</button>
+      <button class="btn btn-primary" onclick="goStep(3)">다음 단계</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Target & Extra -->
+  <div class="wizard-step" id="step3">
+    <h2>Step 3. 대상 & 부가 설정</h2>
+    <p class="desc">타겟 연령대와 추가 요청사항을 입력하세요.</p>
+
+    <div class="form-group">
+      <label class="form-label">타겟 연령대 <span class="req">*</span></label>
+      <div class="checkbox-grid">
+        <label class="cb-item"><input type="checkbox" name="age" value="어린이(7~12)"> 어린이(7~12)</label>
+        <label class="cb-item"><input type="checkbox" name="age" value="청소년(13~18)"> 청소년(13~18)</label>
+        <label class="cb-item"><input type="checkbox" name="age" value="성인(19+)"> 성인(19+)</label>
+        <label class="cb-item checked"><input type="checkbox" name="age" value="전연령" checked> 전연령</label>
+      </div>
+    </div>
+
+    <div class="form-group" id="marketingGroup">
+      <label class="form-label">마케팅 목표</label>
+      <div class="checkbox-grid">
+        <label class="cb-item"><input type="checkbox" name="marketing" value="관광 홍보"> 관광 홍보</label>
+        <label class="cb-item"><input type="checkbox" name="marketing" value="교육"> 교육</label>
+        <label class="cb-item"><input type="checkbox" name="marketing" value="체험 연계"> 체험 연계</label>
+        <label class="cb-item"><input type="checkbox" name="marketing" value="기념품 판매"> 기념품 판매</label>
+        <label class="cb-item"><input type="checkbox" name="marketing" value="SNS 바이럴"> SNS 바이럴</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">추가 요청사항</label>
+      <textarea id="extraRequest" maxlength="500" placeholder="원하는 요소를 자유롭게 입력하세요.&#10;예: 독도 관련 퀴즈 요소 포함, 카드 수집 메커니즘 추가"></textarea>
+      <p class="form-hint"><span id="extraCount">0</span>/500자</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="goStep(2)">이전</button>
+      <button class="btn btn-accent" onclick="generate()">기획서 생성하기</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading -->
+<div class="loading-section" id="loadingSection">
+  <div class="spinner"></div>
+  <p class="loading-text">AI가 기획서를 작성하고 있습니다...</p>
+  <p class="loading-sub" id="loadingSub">조금 더 걸리고 있어요. 잠시만 기다려주세요.</p>
+</div>
+
+<!-- Error -->
+<div class="error-box" id="errorBox">
+  <p id="errorMsg"></p>
+  <button class="btn btn-primary btn-sm" onclick="generate()">다시 시도</button>
+</div>
+
+<!-- Results -->
+<section class="result-section" id="resultSection">
+  <div class="result-header">
+    <h2>보드게임 기획서</h2>
+    <p>AI가 생성한 기획서입니다. 수정이 필요하면 아래에서 요청하세요.</p>
+  </div>
+  <div id="resultCards"></div>
+
+  <div class="refine-section">
+    <h3>수정 & 재생성</h3>
+    <p class="form-hint" style="margin-bottom:12px">마음에 들지 않는 부분이 있다면 수정 요청을 입력하고 재생성하세요.</p>
+    <div class="refine-row">
+      <textarea id="refineInput" maxlength="500" placeholder="예: 규칙을 더 단순하게 해줘 / 퀴즈 요소를 추가해줘 / 플레이 타임을 줄여줘"></textarea>
+      <button class="btn btn-accent" onclick="regenerate()">재생성</button>
+    </div>
+  </div>
+
+  <div style="text-align:center; margin-top:20px;">
+    <button class="btn btn-secondary" onclick="resetAll()">처음부터 다시 만들기</button>
+  </div>
+</section>
+
+</main>
+
+<div class="back-link">
+  <a href="index.html">메인 페이지로 돌아가기</a>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── Config ───────────────────────────────
+const API_KEY = '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';
+const API_URL = 'https://openrouter.ai/api/v1/chat/completions';
+const MODEL = 'meta-llama/llama-4-scout';
+
+// ─── Data ─────────────────────────────────
+const SPOTS = [
+  '성인봉','봉래폭포','독도','나리분지','저동항','도동항',
+  '태하향목','천부항','죽도','관음도','행남해안산책로','사자바위'
+];
+const TOURISM_KEYWORDS = ['자연','모험','역사','음식','해양','힐링','생태','문화','탐험','애국'];
+const GENERAL_KEYWORDS = ['판타지','SF','공포','힐링','경쟁','협동','전쟁','추리','유머','교육'];
+
+const SPOT_THEME_MAP = {
+  '성인봉':['자연','모험'], '봉래폭포':['자연','힐링'], '독도':['역사','해양','모험'],
+  '나리분지':['자연','생태'], '저동항':['음식','해양'], '도동항':['음식','문화'],
+  '태하향목':['자연','힐링'], '천부항':['해양','문화'], '죽도':['자연','모험'],
+  '관음도':['자연','탐험'], '행남해안산책로':['자연','힐링'], '사자바위':['자연','모험']
+};
+const THEME_GENRE_MAP = {
+  '모험':'모험','역사':'퀴즈','자연':'수집','음식':'수집','해양':'모험',
+  '힐링':'협동','생태':'수집','문화':'퀴즈','탐험':'모험','애국':'퀴즈',
+  '판타지':'모험','SF':'전략','공포':'추리','경쟁':'전략','협동':'협동',
+  '전쟁':'전략','추리':'추리','유머':'퀴즈','교육':'퀴즈'
+};
+
+// ─── State ─────────────────────────────────
+let currentStep = 1;
+let isTourism = true;
+let lastResult = '';
+let selectedPlaytime = '15분';
+let selectedDifficulty = '보통';
+let loadingTimer = null;
+
+// ─── Init ──────────────────────────────────
+function init() {
+  renderSpots();
+  renderTags('tourismTags', TOURISM_KEYWORDS);
+  renderTags('generalTags', GENERAL_KEYWORDS);
+  setupToggle();
+  setupCheckboxStyles();
+  setupCharCount();
+  setupRadioGroups();
+}
+
+function renderSpots() {
+  const grid = document.getElementById('spotGrid');
+  // Safe DOM construction: no user input in this HTML
+  grid.textContent = '';
+  SPOTS.forEach(function(s) {
+    var label = document.createElement('label');
+    label.className = 'cb-item';
+    var cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.name = 'spot';
+    cb.value = s;
+    label.appendChild(cb);
+    label.appendChild(document.createTextNode(' ' + s));
+    grid.appendChild(label);
+  });
+  setupCheckboxStyles();
+}
+
+function renderTags(containerId, keywords) {
+  var c = document.getElementById(containerId);
+  c.textContent = '';
+  keywords.forEach(function(k) {
+    var span = document.createElement('span');
+    span.className = 'tag';
+    span.textContent = k;
+    span.onclick = function() { toggleTag(this); };
+    c.appendChild(span);
+  });
+}
+
+function toggleTag(el) { el.classList.toggle('selected'); }
+
+function addCustomSpot() {
+  var input = document.getElementById('customSpot');
+  var val = input.value.trim();
+  if (!val) return;
+  var grid = document.getElementById('spotGrid');
+  var label = document.createElement('label');
+  label.className = 'cb-item checked';
+  var cb = document.createElement('input');
+  cb.type = 'checkbox';
+  cb.name = 'spot';
+  cb.value = val;
+  cb.checked = true;
+  cb.addEventListener('change', function() {
+    label.classList.toggle('checked', this.checked);
+  });
+  label.appendChild(cb);
+  label.appendChild(document.createTextNode(' ' + val));
+  grid.appendChild(label);
+  input.value = '';
+}
+
+function addCustomTag(containerId, inputId) {
+  var input = document.getElementById(inputId);
+  var val = input.value.trim();
+  if (!val) return;
+  var c = document.getElementById(containerId);
+  var tag = document.createElement('span');
+  tag.className = 'tag selected';
+  tag.textContent = val;
+  tag.onclick = function() { toggleTag(this); };
+  c.appendChild(tag);
+  input.value = '';
+}
+
+function setupToggle() {
+  document.getElementById('tourismToggle').addEventListener('change', function() {
+    isTourism = this.checked;
+    document.getElementById('tourismFields').style.display = isTourism ? 'block' : 'none';
+    document.getElementById('generalFields').style.display = isTourism ? 'none' : 'block';
+    document.getElementById('marketingGroup').style.display = isTourism ? 'block' : 'none';
+    document.getElementById('toggleLabelOn').classList.toggle('active', isTourism);
+    document.getElementById('toggleLabelOff').classList.toggle('active', !isTourism);
+    goStep(1);
+  });
+}
+
+function setupCheckboxStyles() {
+  document.querySelectorAll('.cb-item input[type="checkbox"]').forEach(function(cb) {
+    cb.addEventListener('change', function() {
+      this.closest('.cb-item').classList.toggle('checked', this.checked);
+    });
+    if (cb.checked) cb.closest('.cb-item').classList.add('checked');
+  });
+}
+
+function setupCharCount() {
+  document.getElementById('extraRequest').addEventListener('input', function() {
+    document.getElementById('extraCount').textContent = this.value.length;
+  });
+}
+
+function setupRadioGroups() {
+  document.querySelectorAll('.radio-group').forEach(function(group) {
+    group.querySelectorAll('.radio-item').forEach(function(item) {
+      item.addEventListener('click', function() {
+        group.querySelectorAll('.radio-item').forEach(function(r) { r.classList.remove('selected'); });
+        item.classList.add('selected');
+        item.querySelector('input').checked = true;
+        var name = item.querySelector('input').name;
+        var value = item.querySelector('input').value;
+        if (name === 'playtime') selectedPlaytime = value;
+        if (name === 'difficulty') selectedDifficulty = value;
+      });
+    });
+  });
+}
+
+// ─── Navigation ────────────────────────────
+function goStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+  currentStep = n;
+  document.querySelectorAll('.wizard-step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById('step' + n).classList.add('active');
+  document.querySelectorAll('.progress-circle').forEach(function(c) {
+    var s = parseInt(c.dataset.step);
+    c.classList.remove('active','done');
+    if (s === n) c.classList.add('active');
+    else if (s < n) c.classList.add('done');
+  });
+  document.getElementById('line1').classList.toggle('done', n >= 2);
+  document.getElementById('line2').classList.toggle('done', n >= 3);
+  ['sl1','sl2','sl3'].forEach(function(id, i) {
+    document.getElementById(id).classList.toggle('active', i + 1 === n);
+  });
+}
+
+function validateStep(n) {
+  if (n === 1) {
+    if (isTourism) {
+      if (document.querySelectorAll('input[name="spot"]:checked').length === 0) {
+        showToast('관광지를 1개 이상 선택해주세요.');
+        return false;
+      }
+    } else {
+      if (!document.getElementById('freeTheme').value.trim()) {
+        showToast('게임 테마를 입력해주세요.');
+        return false;
+      }
+    }
+  }
+  if (n === 2) {
+    if (!document.getElementById('genre').value) {
+      showToast('게임 장르를 선택해주세요.');
+      return false;
+    }
+  }
+  return true;
+}
+
+// ─── Auto Recommend ────────────────────────
+function autoRecommendStep2() {
+  var themes = [];
+  if (isTourism) {
+    var spots = Array.from(document.querySelectorAll('input[name="spot"]:checked')).map(function(c) { return c.value; });
+    spots.forEach(function(s) { if (SPOT_THEME_MAP[s]) themes = themes.concat(SPOT_THEME_MAP[s]); });
+    document.querySelectorAll('#tourismTags .tag.selected').forEach(function(t) { themes.push(t.textContent); });
+  } else {
+    document.querySelectorAll('#generalTags .tag.selected').forEach(function(t) { themes.push(t.textContent); });
+    var ft = document.getElementById('freeTheme').value.trim();
+    if (ft) {
+      Object.keys(THEME_GENRE_MAP).forEach(function(k) {
+        if (ft.indexOf(k) !== -1) themes.push(k);
+      });
+    }
+  }
+  var genreCounts = {};
+  themes.forEach(function(t) {
+    var g = THEME_GENRE_MAP[t];
+    if (g) genreCounts[g] = (genreCounts[g] || 0) + 1;
+  });
+  var entries = Object.entries(genreCounts).sort(function(a, b) { return b[1] - a[1]; });
+  if (entries.length > 0) {
+    document.getElementById('genre').value = entries[0][0];
+    showToast('"' + entries[0][0] + '" 장르를 추천합니다!');
+  } else {
+    showToast('추천할 정보가 부족합니다. 직접 선택해주세요.');
+  }
+}
+
+// ─── Generate ──────────────────────────────
+function collectInputs() {
+  var data = { isTourism: isTourism };
+  if (isTourism) {
+    data.spots = Array.from(document.querySelectorAll('input[name="spot"]:checked')).map(function(c) { return c.value; });
+    data.themeKeywords = Array.from(document.querySelectorAll('#tourismTags .tag.selected')).map(function(t) { return t.textContent; });
+  } else {
+    data.freeTheme = document.getElementById('freeTheme').value.trim();
+    data.themeKeywords = Array.from(document.querySelectorAll('#generalTags .tag.selected')).map(function(t) { return t.textContent; });
+  }
+  data.genre = document.getElementById('genre').value;
+  data.minPlayers = document.getElementById('minPlayers').value;
+  data.maxPlayers = document.getElementById('maxPlayers').value;
+  data.playtime = selectedPlaytime;
+  data.difficulty = selectedDifficulty;
+  data.ages = Array.from(document.querySelectorAll('input[name="age"]:checked')).map(function(c) { return c.value; });
+  data.marketing = isTourism ? Array.from(document.querySelectorAll('input[name="marketing"]:checked')).map(function(c) { return c.value; }) : [];
+  data.extra = document.getElementById('extraRequest').value.trim();
+  return data;
+}
+
+function buildPrompt(data) {
+  var p = '';
+  if (data.isTourism) {
+    p += '## 테마: 울릉도 관광\n- 관광지: ' + data.spots.join(', ') + '\n';
+  } else {
+    p += '## 테마: ' + data.freeTheme + '\n';
+  }
+  if (data.themeKeywords.length) p += '- 테마 키워드: ' + data.themeKeywords.join(', ') + '\n';
+  p += '\n## 게임 설정\n';
+  p += '- 장르: ' + data.genre + '\n';
+  p += '- 인원: ' + data.minPlayers + '~' + data.maxPlayers + '명\n';
+  p += '- 플레이 타임: ' + data.playtime + '\n';
+  p += '- 난이도: ' + data.difficulty + '\n';
+  p += '\n## 대상\n- 연령대: ' + data.ages.join(', ') + '\n';
+  if (data.marketing.length) p += '- 마케팅 목표: ' + data.marketing.join(', ') + '\n';
+  if (data.extra) p += '\n## 추가 요청\n' + data.extra + '\n';
+  p += '\n위 정보를 바탕으로 완성도 높은 보드게임 기획서를 작성해줘.';
+  return p;
+}
+
+function getSystemPrompt(tourism) {
+  var sp = '너는 보드게임 기획 전문가야.\n사용자가 제공한 정보를 바탕으로 실제 제작 가능한 수준의 완성도 높은 보드게임 기획서를 작성해.\n\n반드시 아래 섹션 구조로, 각 섹션을 ## 마크다운 헤더로 구분해서 출력해:\n\n## 게임 개요\n게임 제목, 한줄 컨셉, 스토리 배경, 테마 설명을 포함.\n\n## 게임 규칙\n승리 조건, 턴 진행 방식, 핵심 메커니즘, 특수 규칙을 구체적으로 기술.\n\n## 구성품 목록\n보드, 카드(종류별 수량), 토큰, 주사위 등 모든 구성품을 상세히 나열.\n\n## 밸런스 분석\n운/실력 비율, 선공 유불리, 강한 전략 경고 등 밸런싱 분석과 개선 제안.';
+  if (tourism) {
+    sp += '\n\n## 관광 마케팅 연계\n실제 관광지와의 연결 방안, SNS/온라인 홍보 활용법, 오프라인 체험 연계 아이디어.';
+  }
+  sp += '\n\n각 섹션 내 소제목은 ### 사용. 리스트는 - 사용.\n한국어로 작성할 것.';
+  return sp;
+}
+
+async function callScout(systemPrompt, userPrompt) {
+  var controller = new AbortController();
+  var timeout = setTimeout(function() { controller.abort(); }, 60000);
+  try {
+    var res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + API_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: MODEL,
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt }
+        ],
+        max_tokens: 4000,
+        temperature: 0.7
+      }),
+      signal: controller.signal
+    });
+    clearTimeout(timeout);
+    if (res.status === 429) throw new Error('RATE_LIMIT');
+    if (res.status >= 500) throw new Error('SERVER_ERROR');
+    if (!res.ok) throw new Error('API_ERROR');
+    var json = await res.json();
+    if (json.error) throw new Error(json.error.message || 'API_ERROR');
+    if (!json.choices || !json.choices[0]) throw new Error('EMPTY');
+    return json.choices[0].message.content;
+  } catch (e) {
+    clearTimeout(timeout);
+    if (e.name === 'AbortError') throw new Error('TIMEOUT');
+    throw e;
+  }
+}
+
+async function generate() {
+  if (!validateStep(1) || !validateStep(2)) return;
+  if (document.querySelectorAll('input[name="age"]:checked').length === 0) {
+    showToast('타겟 연령대를 선택해주세요.');
+    return;
+  }
+  var data = collectInputs();
+  var userPrompt = buildPrompt(data);
+  var systemPrompt = getSystemPrompt(data.isTourism);
+  showLoading(true);
+  hideError();
+  try {
+    var result = await callScout(systemPrompt, userPrompt);
+    lastResult = result;
+    renderResult(result, data.isTourism);
+  } catch (e) {
+    showError(e.message);
+  }
+}
+
+async function regenerate() {
+  var refine = document.getElementById('refineInput').value.trim();
+  if (!refine) { showToast('수정 요청을 입력해주세요.'); return; }
+  var data = collectInputs();
+  var userPrompt = '이전에 생성한 기획서:\n---\n' + lastResult + '\n---\n\n사용자 수정 요청:\n' + refine + '\n\n위 수정 요청을 반영하여 기획서를 다시 작성해줘. 동일한 섹션 구조(## 헤더)를 유지할 것.';
+  var systemPrompt = getSystemPrompt(data.isTourism);
+  showLoading(true);
+  hideError();
+  document.getElementById('resultSection').classList.remove('active');
+  try {
+    var result = await callScout(systemPrompt, userPrompt);
+    lastResult = result;
+    renderResult(result, data.isTourism);
+    document.getElementById('refineInput').value = '';
+  } catch (e) {
+    showError(e.message);
+    document.getElementById('resultSection').classList.add('active');
+  }
+}
+
+// ─── Render ────────────────────────────────
+var CARD_CONFIG = [
+  { key: '게임 개요', icon: 'icon-overview', emoji: '\uD83C\uDFB2' },
+  { key: '게임 규칙', icon: 'icon-rules', emoji: '\uD83D\uDCDC' },
+  { key: '구성품 목록', icon: 'icon-components', emoji: '\uD83E\uDDE9' },
+  { key: '밸런스 분석', icon: 'icon-balance', emoji: '\u2696\uFE0F' },
+  { key: '관광 마케팅 연계', icon: 'icon-marketing', emoji: '\uD83D\uDCE3' }
+];
+
+function parseSections(text) {
+  var sections = {};
+  var parts = text.split(/^## /m).filter(Boolean);
+  parts.forEach(function(part) {
+    var nl = part.indexOf('\n');
+    if (nl === -1) return;
+    var title = part.substring(0, nl).trim();
+    var body = part.substring(nl + 1).trim();
+    var match = CARD_CONFIG.find(function(c) { return title.indexOf(c.key) !== -1; });
+    if (match) {
+      sections[match.key] = body;
+    } else {
+      var partial = CARD_CONFIG.find(function(c) {
+        return c.key.split(' ').some(function(w) { return title.indexOf(w) !== -1; });
+      });
+      if (partial && !sections[partial.key]) sections[partial.key] = body;
+    }
+  });
+  return sections;
+}
+
+// Safe markdown rendering: HTML entities are escaped first,
+// then only controlled tags (h4, strong, li, ul, p) are created.
+function renderMarkdown(text) {
+  var safe = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+  return safe
+    .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/^- (.+)$/gm, '<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>(\n|$))+/g, function(m) { return '<ul>' + m + '</ul>'; })
+    .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+    .replace(/^(?!<[hulo])((?!<\/)[^\n]+)$/gm, '<p>$1</p>')
+    .replace(/\n{2,}/g, '')
+    .replace(/<\/ul>\s*<ul>/g, '');
+}
+
+function renderResult(text, tourism) {
+  showLoading(false);
+  var sections = parseSections(text);
+  var container = document.getElementById('resultCards');
+  container.textContent = '';
+
+  var cards = tourism ? CARD_CONFIG : CARD_CONFIG.filter(function(c) { return c.key !== '관광 마케팅 연계'; });
+  var hasSections = Object.keys(sections).length > 0;
+
+  if (!hasSections) {
+    // Fallback: show full text as a single card
+    var card = document.createElement('div');
+    card.className = 'result-card';
+    var header = document.createElement('div');
+    header.className = 'result-card-header';
+    var h3 = document.createElement('h3');
+    var iconSpan = document.createElement('span');
+    iconSpan.className = 'card-icon icon-overview';
+    iconSpan.textContent = '\uD83C\uDFB2';
+    h3.appendChild(iconSpan);
+    h3.appendChild(document.createTextNode(' 보드게임 기획서'));
+    header.appendChild(h3);
+    var copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-card-btn';
+    copyBtn.textContent = '복사';
+    copyBtn.onclick = function() { copyCard(this); };
+    header.appendChild(copyBtn);
+    card.appendChild(header);
+    var body = document.createElement('div');
+    body.className = 'result-card-body';
+    body.innerHTML = renderMarkdown(text); // Safe: HTML escaped in renderMarkdown
+    card.appendChild(body);
+    container.appendChild(card);
+  } else {
+    cards.forEach(function(cfg) {
+      var sectionBody = sections[cfg.key];
+      if (!sectionBody) return;
+      var card = document.createElement('div');
+      card.className = 'result-card';
+      var header = document.createElement('div');
+      header.className = 'result-card-header';
+      var h3 = document.createElement('h3');
+      var iconSpan = document.createElement('span');
+      iconSpan.className = 'card-icon ' + cfg.icon;
+      iconSpan.textContent = cfg.emoji;
+      h3.appendChild(iconSpan);
+      h3.appendChild(document.createTextNode(' ' + cfg.key));
+      header.appendChild(h3);
+      var copyBtn = document.createElement('button');
+      copyBtn.className = 'copy-card-btn';
+      copyBtn.textContent = '복사';
+      copyBtn.onclick = function() { copyCard(this); };
+      header.appendChild(copyBtn);
+      card.appendChild(header);
+      var body = document.createElement('div');
+      body.className = 'result-card-body';
+      body.innerHTML = renderMarkdown(sectionBody); // Safe: HTML escaped in renderMarkdown
+      card.appendChild(body);
+      container.appendChild(card);
+    });
+  }
+
+  document.getElementById('wizardCard').style.display = 'none';
+  document.getElementById('progressBar').style.display = 'none';
+  document.querySelector('.step-labels').style.display = 'none';
+  document.getElementById('resultSection').classList.add('active');
+  window.scrollTo({ top: document.getElementById('resultSection').offsetTop - 20, behavior: 'smooth' });
+}
+
+function copyCard(btn) {
+  var body = btn.closest('.result-card').querySelector('.result-card-body');
+  navigator.clipboard.writeText(body.innerText).then(function() {
+    btn.textContent = '복사됨!';
+    setTimeout(function() { btn.textContent = '복사'; }, 1500);
+  });
+}
+
+// ─── UI Helpers ────────────────────────────
+function showLoading(show) {
+  var el = document.getElementById('loadingSection');
+  if (show) {
+    el.classList.add('active');
+    document.getElementById('wizardCard').style.display = 'none';
+    document.getElementById('progressBar').style.display = 'none';
+    document.querySelector('.step-labels').style.display = 'none';
+    document.getElementById('resultSection').classList.remove('active');
+    if (loadingTimer) clearTimeout(loadingTimer);
+    loadingTimer = setTimeout(function() {
+      document.getElementById('loadingSub').classList.add('show');
+    }, 15000);
+  } else {
+    el.classList.remove('active');
+    document.getElementById('loadingSub').classList.remove('show');
+    if (loadingTimer) { clearTimeout(loadingTimer); loadingTimer = null; }
+  }
+}
+
+function showError(code) {
+  showLoading(false);
+  var messages = {
+    'RATE_LIMIT': '요청이 많습니다. 30초 후 다시 시도해주세요.',
+    'SERVER_ERROR': '서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.',
+    'TIMEOUT': '응답 시간이 초과되었습니다. 다시 시도해주세요.',
+    'EMPTY': 'AI가 응답을 생성하지 못했습니다. 다시 시도해주세요.',
+    'API_ERROR': 'API 호출에 실패했습니다. 다시 시도해주세요.'
+  };
+  document.getElementById('errorMsg').textContent = messages[code] || ('오류: ' + code);
+  document.getElementById('errorBox').classList.add('show');
+  document.getElementById('wizardCard').style.display = 'block';
+  document.getElementById('progressBar').style.display = 'flex';
+  document.querySelector('.step-labels').style.display = 'flex';
+}
+
+function hideError() { document.getElementById('errorBox').classList.remove('show'); }
+
+function showToast(text) {
+  var t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 2000);
+}
+
+function resetAll() {
+  document.getElementById('resultSection').classList.remove('active');
+  document.getElementById('wizardCard').style.display = 'block';
+  document.getElementById('progressBar').style.display = 'flex';
+  document.querySelector('.step-labels').style.display = 'flex';
+  lastResult = '';
+  goStep(1);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ─── Boot ──────────────────────────────────
+init();
+</script>
+</body>
+</html>
