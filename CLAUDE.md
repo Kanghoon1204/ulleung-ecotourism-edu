@@ -8,14 +8,12 @@ GitHub Pages로 배포되며, 모든 페이지는 단일 HTML 파일(인라인 C
 ## 파일 구조
 
 ```
-index.html              # 메인 랜딩 (프롬프트 가이드 통합)
-class.html              # 수업 진행 페이지
-prompt-guide.html       # 프롬프트 가이드
+index.html              # 수업 당일 메인 실습 진행판
+class.html              # index.html로 이동하는 보조 입구
+prompt-guide.html       # index.html의 복사 문장 구간으로 이동하는 보조 입구
 교육계획서_완성본.html    # 교육 계획서 HTML 버전
 example.html            # 예시 페이지
-generate_docx.py        # 교육 계획서 DOCX 변환 스크립트
-.claude/scripts/        # Scout/Gemini 에이전트 스크립트
-.github/workflows/      # GitHub Pages 배포 (main push 시 자동)
+assets/                 # 울릉도 이미지 자료
 ```
 
 ## 기술 스택 & 코딩 규칙
