@@ -261,6 +261,42 @@ main { padding: 26px 0 64px; }
 }
 .slot-title { margin-top: 12px; font-weight: 900; }
 .slot-note { color: var(--muted); font-size: .9rem; margin-top: 6px; }
+.pb-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 18px;
+  font-weight: 900;
+  font-size: 1rem;
+}
+.pb-label .tag {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #e6f4f4;
+  color: var(--secondary);
+  font-size: .76rem;
+}
+.result-audio { display: grid; gap: 12px; margin: 14px 0; }
+.audio-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--soft);
+  padding: 15px 16px;
+}
+.audio-card .audio-title { font-weight: 900; }
+.audio-card .audio-note { color: var(--muted); font-size: .9rem; margin: 4px 0 11px; }
+.audio-card audio { width: 100%; }
+.shot-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 14px 0; }
+.shot {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--card);
+  box-shadow: var(--shadow);
+}
+.shot img { display: block; width: 100%; height: auto; background: #0e1117; }
+.shot figcaption { padding: 11px 14px; color: var(--muted); font-size: .9rem; }
+.shot figcaption b { color: var(--ink); display: block; margin-bottom: 2px; }
 .field-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .field.full { grid-column: 1 / -1; }
 .field label { display: block; margin-bottom: 5px; color: var(--muted); font-size: .84rem; font-weight: 900; }
@@ -376,7 +412,7 @@ footer { background: #111827; color: #cbd5e1; padding: 28px 0; font-size: .86rem
 footer a { color: #f8d77a; }
 @media (max-width: 900px) {
   body { font-size: 17px; }
-  .top-grid, .grid-2, .grid-3, .grid-4, .overview-grid, .field-grid, .link-grid, .media-slots { grid-template-columns: 1fr; }
+  .top-grid, .grid-2, .grid-3, .grid-4, .overview-grid, .field-grid, .link-grid, .media-slots, .shot-grid { grid-template-columns: 1fr; }
   .today-box { margin-top: 4px; }
   .field.full { grid-column: auto; }
 }
@@ -725,61 +761,141 @@ footer a { color: #f8d77a; }
     <div class="section-head">
       <span class="num">6</span>
       <div>
-        <h2>Suno AI로 짧은 홍보 BGM을 만듭니다</h2>
-        <p class="desc">포스터나 웹페이지를 만든 뒤, SNS 영상이나 매장 안내에 어울리는 짧은 배경음악을 만들어봅니다. 자세한 화면 캡처는 나중에 추가할 수 있게 자리를 만들어두었습니다.</p>
+        <h2>Suno AI로 울릉도 홍보 노래를 만듭니다</h2>
+        <p class="desc">이번에는 Gemini로 "노래 설계도"를 먼저 받고, 그 결과를 Suno에 붙여넣습니다. Suno는 Custom Mode에서 <strong>Style of Music(음악 스타일)</strong>과 <strong>Lyrics(가사)</strong>를 나누어 넣을 때 완성도가 가장 높습니다.</p>
       </div>
     </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3>1단계 · Gemini로 노래 설계</h3>
+        <p>Gemini에게 "Suno용 프롬프트를 설계해줘"라고 부탁하면 <strong>스타일 키워드</strong>와 <strong>구조화된 가사</strong>를 한 번에 만들어 줍니다. 영어 키워드가 AI 이해도가 가장 높습니다.</p>
+      </div>
+      <div class="card">
+        <h3>2단계 · Suno에 붙여넣기</h3>
+        <p>Suno의 <strong>Custom(커스텀) 모드</strong>를 켜고, Style 창과 Lyrics 창에 각각 나누어 붙여넣은 뒤 <strong>Create</strong>를 누릅니다.</p>
+      </div>
+    </div>
+
     <div class="steps">
-      <div class="step"><b>1</b><span><a href="https://suno.com/" target="_blank">Suno</a>를 열고 로그인합니다.</span></div>
-      <div class="step"><b>2</b><span>아래 명령문을 복사해서 음악 생성 입력창에 붙여넣습니다.</span></div>
-      <div class="step"><b>3</b><span>음악이 만들어지면 10초에서 20초 정도 들어보고, 우리 가게 분위기와 맞는지 확인합니다.</span></div>
-      <div class="step"><b>4</b><span>마음에 드는 음악 제목, 분위기, 사용 위치를 메모합니다. 예: 인스타 영상, 매장 안내 영상, 웹페이지 배경 아이디어.</span></div>
+      <div class="step"><b>1</b><span><a href="https://gemini.google.com/" target="_blank">Gemini</a>에 아래 <strong>Gemini 설계 요청</strong> 문장을 붙여넣어 Style과 Lyrics를 받습니다.</span></div>
+      <div class="step"><b>2</b><span><a href="https://suno.com/" target="_blank">Suno</a>를 열고 로그인한 뒤, 만들기(Create) 화면에서 <strong>Custom</strong> 모드를 켭니다.</span></div>
+      <div class="step"><b>3</b><span><strong>Style of Music</strong> 창에 스타일 키워드를 붙여넣습니다.</span></div>
+      <div class="step"><b>4</b><span><strong>Lyrics</strong> 창에 [Verse], [Chorus] 태그가 들어간 가사를 붙여넣습니다.</span></div>
+      <div class="step"><b>5</b><span>Create를 눌러 곡을 만들고, 20~30초 재생하며 우리 가게·울릉도 분위기와 맞는지 확인합니다.</span></div>
     </div>
-    <div class="media-slots" aria-label="Suno 캡처 이미지 자리">
-      <div class="media-slot">
-        <span class="slot-label">캡처 자리 1</span>
-        <div>
-          <div class="slot-title">Suno 입력창</div>
-          <p class="slot-note">음악 분위기를 입력하는 화면 캡처를 넣습니다.</p>
-        </div>
-      </div>
-      <div class="media-slot">
-        <span class="slot-label">캡처 자리 2</span>
-        <div>
-          <div class="slot-title">생성된 음악 목록</div>
-          <p class="slot-note">결과가 1개 이상 생성된 화면을 넣습니다.</p>
-        </div>
-      </div>
-      <div class="media-slot">
-        <span class="slot-label">캡처 자리 3</span>
-        <div>
-          <div class="slot-title">재생·저장 화면</div>
-          <p class="slot-note">수업 중 실제로 음악을 재생하는 장면을 넣습니다.</p>
-        </div>
-      </div>
-    </div>
+
+    <div class="pb-label"><span class="tag">Gemini</span> 노래 설계 요청 문장</div>
     <div class="prompt-box">
       <button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button>
-      <code>울릉도 관광 홍보 영상에 사용할 짧은 배경음악을 만들어줘.
+      <code>너는 최고의 프롬프트 엔지니어야.
+Suno AI로 울릉도 관광 홍보 노래를 만들려고 해.
+아래 정보를 바탕으로 Suno Custom Mode에 넣을 프롬프트를 설계해줘.
 
-분위기:
-- 밝고 따뜻한 여행 느낌
-- 울릉도 바다, 산책, 자연, 신선한 음식이 떠오르게
-- 너무 시끄럽지 않고, 설명 음성과 함께 써도 방해되지 않게
-- 30초 정도의 짧은 홍보 영상 배경음악 느낌
+[내 정보]
+- 이름: [가게/숙소/프로그램 이름]
+- 종류: [식당/숙소/체험/관광지/특산품]
+- 대표 매력: [바다 전망, 자연산 음식, 성인봉 트레킹 등]
+- 한 줄 소개: [Gemini에서 고른 한 줄 소개]
 
-스타일:
-- instrumental
-- acoustic guitar, light percussion, warm bass
-- clean, hopeful, coastal travel mood
+[만들어줄 것]
+1. Style of Music: Suno "Style" 창에 넣을 영어 키워드
+   (장르, 분위기, 악기, 보컬, 리듬을 쉼표로 나열)
+2. Lyrics: [Verse], [Chorus], [Bridge], [Outro] 태그로 구조화한 한국어 가사
+   - 울릉도 바다, 성인봉, 나리분지, 독도, 오징어 같은 실제 명소·특산품을 자연스럽게 넣기
+   - 후렴은 따라 부르기 쉽고 중독성 있게
 
-주의:
-- 특정 유명 가수나 기존 노래를 따라 하지 말기
-- 가사가 꼭 필요하지 않으면 보컬 없이 만들기</code>
+조건:
+- 밝고 청량한 여행 송 느낌
+- 과장 없이 실제 울릉도 매력을 담기
+- Style과 Lyrics를 나누어 출력하기</code>
     </div>
     <div class="toolbar">
       <button class="btn secondary" type="button" onclick="copyFilledPrompt('music')">내 정보 넣어서 복사</button>
     </div>
+
+    <div class="pb-label"><span class="tag">Suno · Style</span> Style of Music 창에 붙여넣기 (예시)</div>
+    <div class="prompt-box">
+      <button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button>
+      <code>Refreshing K-pop, modern folk rock, upbeat, acoustic guitar, bright synths, driving rhythm, cheerful, energetic, travel song, male/female duet vocals, catchy chorus</code>
+    </div>
+
+    <div class="pb-label"><span class="tag">Suno · Lyrics</span> Lyrics 창에 붙여넣기 (예시)</div>
+    <div class="prompt-box">
+      <button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button>
+      <code>[Verse 1]
+푸른 동해 물결 너머 피어난 비밀
+바람이 머무는 곳, 울릉도로 가자
+해안도로 따라서 달리는 이 순간
+가슴 가득 퍼지는 에메랄드빛 바다
+
+[Verse 2]
+기암괴석 수놓은 대자연의 풍경
+독도행 배에 오르면 설레는 마음
+도시를 벗어나 숨 쉬는 이곳에서
+너와 나의 완벽한 여행이 시작돼
+
+[Chorus]
+오오 울릉도! 신비의 그 섬으로
+나리분지 초록빛 꿈을 품은 곳
+성인봉 아래 우리 추억을 새겨봐
+맛있는 오징어와 독도새우도 함께해
+떠나자, 지금 당장 울릉도로!
+
+[Bridge]
+노을빛에 물드는 독도 바다를 보며
+우리들의 이야기는 깊어만 가고
+발길 닿는 곳마다 감동이 가득해
+
+[Chorus]
+오오 울릉도! 신비의 그 섬으로
+나리분지 초록빛 꿈을 품은 곳
+성인봉 아래 우리 추억을 새겨봐
+맛있는 오징어와 독도새우도 함께해
+떠나자, 지금 당장 울릉도로!
+
+[Outro]
+영원히 잊지 못할 우리의 섬
+울릉도에서 만나!
+[Fade out]
+[End]</code>
+    </div>
+
+    <div class="pb-label"><span class="tag">예시 결과</span> 위 프롬프트로 실제 생성한 곡</div>
+    <p class="desc" style="margin-bottom:6px;">Suno에서 같은 프롬프트로 만든 두 가지 버전입니다. 발표 중 바로 재생해 결과를 들려줄 수 있습니다.</p>
+    <div class="result-audio">
+      <div class="audio-card">
+        <div class="audio-title">즐거운 여행, 울릉도로 떠나요! — ver.1</div>
+        <p class="audio-note">청량한 K-pop / 모던 포크 록, 남녀 듀엣 보컬</p>
+        <audio controls preload="none" src="assets/ulleung-song-1.mp3">브라우저가 오디오 재생을 지원하지 않습니다.</audio>
+      </div>
+      <div class="audio-card">
+        <div class="audio-title">즐거운 여행, 울릉도로 떠나요! — ver.2</div>
+        <p class="audio-note">같은 가사·스타일로 만든 두 번째 버전 (Suno는 한 번에 2곡을 생성합니다)</p>
+        <audio controls preload="none" src="assets/ulleung-song-2.mp3">브라우저가 오디오 재생을 지원하지 않습니다.</audio>
+      </div>
+    </div>
+
+    <div class="pb-label"><span class="tag">실습 화면</span> 실제 사용 흐름 캡처</div>
+    <div class="shot-grid">
+      <figure class="shot">
+        <img src="assets/suno-flow-1-gemini-style.png" alt="Gemini가 Suno용 Style of Music 키워드를 설계한 화면" loading="lazy">
+        <figcaption><b>1. Gemini · Style of Music</b>음악 스타일 키워드를 영어로 설계합니다.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/suno-flow-2-gemini-lyrics.png" alt="Gemini가 [Verse], [Chorus] 태그로 구조화한 가사를 만든 화면" loading="lazy">
+        <figcaption><b>2. Gemini · Lyrics</b>[Verse]·[Chorus] 태그로 구조화된 가사를 받습니다.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/suno-flow-3-suno-home.png" alt="Suno 홈 화면" loading="lazy">
+        <figcaption><b>3. Suno 접속</b>Suno에 로그인하고 만들기(Create) 화면으로 들어갑니다.</figcaption>
+      </figure>
+      <figure class="shot">
+        <img src="assets/suno-flow-4-suno-input.png" alt="Suno Custom Mode의 Lyrics·Styles 입력창에 붙여넣은 화면" loading="lazy">
+        <figcaption><b>4. Suno · Custom 입력</b>Lyrics와 Styles 창에 각각 붙여넣고 생성합니다.</figcaption>
+      </figure>
+    </div>
+
     <div class="notice">
       <strong>확인:</strong> 음악을 실제 홍보물에 쓰기 전에는 Suno 계정의 사용 조건과 상업적 사용 가능 여부를 확인합니다.
     </div>
@@ -1063,7 +1179,9 @@ function copyFilledPrompt(kind) {
 - 읽기 쉬운 큰 글씨로 만들어줘`;
   }
   if (kind === 'music') {
-    text = `울릉도 관광 홍보 영상에 사용할 짧은 배경음악을 만들어줘.
+    text = `너는 최고의 프롬프트 엔지니어야.
+Suno AI로 울릉도 관광 홍보 노래를 만들려고 해.
+아래 정보를 바탕으로 Suno Custom Mode에 넣을 프롬프트를 설계해줘.
 
 [내 정보]
 - 이름: ${d.name}
@@ -1071,20 +1189,17 @@ function copyFilledPrompt(kind) {
 - 대표 매력: ${d.strengths}
 - 한 줄 소개: ${d.tagline}
 
-분위기:
-- 밝고 따뜻한 여행 느낌
-- 울릉도 바다, 산책, 자연, 신선한 음식이 떠오르게
-- 너무 시끄럽지 않고, 설명 음성과 함께 써도 방해되지 않게
-- 30초 정도의 짧은 홍보 영상 배경음악 느낌
+[만들어줄 것]
+1. Style of Music: Suno "Style" 창에 넣을 영어 키워드
+   (장르, 분위기, 악기, 보컬, 리듬을 쉼표로 나열)
+2. Lyrics: [Verse], [Chorus], [Bridge], [Outro] 태그로 구조화한 한국어 가사
+   - 울릉도 바다, 성인봉, 나리분지, 독도, 오징어 같은 실제 명소·특산품을 자연스럽게 넣기
+   - 후렴은 따라 부르기 쉽고 중독성 있게
 
-스타일:
-- instrumental
-- acoustic guitar, light percussion, warm bass
-- clean, hopeful, coastal travel mood
-
-주의:
-- 특정 유명 가수나 기존 노래를 따라 하지 말기
-- 가사가 꼭 필요하지 않으면 보컬 없이 만들기`;
+조건:
+- 밝고 청량한 여행 송 느낌
+- 과장 없이 실제 울릉도 매력을 담기
+- Style과 Lyrics를 나누어 출력하기`;
   }
   if (kind === 'page') {
     text = `우리 가게 소개 웹페이지 파일을 만들어줘.
