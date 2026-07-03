@@ -21,8 +21,8 @@
   --ink:#171412; --ink-soft:#4b4540; --muted:#6b6560;
   --line:#eadfd4; --bg:#ffffff; --cream:#fffaf4; --surface:#ffffff;
   --radius:20px; --radius-sm:12px;
-  --shadow-sm:0 1px 2px rgba(93,64,40,.06), 0 4px 14px rgba(93,64,40,.06);
-  --shadow:0 4px 10px rgba(93,64,40,.07), 0 22px 48px rgba(93,64,40,.10);
+  --shadow-sm:0 1px 2px rgba(93,64,40,.04), 0 3px 10px rgba(93,64,40,.045);
+  --shadow:0 2px 8px rgba(93,64,40,.05), 0 16px 38px rgba(93,64,40,.07);
   --font-display:'Black Han Sans', sans-serif;
   --font-head:'Do Hyeon', sans-serif;
   --font-body:'Gothic A1', sans-serif;
@@ -31,13 +31,12 @@
 html{scroll-behavior:smooth; scroll-padding-top:72px;}
 body{
   font-family:var(--font-body); color:var(--ink);
-  font-size:22px; line-height:1.85; font-weight:500;
+  font-size:21px; line-height:1.85; font-weight:500;
   word-break:keep-all; overflow-wrap:break-word; overflow-x:hidden;
   background:var(--bg);
   background-image:
-    radial-gradient(circle at 12% 6%, rgba(234,88,12,.05), transparent 42%),
-    radial-gradient(circle at 88% 3%, rgba(13,148,136,.06), transparent 40%),
-    repeating-radial-gradient(circle at 80% 120%, rgba(13,148,136,.035) 0 1px, transparent 1px 46px);
+    radial-gradient(circle at 14% 3%, rgba(234,88,12,.028), transparent 48%),
+    radial-gradient(circle at 90% 1%, rgba(13,148,136,.03), transparent 46%);
 }
 a{color:var(--secondary); text-decoration:none;}
 a:hover{text-decoration:underline;}
@@ -48,13 +47,13 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .mega{font-family:var(--font-display); line-height:1.05; letter-spacing:-.01em;}
 .eyebrow{font-family:var(--font-head); display:inline-flex; align-items:center; gap:9px; flex-wrap:wrap; font-size:1.05rem; color:var(--primary); margin-bottom:8px;}
 .eyebrow .time{background:var(--secondary-soft); color:#0a6b62; padding:3px 12px; border-radius:999px; font-size:.9rem;}
-.step-badge{display:inline-flex; align-items:center; gap:11px; background:var(--primary); color:#fff; font-family:var(--font-head); font-size:1.05rem; padding:7px 20px 7px 8px; border-radius:999px; box-shadow:0 6px 16px rgba(234,88,12,.25); margin-bottom:12px;}
-.step-badge .n{background:#fff; color:var(--primary); min-width:32px; height:32px; padding:0 8px; border-radius:999px; display:grid; place-items:center; font-family:var(--font-display); font-size:.95rem;}
+.step-badge{display:inline-flex; align-items:center; gap:11px; background:var(--primary); color:#fff; font-family:var(--font-head); font-size:1.05rem; padding:7px 20px 7px 8px; border-radius:999px; box-shadow:0 4px 12px rgba(234,88,12,.15); margin-bottom:12px;}
+.step-badge .n{background:#fff; color:var(--primary); min-width:32px; height:32px; padding:0 8px; border-radius:999px; display:grid; place-items:center; font-family:var(--font-head); font-size:.95rem;}
 
 /* 버튼 */
-.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:58px; padding:14px 28px; border:0; border-radius:999px; font-family:var(--font-head); font-size:1.1rem; background:var(--primary); color:#fff; cursor:pointer; box-shadow:0 8px 20px rgba(234,88,12,.26); transition:transform .15s, box-shadow .15s;}
-.btn:hover{text-decoration:none; transform:translateY(-2px); box-shadow:0 12px 26px rgba(234,88,12,.32);}
-.btn.teal{background:var(--secondary); box-shadow:0 8px 20px rgba(13,148,136,.24);}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:56px; padding:13px 26px; border:0; border-radius:999px; font-family:var(--font-head); font-size:1.06rem; background:var(--primary); color:#fff; cursor:pointer; box-shadow:0 4px 12px rgba(234,88,12,.16); transition:transform .15s, box-shadow .15s;}
+.btn:hover{text-decoration:none; transform:translateY(-2px); box-shadow:0 8px 18px rgba(234,88,12,.22);}
+.btn.teal{background:var(--secondary); box-shadow:0 4px 12px rgba(13,148,136,.16);}
 .btn.ghost{background:#fff; color:var(--ink); border:2px solid var(--line); box-shadow:var(--shadow-sm);}
 .btn.ghost:hover{border-color:var(--primary); color:var(--primary);}
 .btn.light{background:var(--primary-soft); color:var(--primary-dark); box-shadow:none;}
@@ -77,13 +76,13 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .section{position:relative; padding:112px 0; border-top:1px solid var(--line);}
 .section:first-of-type{border-top:0;}
 .cover{min-height:calc(100vh - 64px); display:flex; flex-direction:column; justify-content:center;}
-.sec-no{position:absolute; top:26px; right:max(24px,5%); font-family:var(--font-display); font-size:clamp(3.4rem,8vw,7rem); line-height:1; color:var(--primary); opacity:.07; pointer-events:none; z-index:0;}
+.sec-no{position:absolute; top:28px; right:max(24px,5%); font-family:var(--font-head); font-size:clamp(2.6rem,5.5vw,4.8rem); line-height:1; color:#a2917f; opacity:.15; pointer-events:none; z-index:0;}
 .section-head{max-width:920px; margin-bottom:46px;}
 .section-head.center{margin-left:auto; margin-right:auto; text-align:center;}
-.section h2{font-size:clamp(2.3rem, 5vw, 3.8rem); margin:8px 0 18px;}
+.section h2{font-size:clamp(2rem, 3.8vw, 3rem); margin:8px 0 18px; letter-spacing:-.01em;}
 .section h2 .hl{color:var(--primary);}
 .section h2 .hl-t{color:var(--secondary);}
-.section .kicker{color:var(--ink-soft); font-size:1.35rem; line-height:1.75;}
+.section .kicker{color:var(--ink-soft); font-size:1.22rem; line-height:1.8;}
 .lead-big{font-size:clamp(1.5rem,2.8vw,2.1rem); font-family:var(--font-head); line-height:1.55; color:var(--ink);}
 .follow{display:inline-flex; align-items:center; gap:9px; padding:10px 20px; border-radius:999px; background:var(--primary); color:#fff; font-family:var(--font-head); font-size:1.05rem; margin-bottom:16px; box-shadow:0 6px 16px rgba(234,88,12,.25);}
 .follow::before{content:"👉"; font-size:1.15rem;}
@@ -94,6 +93,12 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .img-band img{width:100%; height:clamp(240px,32vw,420px); object-fit:cover; display:block;}
 .img-band figcaption{padding:16px 22px; color:var(--muted); font-size:1.05rem; background:#fff;}
 .img-band figcaption b{color:var(--ink); font-family:var(--font-head);}
+.slot-ph{min-height:240px; display:grid; place-items:center; text-align:center; gap:6px; padding:28px; background:var(--primary-soft); color:var(--primary-dark);}
+.slot-ph .t{font-family:var(--font-head); font-size:1.12rem;}
+.slot-ph code{background:#fff; padding:3px 9px; border-radius:7px; font-size:.92rem;}
+.slot-ph .n{color:var(--muted); font-size:.96rem;}
+.poster-band{max-width:420px;}
+.poster-band img{height:auto;}
 
 /* 카드 */
 .cols-2{display:grid; grid-template-columns:1fr; gap:22px;}
@@ -144,7 +149,7 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 /* 트렌드/활용 카드 */
 .trend-grid{display:grid; grid-template-columns:1fr; gap:20px;}
 .trend-grid .card{border-left:6px solid var(--secondary);}
-.trend-num{font-family:var(--font-display); font-size:2.2rem; color:var(--tertiary); line-height:1;}
+.trend-num{font-family:var(--font-head); font-size:1.4rem; color:var(--primary); line-height:1;}
 .trend-grid .card h3{margin-top:6px;}
 .trend-q{margin-top:16px; padding:16px 18px; background:var(--cream); border-radius:12px; font-family:var(--font-head); font-size:1.12rem; color:var(--ink);}
 .trend-apply{margin-top:14px; font-size:1.06rem; color:var(--ink-soft);}
@@ -182,21 +187,21 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .rm{display:grid; grid-template-columns:82px 1fr; gap:20px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:16px; padding:16px 24px; box-shadow:var(--shadow-sm); color:var(--ink); transition:.15s;}
 .rm:hover{border-color:var(--primary); transform:translateX(4px); text-decoration:none;}
 .rm .rmn{width:82px; height:58px; border-radius:14px; background:var(--primary-soft); color:var(--primary-dark); display:grid; place-items:center; font-family:var(--font-head); font-size:1.02rem; line-height:1.1; text-align:center;}
-.rm .rmn b{font-family:var(--font-display); font-size:1.5rem; display:block;}
+.rm .rmn b{font-family:var(--font-head); font-size:1.5rem; display:block;}
 .rm h3{font-size:1.28rem; margin-bottom:1px;}
 .rm p{color:var(--muted); font-size:1.02rem;}
 
 /* 원칙/에이전트 스텝 */
 .principle{display:grid; gap:14px; counter-reset:pr; margin-top:8px;}
 .principle .p{display:grid; grid-template-columns:56px 1fr; gap:18px; align-items:start; background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 24px; box-shadow:var(--shadow-sm);}
-.principle .p::before{counter-increment:pr; content:counter(pr); width:56px; height:56px; border-radius:15px; background:var(--secondary); color:#fff; display:grid; place-items:center; font-family:var(--font-display); font-size:1.5rem;}
+.principle .p::before{counter-increment:pr; content:counter(pr); width:54px; height:54px; border-radius:15px; background:var(--secondary-soft); color:#0a6b62; display:grid; place-items:center; font-family:var(--font-head); font-size:1.4rem;}
 .principle .p h3{font-size:1.28rem; margin-bottom:4px;}
 .principle .p .eg{color:var(--ink-soft); font-size:1.06rem;}
 .principle .p .eg b{color:var(--primary-dark); font-family:var(--font-head);}
 .principle .p.warn::before{background:var(--primary);}
 .astep{display:grid; grid-template-columns:60px 1fr; gap:18px; align-items:start; margin-bottom:16px;}
-.astep .anum{width:60px; height:60px; border-radius:16px; background:var(--secondary); color:#fff; display:grid; place-items:center; font-family:var(--font-display); font-size:1.4rem;}
-.astep .anum.last{background:var(--primary);}
+.astep .anum{width:58px; height:58px; border-radius:16px; background:var(--secondary-soft); color:#0a6b62; display:grid; place-items:center; font-family:var(--font-head); font-size:1.35rem;}
+.astep .anum.last{background:var(--primary-soft); color:var(--primary-dark);}
 .astep h3{font-size:1.26rem; margin-bottom:2px;}
 .astep .amini{color:var(--muted); font-size:1rem; margin-bottom:4px;}
 .agent-flow{display:flex; flex-wrap:wrap; gap:10px; align-items:center; margin-top:8px;}
@@ -221,6 +226,13 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .copy-btn{position:absolute; top:14px; right:14px; border:1px solid rgba(255,255,255,.25); background:rgba(255,255,255,.12); color:#fff; padding:9px 15px; border-radius:9px; font-family:var(--font-head); font-size:.9rem; cursor:pointer;}
 .copy-btn:hover{background:var(--primary); border-color:var(--primary);}
 .tmpl-title{font-family:var(--font-head); font-size:1.2rem; margin:22px 0 2px; display:flex; align-items:center; gap:9px;}
+.tmpl-card{margin-top:22px; padding:22px 24px; border:1px solid var(--line); border-radius:16px; background:#fff; box-shadow:var(--shadow-sm);}
+.tmpl-card .tmpl-title{margin:0 0 10px;}
+.tvar-row{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-bottom:4px;}
+.tvar-f label{display:block; font-family:var(--font-head); font-size:.9rem; color:var(--ink-soft); margin-bottom:4px;}
+.tvar{width:100%; min-height:46px; border:2px solid var(--line); border-radius:10px; padding:10px 12px; font:inherit; font-size:.98rem; background:var(--sand,#fffaf4); color:var(--ink);}
+.tvar:focus{border-color:var(--secondary); outline:none; background:#fff;}
+.tmpl-hint{font-size:.98rem; color:var(--muted); margin-top:10px;}
 .drill{margin-top:24px; padding-top:22px; border-top:2px dashed var(--line);}
 .drill .dh{font-family:var(--font-head); font-size:1.34rem; margin-bottom:6px; display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
 .drill h4{font-family:var(--font-head); font-size:1.14rem; margin:18px 0 0; display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
@@ -240,6 +252,14 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .audio-card .audio-title{font-family:var(--font-head); font-size:1.14rem;}
 .audio-card .audio-note{color:var(--muted); font-size:1rem; margin:4px 0 12px;}
 .audio-card audio{width:100%;}
+.script{margin-top:14px; border:1px solid var(--line); border-radius:12px; background:var(--cream); overflow:hidden;}
+.script>summary{cursor:pointer; padding:15px 20px; font-family:var(--font-head); font-size:1.06rem; color:var(--ink); list-style:none;}
+.script>summary::-webkit-details-marker{display:none;}
+.script>summary::before{content:"▸ "; color:var(--primary);}
+.script[open]>summary::before{content:"▾ ";}
+.script .sc{padding:0 22px 20px; white-space:pre-wrap; font-size:1.04rem; line-height:1.9; color:var(--ink-soft);}
+.script .sc .spk{color:var(--secondary); font-family:var(--font-head);}
+.script .sc .tagline2{color:var(--primary-dark); font-family:var(--font-head);}
 .shot-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;}
 .shot{border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; background:#fff; box-shadow:var(--shadow-sm);}
 .shot img{width:100%; height:auto; background:#0e1117;}
@@ -281,7 +301,7 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 /* 발표 템플릿 */
 .talk{counter-reset:talk; display:grid; gap:16px;}
 .talk .t{display:grid; grid-template-columns:56px 1fr; gap:18px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px 24px; box-shadow:var(--shadow-sm);}
-.talk .t::before{counter-increment:talk; content:counter(talk); width:56px; height:56px; border-radius:15px; background:var(--primary); color:#fff; display:grid; place-items:center; font-family:var(--font-display); font-size:1.6rem;}
+.talk .t::before{counter-increment:talk; content:counter(talk); width:54px; height:54px; border-radius:15px; background:var(--primary-soft); color:var(--primary-dark); display:grid; place-items:center; font-family:var(--font-head); font-size:1.45rem;}
 .talk .t h3{font-size:1.3rem; margin-bottom:1px;} .talk .t p{color:var(--ink-soft); font-size:1.1rem;}
 
 /* 도구 링크 */
@@ -310,7 +330,7 @@ h1,h2,h3{font-family:var(--font-head); line-height:1.24; font-weight:400;}
 .map-pin{position:absolute; width:20px; height:20px;}
 .map-pin::after{content:""; position:absolute; inset:0; border-radius:50% 50% 50% 2px; transform:rotate(-45deg); background:var(--primary); box-shadow:0 3px 8px rgba(0,0,0,.3);}
 .map-pin.p1{top:26%; left:38%;} .map-pin.p2{top:40%; left:64%;} .map-pin.p2::after{background:var(--tertiary);}
-.map-pin span{position:absolute; inset:0; border-radius:50%; background:rgba(234,88,12,.4); animation:pulse 2.2s ease-out infinite;}
+.map-pin span{position:absolute; inset:0; border-radius:50%; background:rgba(234,88,12,.28); animation:pulse 3.6s ease-out infinite;}
 @keyframes pulse{0%{transform:scale(.6);opacity:.8}100%{transform:scale(2.6);opacity:0}}
 .reveal{opacity:0; transform:translateY(16px); animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards;}
 @keyframes rise{to{opacity:1; transform:none}}
@@ -343,6 +363,14 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
 
 .toast{position:fixed; left:50%; bottom:28px; transform:translateX(-50%) translateY(90px); z-index:90; padding:16px 28px; border-radius:999px; background:var(--ink); color:#fff; font-family:var(--font-head); box-shadow:var(--shadow); opacity:0; transition:.24s; font-size:1.05rem;}
 .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+/* mermaid 흐름도 · 다음 STEP 이동 */
+.mermaid-wrap{overflow-x:auto; background:#fff; border:1px solid var(--line); border-radius:18px; padding:26px 20px; box-shadow:var(--shadow-sm); margin:16px 0;}
+.mermaid{min-width:min-content; margin:0 auto; font-family:var(--font-head);}
+.mermaid-cap{text-align:center; color:var(--muted); font-size:1rem; margin-top:6px;}
+.step-next{display:flex; justify-content:flex-end; margin-top:38px;}
+.step-next a{display:inline-flex; align-items:center; gap:8px; background:#fff; border:2px solid var(--line); border-radius:999px; padding:12px 24px; font-family:var(--font-head); font-size:1.05rem; color:var(--ink); box-shadow:var(--shadow-sm);}
+.step-next a:hover{border-color:var(--primary); color:var(--primary); text-decoration:none; transform:translateX(3px);}
 
 @media (max-width:980px){
   body{font-size:19px;}
@@ -452,6 +480,18 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
       <div class="card lift"><div class="ic-lg" style="background:var(--secondary-soft)">🧩</div><h3>재료 → 조립</h3><p>AI로 글·번역·이미지 <b>재료</b>를 먼저 만들고, 그 재료를 모아 <b>웹페이지</b>로 조립합니다.</p></div>
       <div class="card lift"><div class="ic-lg" style="background:var(--tertiary-soft)">🤝</div><h3>함께 나누기</h3><p>마지막에는 완성한 페이지를 <b>1분씩 발표</b>하고 서로의 아이디어를 나눕니다.</p></div>
     </div>
+    <div class="subhead">🧩 오늘은 이렇게 만듭니다</div>
+    <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart LR
+  A["✍️ 홍보 문구"] --> Z
+  B["🌐 다국어 안내"] --> Z
+  C["🔎 리서치 자료"] --> Z
+  D["🖼️ 이미지·소리"] --> Z
+  Z{{"Codex로 웹페이지 조립"}} --> DONE(["🎉 홍보 웹페이지 완성"])
+</pre>
+    </div>
+    <p class="mermaid-cap">STEP 2~6에서 만든 <b>재료</b>를, STEP 7에서 하나로 <b>조립</b>합니다.</p>
     <div class="tip"><strong>💡 편하게 오세요.</strong> 준비물이 없어도 됩니다. 교육장에서 제공하는 울릉도 예시(해울림식당 등)로도 똑같이 실습할 수 있습니다.</div>
   </div>
 </section>
@@ -539,6 +579,11 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
         </tbody>
       </table>
     </div>
+    <figure class="img-band" style="margin-top:20px;">
+      <img src="assets/chatgpt-home.png" alt="ChatGPT 시작 화면" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+      <div class="slot-ph" style="display:none;"><span class="t">📷 ChatGPT 시작 화면</span><span class="n">이미지를 <code>assets/chatgpt-home.png</code>로 저장하면 표시됩니다</span></div>
+      <figcaption><b>ChatGPT 시작 화면.</b> Gemini와 비슷하게, 입력창에 편하게 물어보면 됩니다. 이미지 만들기·글쓰기·웹 검색도 여기서.</figcaption>
+    </figure>
     <div class="notice"><strong>핵심:</strong> 어떤 도구가 “가장 좋으냐”가 아니라, <b>내가 하려는 일</b>에 맞는 도구를 고르는 것입니다. 각 도구의 무료 범위·정책은 바뀔 수 있어 <b>행사 당일 계정 기준</b>으로 안내합니다.</div>
   </div>
 </section>
@@ -551,6 +596,12 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
       <span class="eyebrow">오늘의 여정</span>
       <h2>이제 <span class="hl">7개의 STEP</span>을 하나씩 따라갑니다</h2>
       <p class="kicker">각 STEP은 <b>직접 해보며</b> 배웁니다. 아래에서 원하는 STEP으로 바로 이동할 수 있습니다.</p>
+    </div>
+    <div class="mermaid-wrap">
+<pre class="mermaid">
+flowchart LR
+  S1(["STEP 1<br/>AI와 첫 만남"]) --> S2(["STEP 2<br/>홍보 문구"]) --> S3(["STEP 3<br/>글로벌"]) --> S4(["STEP 4<br/>소리"]) --> S5(["STEP 5<br/>리서치"]) --> S6(["STEP 6<br/>에이전트"]) --> S7(["STEP 7<br/>웹페이지"]) --> F(["발표·공유"])
+</pre>
     </div>
     <div class="roadmap">
       <a class="rm" href="#step1"><div class="rmn">STEP<b>1</b></div><div><h3>AI와 첫 만남</h3><p>Gemini 접속 · AI에게 첫 마디 · 좋은 프롬프트 원리 체험</p></div></a>
@@ -580,6 +631,11 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
       <div class="step"><b>2</b><span>화면 아래 입력창에 아무거나 편하게 물어봅니다. 예: <b>“울릉도는 어떤 곳이야?”</b></span></div>
       <div class="step"><b>3</b><span>AI가 답하면, 이어서 <b>“더 짧게 알려줘”</b>라고 다시 말해 봅니다. AI가 대화를 <b>기억</b>한다는 걸 느껴보세요.</span></div>
     </div>
+    <figure class="img-band">
+      <img src="assets/gemini-home.png" alt="Gemini 시작 화면" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+      <div class="slot-ph" style="display:none;"><span class="t">📷 Gemini 시작 화면</span><span class="n">이미지를 <code>assets/gemini-home.png</code>로 저장하면 여기에 표시됩니다</span></div>
+      <figcaption><b>Gemini 시작 화면.</b> “오늘은 무엇을 해볼까요?” 아래 입력창에 편하게 말을 걸어보세요.</figcaption>
+    </figure>
 
     <div class="subhead">🔑 좋은 프롬프트의 원리</div>
     <p class="kicker" style="margin-bottom:8px;">‘프롬프트’는 AI에게 주는 <b>부탁 문장</b>입니다. 좋은 부탁에는 이 세 가지가 들어갑니다.</p>
@@ -635,12 +691,21 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
     <div class="section-head">
       <span class="eyebrow">꺼내 쓰는 · 프롬프트 템플릿</span>
       <h2>복사해서 <span class="hl">[대괄호]만 바꾸면</span> 됩니다</h2>
-      <p class="kicker">막막할 땐 여기서 꺼내 쓰세요. 각 템플릿의 <b>복사</b> 버튼을 누르고, 대괄호 부분만 내 정보로 바꾸면 바로 결과가 나옵니다.</p>
+      <p class="kicker">막막할 땐 여기서 꺼내 쓰세요. 위 <b>입력칸을 채우고</b> <b>“채워서 복사”</b>를 누르면, 대괄호가 내 정보로 바뀐 완성 프롬프트가 복사됩니다. (비운 칸은 대괄호 그대로 남습니다.)</p>
     </div>
 
-    <div class="card" style="border-left:6px solid var(--primary);">
-      <div class="tmpl-title" style="margin-top:0;">⭐ 만능 템플릿 — 무엇이든 이 틀로</div>
-      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>너는 [역할]이야.
+    <div class="tmpl-card" style="border-left:6px solid var(--primary);">
+      <div class="tmpl-title">⭐ 만능 템플릿 — 무엇이든 이 틀로</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>역할</label><input class="tvar" data-ph="[역할]" placeholder="예: 울릉도 관광 홍보 전문가"></div>
+        <div class="tvar-f"><label>대상</label><input class="tvar" data-ph="[대상]" placeholder="예: 가족 여행객"></div>
+        <div class="tvar-f"><label>만들 것</label><input class="tvar" data-ph="[만들 것]" placeholder="예: 인스타그램 홍보글"></div>
+        <div class="tvar-f"><label>꼭 넣을 내용</label><input class="tvar" data-ph="[키워드1, 키워드2, 키워드3]" placeholder="예: 성인봉, 오징어, 바다 전망"></div>
+        <div class="tvar-f"><label>톤</label><input class="tvar" data-ph="[따뜻하게 / 활기차게 등]" placeholder="예: 따뜻하게"></div>
+        <div class="tvar-f"><label>길이/형식</label><input class="tvar" data-ph="[300자 이내 / 표로 / 목록으로]" placeholder="예: 300자 이내"></div>
+        <div class="tvar-f"><label>언어</label><input class="tvar" data-ph="[한국어 / 영어 / 일본어]" placeholder="예: 한국어"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>너는 [역할]이야.
 [대상]에게 보여줄 [만들 것]을 만들어줘.
 
 [꼭 넣을 내용]
@@ -653,34 +718,65 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
 - 확인이 필요한 가격·시간·배편은 "확인 필요"로 표시</code></div>
     </div>
 
-    <div class="tmpl-title">🐟 식당 홍보글</div>
-    <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>너는 울릉도 맛집 홍보 전문가야.
+    <div class="tmpl-card">
+      <div class="tmpl-title">🐟 식당 홍보글</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>식당 이름</label><input class="tvar" data-ph="[식당 이름]" placeholder="예: 해울림식당"></div>
+        <div class="tvar-f"><label>대표 메뉴</label><input class="tvar" data-ph="[메뉴]" placeholder="예: 따개비밥, 오징어내장탕"></div>
+        <div class="tvar-f"><label>위치</label><input class="tvar" data-ph="[위치]" placeholder="예: 도동항 3분"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>너는 울릉도 맛집 홍보 전문가야.
 [식당 이름]의 인스타그램 홍보글을 만들어줘.
 대표 메뉴는 [메뉴]이고, 위치는 [위치]야.
 따뜻하고 먹음직스럽게, 300자 이내, 해시태그 10개 포함.</code></div>
+    </div>
 
-    <div class="tmpl-title">🏡 숙소 소개글</div>
-    <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>너는 울릉도 여행 안내 전문가야.
+    <div class="tmpl-card">
+      <div class="tmpl-title">🏡 숙소 소개글</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>숙소 이름</label><input class="tvar" data-ph="[숙소 이름]" placeholder="예: 바다뷰 민박"></div>
+        <div class="tvar-f"><label>특징</label><input class="tvar" data-ph="[바다 전망 / 주방 완비 등]" placeholder="예: 바다 전망, 가족실"></div>
+        <div class="tvar-f"><label>주변 관광지</label><input class="tvar" data-ph="[관광지]" placeholder="예: 도동항, 행남산책로"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>너는 울릉도 여행 안내 전문가야.
 [숙소 이름]을 가족 여행객에게 소개하는 글을 만들어줘.
 특징은 [바다 전망 / 주방 완비 등], 주변에 [관광지]가 있어.
 따뜻하고 친근하게, 예약 안내 문구도 함께.</code></div>
+    </div>
 
-    <div class="tmpl-title">🥾 체험 프로그램 안내</div>
-    <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>너는 생태관광 체험 기획자야.
+    <div class="tmpl-card">
+      <div class="tmpl-title">🥾 체험 프로그램 안내</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>체험 이름</label><input class="tvar" data-ph="[체험 이름]" placeholder="예: 성인봉 생태 트레킹"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>너는 생태관광 체험 기획자야.
 [체험 이름] 소개문을 만들어줘.
 소요 시간·난이도·준비물·추천 계절·예약 안내를 포함하고,
 안전 안내도 넣어줘. 가격은 "확인 필요"로 표시.</code></div>
+    </div>
 
-    <div class="tmpl-title">🌐 다국어 안내문</div>
-    <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>외국인 관광객을 위한 [가게 이름] 안내문을 만들어줘.
+    <div class="tmpl-card">
+      <div class="tmpl-title">🌐 다국어 안내문</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>가게 이름</label><input class="tvar" data-ph="[가게 이름]" placeholder="예: 해울림식당"></div>
+        <div class="tvar-f"><label>대표 메뉴</label><input class="tvar" data-ph="[메뉴]" placeholder="예: 오징어내장탕"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>외국인 관광객을 위한 [가게 이름] 안내문을 만들어줘.
 영어와 일본어 각 3줄, 쉬운 표현으로.
 대표 메뉴 [메뉴]는 재료·맛·특징을 함께 설명하고,
 예약·결제·알레르기 정보를 분명하게.</code></div>
+    </div>
 
-    <div class="tmpl-title">💬 고객 응대 메시지</div>
-    <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyPrompt(this)">복사</button><code>예약 문의 고객에게 보내는 친절한 카카오톡 답변을 만들어줘.
+    <div class="tmpl-card">
+      <div class="tmpl-title">💬 고객 응대 메시지</div>
+      <div class="tvar-row">
+        <div class="tvar-f"><label>위치</label><input class="tvar" data-ph="[위치]" placeholder="예: 도동항 3분"></div>
+        <div class="tvar-f"><label>예약 방법</label><input class="tvar" data-ph="[방법]" placeholder="예: 전화 054-000-0000"></div>
+      </div>
+      <div class="prompt-box"><button class="copy-btn" type="button" onclick="copyTemplate(this)">채워서 복사</button><code>예약 문의 고객에게 보내는 친절한 카카오톡 답변을 만들어줘.
 위치는 [위치], 예약 방법은 [방법]이야.
 정중하고 따뜻하게, 3~4문장으로.</code></div>
+    </div>
 
     <div class="notice"><strong>한 걸음 더:</strong> 결과가 아쉬우면 <b>“더 짧게 / 더 정중하게 / 이모지 빼고 / 다른 버전 3개”</b>처럼 이어서 부탁하세요. 좋은 프롬프트는 <b>대화로 완성</b>됩니다.</div>
   </div>
@@ -696,6 +792,10 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
       <h2>웹페이지에 들어갈 <span class="hl">글 재료</span>를 만듭니다</h2>
       <p class="kicker">여기서 나온 제목·한 줄 소개·SNS 글은 STEP 7에서 웹페이지에 그대로 씁니다.</p>
     </div>
+    <figure class="img-band">
+      <img src="assets/ulleung-dodong.jpg" alt="울릉도 도동항 주변 마을과 바다 풍경" loading="lazy">
+      <figcaption><b>내 동네를 이렇게 소개합니다.</b> 우리 가게가 있는 도동항 같은 실제 장소를, AI와 함께 매력적인 한 줄로 바꿔봅니다.</figcaption>
+    </figure>
     <span class="follow">내 정보를 넣고 복사해서 Gemini에 붙여넣으세요</span>
     <div class="card">
       <div class="pb-head"><span class="tag-badge primary">홍보 문구</span><h3>소개글·SNS·FAQ 한 번에</h3></div>
@@ -740,6 +840,12 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
 각 2개씩 만들어줘. 짧고 감성적으로, 과장 없이.</code></div>
       </div>
     </div>
+    <div class="pb-label"><span class="tag">보너스</span> AI로 만든 홍보 포스터 예시</div>
+    <figure class="img-band poster-band">
+      <img src="assets/poster-example.png" alt="AI로 만든 홍보 포스터 예시" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+      <div class="slot-ph" style="display:none;"><span class="t">🖼️ AI 포스터 예시</span><span class="n">이미지를 <code>assets/poster-example.png</code>로 저장하면 표시됩니다</span></div>
+      <figcaption><b>이미지 생성 AI로 만든 포스터.</b> 글뿐 아니라 이런 홍보 포스터도 프롬프트 한 줄로 만들 수 있습니다.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -815,6 +921,21 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
           <div class="audio-note">두 진행자가 위치·대표 메뉴·이용 팁을 대화로 (약 30초)</div>
           <audio controls preload="none" src="assets/notebooklm-audio-overview.mp3">브라우저가 오디오 재생을 지원하지 않습니다.</audio>
         </div>
+        <details class="script">
+          <summary>🗒️ 이 음성의 대본 보기 (해울림식당 · 약 30초)</summary>
+          <div class="sc"><span class="spk">진행자 A</span>  자, 오늘은 울릉도의 작은 식당 하나를 소개해 드릴게요. 이름이 해울림식당인데요.
+<span class="spk">진행자 B</span>  아, 도동항에서 걸어서 삼 분 거리에 있다는 그곳 말이죠?
+<span class="spk">진행자 A</span>  네 맞아요. 바다 전망을 보면서 식사할 수 있는, 가족이 운영하는 식당이에요.
+<span class="spk">진행자 B</span>  대표 메뉴가 궁금한데요, 뭐가 유명한가요?
+<span class="spk">진행자 A</span>  따개비밥, 오징어내장탕, 그리고 자연산 회정식이 대표 메뉴예요. 모두 울릉도 현지 재료로 만든다고 하네요.
+<span class="spk">진행자 B</span>  여행자 입장에서는 뭘 미리 알아두면 좋을까요?
+<span class="spk">진행자 A</span>  배편 시간에 맞춰 방문 시간을 정하는 게 좋고요, 예약은 전화로 하면 됩니다. 외국인 손님을 위한 간단한 영어 안내도 준비되어 있대요.
+<span class="spk">진행자 B</span>  바다를 보면서 즐기는 따뜻한 울릉도 한 끼라니, 꼭 한번 들러보고 싶네요.</div>
+        </details>
+        <figure class="img-band" style="margin-top:14px;">
+          <img src="assets/notebooklm-home.png" alt="NotebookLM 시작 화면" loading="lazy">
+          <figcaption><b>NotebookLM 화면.</b> 새 노트를 만들고 소개글을 소스로 넣으면, 위 예시 같은 음성 소개가 만들어집니다.</figcaption>
+        </figure>
       </div>
       <div class="card">
         <div class="pb-head"><span class="tag-badge">음악 · Suno</span><h3>울릉도 홍보 노래</h3></div>
@@ -822,6 +943,36 @@ footer .foot-grid{display:flex; justify-content:space-between; flex-wrap:wrap; g
         <div class="result-audio" style="margin-top:14px;">
           <div class="audio-card"><div class="audio-title">🎵 즐거운 여행, 울릉도로 떠나요!</div><div class="audio-note">청량한 K-pop / 모던 포크 록 (예시)</div><audio controls preload="none" src="assets/ulleung-song-1.mp3">오디오 재생 미지원</audio></div>
         </div>
+        <details class="script">
+          <summary>🎼 이 노래의 가사 대본 보기 — 즐거운 여행, 울릉도로 떠나요!</summary>
+          <div class="sc"><span class="tagline2">[Verse 1]</span>
+푸른 동해 물결 너머 피어난 비밀
+바람이 머무는 곳, 울릉도로 가자
+해안도로 따라서 달리는 이 순간
+가슴 가득 퍼지는 에메랄드빛 바다
+
+<span class="tagline2">[Verse 2]</span>
+기암괴석 수놓은 대자연의 풍경
+독도행 배에 오르면 설레는 마음
+도시를 벗어나 숨 쉬는 이곳에서
+너와 나의 완벽한 여행이 시작돼
+
+<span class="tagline2">[Chorus]</span>
+오오 울릉도! 신비의 그 섬으로
+나리분지 초록빛 꿈을 품은 곳
+성인봉 아래 우리 추억을 새겨봐
+맛있는 오징어와 독도새우도 함께해
+떠나자, 지금 당장 울릉도로!
+
+<span class="tagline2">[Bridge]</span>
+노을빛에 물드는 독도 바다를 보며
+우리들의 이야기는 깊어만 가고
+발길 닿는 곳마다 감동이 가득해
+
+<span class="tagline2">[Outro]</span>
+영원히 잊지 못할 우리의 섬
+울릉도에서 만나!</div>
+        </details>
       </div>
     </div>
     <div class="pb-label"><span class="tag">실습 화면</span> Suno 사용 흐름</div>
@@ -1066,6 +1217,15 @@ function showToast(m){const t=document.getElementById('toast');t.textContent=m||
 function fallbackCopy(text,done){const el=document.createElement('textarea');el.value=text;el.style.position='fixed';el.style.opacity='0';document.body.appendChild(el);el.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(el);done();}
 function copyText(text,button){const done=()=>{showToast('복사되었습니다!');if(button){const o=button.textContent;button.textContent='완료';setTimeout(()=>button.textContent=o,1300);}};if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(done).catch(()=>fallbackCopy(text,done));}else fallbackCopy(text,done);}
 function copyPrompt(btn){copyText(btn.parentElement.querySelector('code').textContent,btn);}
+function copyTemplate(btn){
+  const card=btn.closest('.tmpl-card');
+  let text=card.querySelector('code').textContent;
+  card.querySelectorAll('.tvar').forEach(inp=>{
+    const ph=inp.getAttribute('data-ph'); const val=inp.value.trim();
+    if(ph && val) text=text.split(ph).join(val);
+  });
+  copyText(text,btn);
+}
 const profileFields=['bizName','bizType','location','items','strengths','contact','tagline'];
 function gv(id,fb){const el=document.getElementById(id);return (el&&el.value.trim())||fb;}
 function profileData(){return{name:gv('bizName','[가게/숙소/프로그램 이름]'),type:gv('bizType','[식당/숙소/체험/관광지/특산품]'),location:gv('location','[위치]'),items:gv('items','[대표 메뉴·객실·체험]'),strengths:gv('strengths','[강조하고 싶은 특징]'),contact:gv('contact','[전화번호 또는 문의 방법]'),tagline:gv('tagline','[한 줄 소개]')};}
@@ -1085,6 +1245,20 @@ const secs=Array.from(document.querySelectorAll('section[id], header[id]'));
 function updateNav(){const y=window.scrollY+90;let cur='';secs.forEach(s=>{if(s.offsetTop<=y)cur=s.id;});navLinks.forEach(l=>l.classList.toggle('active',l.getAttribute('href')===`#${cur}`));}
 window.addEventListener('scroll',updateNav,{passive:true});
 loadProfile();updateNav();
+</script>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+  mermaid.initialize({
+    startOnLoad:true, securityLevel:'loose', flowchart:{curve:'basis', htmlLabels:true, useMaxWidth:false},
+    theme:'base',
+    themeVariables:{
+      fontFamily:"'Do Hyeon', sans-serif", fontSize:'15px',
+      primaryColor:'#FFF3EA', primaryBorderColor:'#EA580C', primaryTextColor:'#171412',
+      lineColor:'#c9b6a2',
+      secondaryColor:'#E6F5F3', secondaryBorderColor:'#0D9488',
+      tertiaryColor:'#FEF6DC', tertiaryBorderColor:'#EAB308'
+    }
+  });
 </script>
 </body>
 </html>
